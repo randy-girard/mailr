@@ -1,0 +1,68 @@
+es-ES:
+  mailr:          Mailr
+  email:          Email
+  password:       Contrase&ntilde;a 
+  log_in:         Iniciar sesi&oacute;n
+  wrong_email_or_password:  Email o contrase&ntilde;a incorrecta
+  mailbox:        Buzon de Correo
+  folders:        Carpetas
+  folder:         Carpeta
+  empty:          Vaciar
+  logout:         Cerrar sesi&oacute;n
+  compose:        Redactar
+  preferences:    Opciones
+  filters:        Filtros
+  contacts:       Contactos
+  search:         Buscar
+  search_txt:     Buscar en el campo
+  refresh:        Refrescar
+  operations:     Operaciones
+  operations_txt: Operaciones en mensajes marcados
+  delete:         borrar
+  copy:           copiar
+  move:           mover
+  mark_read:      marcar como leido
+  mark_unread:    marcar comono leido
+  destination_txt:  Destination for move and copy operations
+  for:            for
+  to:             Para
+  subject:        Asunto
+  date:           Fecha
+  size:           Tama&ntilde;o
+  from:           De
+  show_all:       Mostrar todos
+  pages:          P&aacute;ginas
+  first:          Primero
+  prev:           Previo
+  next:           Siguiente
+  last:           &Uacute;ltimo
+  back_to_list:   Volver a la lista
+  back_to_message:  Volver al mensaje
+  reply:          Responder
+  forward:        Reenviar
+  view_source:    Ver fuente
+  add_filter:     Agregar filtro
+  cc:             CC
+  bcc:            BCC
+  send:           Enviar
+  choose_address: Choose addresses from contacts 
+  compose_txt:    Compose new mail
+  attachment:     Adjunto
+  add:            Agregar
+  first_name:     Nombre
+  last_name:      Apellido
+  send_type:      Send type message
+  messages_per_page:    Mensajes por p&aacute;gina
+  check_external_mail:  Check external mail?
+  check_external_mail_txt:  Note that by selecting this option webmail system will try to log you using your original email on a local server.
+  save:           Guardar
+  save_and_add_another:           Guardar y agregar otro
+  cancel:         Cancelar
+  add_one_contact:  Add one contact
+  add_multiple:   Add multiple 
+  name:           nombre
+  add_folder:     Add folder
+  total_messages: Total messages
+  unseen:         Unseen
+  edit_create_contact: Editar o crear contacto
+  back_to_contacts: Volver a contactos
