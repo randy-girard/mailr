@@ -23,8 +23,8 @@ es-ES:
   move:           mover
   mark_read:      marcar como leido
   mark_unread:    marcar comono leido
-  destination_txt:  Destination for move and copy operations
-  for:            for
+  destination_txt:  Destino para operaciones de copiado y movido
+  for:            para
   to:             Para
   subject:        Asunto
   date:           Fecha
@@ -45,24 +45,24 @@ es-ES:
   cc:             CC
   bcc:            BCC
   send:           Enviar
-  choose_address: Choose addresses from contacts 
-  compose_txt:    Compose new mail
+  choose_address: Elegir direcci&oacute;n desde contactos
+  compose_txt:    Componer nuevo correo
   attachment:     Adjunto
   add:            Agregar
   first_name:     Nombre
   last_name:      Apellido
-  send_type:      Send type message
+  send_type:      Enviar mensaje tipo
   messages_per_page:    Mensajes por p&aacute;gina
-  check_external_mail:  Check external mail?
+  check_external_mail:  Comprobar correos externos?
   check_external_mail_txt:  Note that by selecting this option webmail system will try to log you using your original email on a local server.
   save:           Guardar
   save_and_add_another:           Guardar y agregar otro
   cancel:         Cancelar
-  add_one_contact:  Add one contact
-  add_multiple:   Add multiple 
+  add_one_contact:  Agregar un contacto
+  add_multiple:   Agregar multiples
   name:           nombre
-  add_folder:     Add folder
-  total_messages: Total messages
-  unseen:         Unseen
+  add_folder:     Agregar carpeta
+  total_messages: Mensajes totales
+  unseen:         No leidos
   edit_create_contact: Editar o crear contacto
   back_to_contacts: Volver a contactos
