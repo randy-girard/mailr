@@ -1,4 +1,4 @@
-<h1><%=_('Edit/Create contact')%></h1>
+<h1><%=t(:edit_create_contact)%></h1>
 <div id="header">
   <ul id="primary">
     <li><%=link_folders%></li>
@@ -7,7 +7,7 @@
     <li><%=link_mail_filters%></li>
     <li><span><%= t :contacts %></span>
       <ul id="secondary">
-        <li><%=link_contact_list%></li>
+        <li><%=link_to t(:back_to_contacts), contacts_url%></li>
 	<% if ret = session["return_to"] %>
 	<li><%=link_to(t(:back_to_message), ret) %></li>
 	<% end %>
@@ -63,8 +63,8 @@
 	<table class="edit">  
 	  <tr>
 	    <td colspan=2 class="buttonBar">
-	      <input type="submit" name="paction" value="<%=_('Save')%>"/>
-	      <input type="submit" name="paction" value="<%=_('Save and add another')%>"/>
+	      <input type="submit" name="paction" value="<%=t(:save)%>"/>
+	      <input type="submit" name="paction" value="<%=t(:save_and_add_another)%>"/>
 	    </td>
 	  </tr>	
 	</table>	

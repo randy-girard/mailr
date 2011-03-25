@@ -73,8 +73,8 @@
 <% elsif @mode == "groups"%>
         <tr>
           <th></th>
-          <th width="200px"><%= _('Name')%></th>
-          <th><%= _('E-mail')%></th>
+          <th width="200px"><%= t(:name)%></th>
+          <th><%= t(:email)%></th>
         </tr>
 <%  for contact in @contacts %>
 <input type="hidden" id="contacts_for_group[<%=contact.id%>]" name="contacts_for_group[<%=contact.id%>]" value="<%=@contacts_for_group[contact.id]%>" >
@@ -94,8 +94,8 @@
         </tr>
         <% else %>	
         <tr>
-          <th width="200px"><%= _('Name')%></th>
-          <th><%= _('E-mail')%></th>
+          <th width="200px"><%= t(:name)%></th>
+          <th><%= t(:email)%></th>
           <th>&nbsp;</th>
         </tr>	
 <%  	for contact in @contacts %>

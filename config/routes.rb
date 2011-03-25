@@ -1,6 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :folders, :requirements => {:id => /[^\/]+/}
-  map.resources :contacts
+  map.resources :contacts, :member => {:add_from_mail => :get}
   map.resources :contact_groups
 
   # Add your own custom routes here.
@@ -9,13 +9,13 @@ ActionController::Routing::Routes.draw do |map|
   # Here's a sample route:
   # map.connect 'products/:id', :controller => 'catalog', :action => 'view'
   # Keep in mind you can assign values other than :controller and :action
-  map.connect '', :controller=>'webmail', :action=>'index'
+  map.root :controller=>'webmail', :action=>'index'
 
   map.connect 'webmail', :controller=>'webmail', :action=>'index'
 
   map.connect 'webmail/:action', :controller=>'webmail'
   
-  map.connect '/contact/:action', :controller=>'contact'
+  map.connect '/contact/:action', :controller=>'contacts'
   
   map.connect 'admin/main', :controller=> 'login', :action=>'logout'
   # Allow downloading Web Service WSDL as a file with an extension

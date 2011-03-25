@@ -144,7 +144,7 @@ module Mail2Screen
   end
   
   def add_to_contact(addr, msg_id)
-    "&nbsp;<a href='/contacts/contact/add_from_mail?cstr=#{CGI.escape(friendly_address(addr))}&retmsg=#{msg_id}'>Add to contacts</a>"
+    "&nbsp;<a href='/contact/add_from_mail?cstr=#{CGI.escape(friendly_address(addr))}&retmsg=#{msg_id}'>Agregar a contactos</a>"
   end
   
   def short_address(addresses)

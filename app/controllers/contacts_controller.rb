@@ -58,7 +58,7 @@ class ContactsController < ApplicationController
   def add_from_mail
     cstr = params['cstr']
     retmsg = params['retmsg']
-    @session["return_to"] = url_for(:controller=>'/webmail/webmail',
+    session["return_to"] = url_for(:controller=>'/webmail/webmail',
                                     :action=>'folders',
                                     :msg_id=>retmsg)
     # parse string
@@ -106,7 +106,7 @@ class ContactsController < ApplicationController
         @groups[g.id] = 0
       }
     end  
-    render :action => "add"
+    render :action => "new"
   end
   
   def import_preview
