@@ -1,6 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :folders, :requirements => {:id => /[^\/]+/}
-  map.resources :contacts, :member => {:add_from_mail => :get}
+  map.resources :contacts, :member => {:add_from_mail => :get}, :collection => {:add_multiple => :get}
   map.resources :contact_groups
 
   # Add your own custom routes here.

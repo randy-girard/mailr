@@ -8,7 +8,7 @@
     <li><span><%= t :contacts %></span>
       <ul id="secondary">
         <li><%=link_contact_add_one%></li>
-        <li><%=link_contact_add_multiple%></li>
+        <li><%=link_to t(:add_multiple), add_multiple_contacts_path %></li>
 	<% if ret = session["return_to"] %>
 	<li><%=link_to(t(:back_to_message), ret) %></li>
 	<% end %>
@@ -100,9 +100,11 @@
         </tr>	
 <%  	for contact in @contacts %>
         <tr class="<%= alternator %>">
-          <td><%= link_to(contact.full_name, :controller=>"/contacts/contact", :action => "edit", :id => contact.id ) %></td>
-          <td><%= link_to( contact.email, :controller => "/webmail", :action => "compose", :params => { "mail[to]" => contact.email } ) %></td>
-          <td><%= link_to(_('delete'), {:controller=>'/contacts/contact', :action=>'delete', :id=>contact.id}, {:confirm=>sprintf(_('DELETE CONTACT?\r\n\Name - %s\r\nE-mail - %s'), contact.show_name, contact.email)})%></td>
+          <td><%= link_to(contact.full_name, :controller=>:contacts, :action => "edit", :id => contact.id ) %></td>
+          <td><%= link_to( contact.email, :controller => :webmail, :action => "compose", :params => { "mail[to]" => contact.email } ) %></td>
+          <td><%= link_to(t(:delete), {:controller=>:contacts, :action=>'delete', :id=>contact.id}, 
+                                      {:confirm=>t(:delete_contact_question, :name => contact.show_name, :email => contact.email)})%>
+          </td>
         </tr>	
         <% end %>
         <% end %>

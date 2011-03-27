@@ -1,25 +1,25 @@
-<h1><%=_('Add multiple contacts')%></h1>
-<% if @flash["errors"] and not @flash["errors"].empty?%>
-  <%= _('Errors')%>
+<h1><%=t :add_multiple_contacts %></h1>
+<% if flash["errors"] and not flash["errors"].empty?%>
+  <%= t(:errors)%>
   <ul>
-  <% @flash["errors"].each do |message| %>
+  <% flash["errors"].each do |message| %>
     <li><%= message %>
   <% end %>
   </ul>
 <% end %>
 <form action="<%=link_import_preview%>" enctype="multipart/form-data" method="post">
-  	<%= radio_button("contact", "file_type", "1")%> <%= _('Comma-separated (CSV) file')%>
-  	<%= radio_button("contact", "file_type", "2")%> <%= _('Tab-delimited text file')%>
+  	<%= radio_button("contact", "file_type", "1")%> <%= t(:csv_file)%>
+  	<%= radio_button("contact", "file_type", "2")%> <%= t(:tab_file)%>
   	<table>
   		<tr>
-  			<th><label for="contact[data]"><%=_('Select file')%></label></th>
+  			<th><label for="contact[data]"><%=t(:select_file)%></label></th>
     		<td><input type="file" name="contact[data]"/></td>
   		</tr>
   		<tr>
   			<td colspan=2>
-  				<input type="submit" value="<%=_('Import')%>"/>
-  				<input type="button" value="<%= _('Back to contacts')%>" onclick="window.location='<%=link_contact_list%>'">
-  				<input type="button" value="<%= _('Back to folders')%>" onclick="window.location='<%=link_main_index%>'">
+  				<input type="submit" value="<%= t(:import)%>"/>
+  				<input type="button" value="<%= t(:back_to_contacts)%>" onclick="window.location='<%=contacts_url%>'">
+          <input type="button" value="<%= t(:back_to_folders)%>" onclick="window.location='<%=url_for(:controller => :webmail)%>'">
   			</td>
   		</tr>
   	</table>

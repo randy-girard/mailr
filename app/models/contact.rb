@@ -47,23 +47,23 @@ class Contact < ActiveRecord::Base
   
   protected
     def validate
-      errors.add 'fname', _('Please enter your first name (2 to 20 characters).') unless self.fname =~ /^.{2,20}$/i
-      errors.add 'lname', _('Please enter your surname (2 to 20 characters).') unless self.lname =~ /^.{2,20}$/i
+      errors.add 'fname', I18n.t(:validate_fname_error) unless self.fname =~ /^.{2,20}$/i
+      errors.add 'lname', I18n.t(:validate_lname_error) unless self.lname =~ /^.{2,20}$/i
       
       # Contact e-mail cannot be changed
       unless self.new_record?
         old_record = Contact.find(self.id)
-        errors.add 'email', _('Contacts email cannot be changed.') unless old_record.email == self.email
+        errors.add 'email', I18n.t(:contacto_cannot_be_changed) unless old_record.email == self.email
       end
     end
     
     def validate_on_create
       # Contact e-mail cannot be changed, so we only need to validate it on create
-      errors.add 'email', _('Please enter a valid email address.') unless valid_email?(self.email)
+      errors.add 'email', I18n.t(:validate_email_error) unless valid_email?(self.email)
       # Already existing e-mail in contacts for this user is not allowed
       if self.new_record?
         if Contact.find :first, :conditions => {:email => email, :customer_id => customer_id}
-          errors.add('email', _('An account for your email address already exists.'))
+          errors.add('email', I18n.t(:email_exists))
         end
       end
     end

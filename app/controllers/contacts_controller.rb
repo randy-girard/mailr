@@ -249,7 +249,7 @@ class ContactsController < ApplicationController
         contact_group.contacts.delete(contact) 
       end
     }
-    redirect_to(:action=>"list", :id=>group_id, :params=>{"mode"=>params["mode"]})
+    redirect_to(:action=>"index", :id=>group_id, :params=>{"mode"=>params["mode"]})
   end
   
   def edit
@@ -273,12 +273,11 @@ class ContactsController < ApplicationController
         @groups[g.id] = 0 # unchecked
       end
     }    
-    render :action => "add"
+    render :action => "new"
   end
   
   # Insert or update
   def create
-    logger.info("BEGIN")
     if params["contact"]["id"] == ""
       # New contact
       @contact = Contact.create(params["contact"])
@@ -311,10 +310,10 @@ class ContactsController < ApplicationController
       end
     }
     if @contact.save
-      if params["paction"] == _('Save')
-        redirect_to :controller => "/contacts/contact", :action =>"list"
+      if params["paction"] == t(:save)
+        redirect_to  :action =>:index
       else
-        redirect_to :controller => "/contacts/contact", :action =>"add"
+        redirect_to :action => :new
       end
     else
       loadLists
@@ -326,13 +325,13 @@ class ContactsController < ApplicationController
           @groups[g.id] = 0
         end      
       }
-      redirect_to contacts_path
+      render :action => :new
     end
   end
   
   def delete
     Contact.destroy(params['id'])
-    redirect_to(:action=>'list')
+    redirect_to(:action=>'index')
   end
   
   protected

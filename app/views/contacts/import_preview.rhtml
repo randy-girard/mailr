@@ -1,9 +1,9 @@
 <h1><%= _('Contacts You Are About To Import')%></h1>
 
-<% if @flash["errors"] and not @flash["errors"].empty?%>
+<% if flash["errors"] and not flash["errors"].empty?%>
   <%= _('Errors')%>
   <ul>
-  <% @flash["errors"].each do |message| %>
+  <% flash["errors"].each do |message| %>
   <li><%= message %>
   <% end %>
   </ul>
