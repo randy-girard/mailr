@@ -131,7 +131,7 @@ class WebmailController < ApplicationController
   def compose
     if @mail.nil?
       operation = operation_param
-      if operation == _('Send')
+      if operation == t(:send)
         @mail = create_mail
         encmail = @mail.send_mail
         get_imap_session
@@ -139,8 +139,8 @@ class WebmailController < ApplicationController
         
         # delete temporary files (attachments)
         @mail.delete_attachments()
-        render :action => "webmail/mailsent"
-      elsif operation == _('Add')
+        render :action => :mailsent
+      elsif operation == t(:add)
         @mail = create_mail
         attachment = CDF::Attachment.new(@mail)
         attachment.file = params['attachment']
