@@ -1,8 +1,8 @@
-<h1><%=_('Mailbox')%></h1>
+<h1><%=t(:mailbox)%></h1>
 <div id="header">
   <ul id="primary">
     <li><%=link_folders%></li>
-    <li><span><%= _('Compose') %></span>
+    <li><span><%= t(:compose) %></span>
       <ul id="secondary">
         <li><%=link_compose_new%></li>
       </ul>
@@ -17,14 +17,14 @@
 
 <div class="msghdr">
 <dl>
-  <dt><%=_('To')%></dt><dd><%= CGI.escapeHTML(@mail.to) %></dd>
+  <dt><%=t(:to)%></dt><dd><%= CGI.escapeHTML(@mail.to) %></dd>
   <% if @mail.cc %>
-  <dt><%=_('CC')%></dt><dd><%= CGI.escapeHTML(@mail.cc) %></dd>
+  <dt><%=t(:cc)%></dt><dd><%= CGI.escapeHTML(@mail.cc) %></dd>
   <% end 
      if @mail.bcc %>
-  <dt><%=_('BCC')%></dt><dd><%= CGI.escapeHTML(@mail.bcc) %></dd>
+  <dt><%=t(:bcc)%></dt><dd><%= CGI.escapeHTML(@mail.bcc) %></dd>
   <% end %>
-  <dt><%=_('Subject')%></dt><dd><%= CGI.escapeHTML(@mail.subject) %></dd>
+  <dt><%=t(:subject)%></dt><dd><%= CGI.escapeHTML(@mail.subject) %></dd>
 </dl>
 </div>
 </div>

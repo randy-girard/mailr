@@ -3,7 +3,7 @@
 <% } %>
 
 <h1><%= t :mailbox %></h1>
-<form name="composeMail" id='composeMail' action="/webmail/compose"  enctype="multipart/form-data" method="post">
+<form name="composeMail" id='composeMail' action="<%= url_for(:controller => :webmail, :action => :compose) %>"  enctype="multipart/form-data" method="post">
 <div id="header">
   <ul id="primary">
     <li><%= link_folders %></li>
@@ -64,8 +64,4 @@
 <% if ['text/html', 'multipart'].include?(@mail.content_type) %>
 <%= include_tinymce %>
 <% end %>
-<%= javascript_include_tag "controls" %>
-<%= javascript_include_tag "dragdrop" %>
-<%= javascript_include_tag "effects" %>
-<% %>
 <% } %>

@@ -24,7 +24,7 @@ module NavigationHelper
   end
 
   def link_import_preview() "/contacts/import_preview" end
-  def link_main_index() "/" end
+  def link_main_index() root_url end
   def link_contact_import() "/contacts/import" end
   def link_contact_choose() "/contacts/contact/choose" end
 
@@ -45,7 +45,7 @@ module NavigationHelper
   end
 
   def link_folders
-    link_to( t(:folders), :controller=>"/webmail", :action=>"messages")
+    link_to( t(:folders), :controller=>:webmail, :action=>:messages)
   end
   
   private

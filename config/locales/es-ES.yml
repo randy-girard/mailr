@@ -78,3 +78,7 @@ es-ES:
   select_file: Selecionar archivo
   import: Importar
   back_to_folders: Volver a carpetas
+  add_edit_folder: agregar/editar
+  user_logged_out: Sesi&oacute;n cerrada correctamente
+  please_login: Por favor, inicie sesi&oacute;n
+  want_to_empty_trash_message: ¿Realmente quieres vaciar la papelera?

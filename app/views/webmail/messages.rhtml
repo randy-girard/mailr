@@ -55,13 +55,13 @@
         <tr>
           <th width="1%"><input type="checkbox" name="allbox" onclick="checkAll(this.form)" style="margin: 0 0 0 4px" /></th>
     <% if @folder_name == CDF::CONFIG[:mail_sent] %>
-          <th width="20%"><%= link_to(t(:to), :controller=>'/webmail/webmail', :action=>'messages', :op=>'SORT', :page=>@page, :scc=>'to_flat')%></th>
+          <th width="20%"><%= link_to(t(:to), :controller=>:webmail, :action=>:messages, :op=>'SORT', :page=>@page, :scc=>'to_flat')%></th>
     <% else %>
-          <th width="20%"><%= link_to(t(:from), :controller=>'/webmail/webmail', :action=>'messages', :op=>'SORT', :page=>@page, :scc=>'from_flat')%></th>
+          <th width="20%"><%= link_to(t(:from), :controller=>:webmail, :action=>:messages, :op=>'SORT', :page=>@page, :scc=>'from_flat')%></th>
     <% end%>
-          <th width='60%'><%= link_to(t(:subject), :controller=>'/webmail/webmail', :action=>'messages', :op=>'SORT', :page=>@page, :scc=>'subject')%></th>
-          <th><%= link_to(t(:date), :controller=>'/webmail/webmail', :action=>'messages', :op=>'SORT', :page=>@page, :scc=>'date')%></th>
-          <th><%= link_to(t(:size), :controller=>'/webmail/webmail', :action=>'messages', :op=>'SORT', :page=>@page, :scc=>'size')%></th>
+          <th width='60%'><%= link_to(t(:subject), :controller=>:webmail, :action=>:messages, :op=>'SORT', :page=>@page, :scc=>'subject')%></th>
+          <th><%= link_to(t(:date), :controller=>:webmail, :action=>:messages, :op=>'SORT', :page=>@page, :scc=>'date')%></th>
+          <th><%= link_to(t(:size), :controller=>:webmail, :action=>:messages, :op=>'SORT', :page=>@page, :scc=>'size')%></th>
           <th>&nbsp;</th>
         </tr>
       </thead>

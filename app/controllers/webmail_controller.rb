@@ -9,14 +9,11 @@ class WebmailController < ApplicationController
   
   # Administrative functions
   before_filter :login_required
-  
   before_filter :obtain_cookies_for_search_and_nav, :only=>[:messages]
+  before_filter :load_imap_session
+  after_filter :close_imap_session
   
   layout "public", :except => [:view_source, :download]
-  
-  before_filter :load_imap_session
-  
-  after_filter :close_imap_session
   
 #   model :filter, :expression, :mail_pref, :customer
   
@@ -70,10 +67,10 @@ class WebmailController < ApplicationController
       session['lsort'] = sort_query = params["scc"]
       session['tsort'][sort_query] = (session['tsort'][sort_query]? false : true)
       @search_field, @search_value = session['search_field'], session['search_value']
-    when _('Search') # search  
+    when t(:search) # search  
       session['search_field'] = @search_field
       session['search_value'] = @search_value
-    when _('Show all') # search  
+    when t(:show_all) # search  
       session['search_field'] = @search_field = nil
       session['search_value'] = @search_value = nil
     else
@@ -175,9 +172,9 @@ class WebmailController < ApplicationController
       get_parts(mail).each { |part|  
         return send_part(part) if part.header and part.header['content-type']['name'] == params['ctype'] 
       }
-      render("webmail/webmail/noattachment")
+      render("webmail/noattachment")
     else  
-      render("webmail/webmail/noattachment")
+      render("webmail/noattachment")
     end  
   end
   

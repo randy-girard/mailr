@@ -33,7 +33,7 @@ class LoginController < ApplicationController
   
   def logout
     reset_session
-    flash["status"] = _('User successfully logged out')
+    flash["status"] = t(:user_logged_out)
     redirect_to :action => "index" 
   end
   

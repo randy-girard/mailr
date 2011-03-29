@@ -159,6 +159,6 @@ module WebmailHelper
   def empty_trash_link(folder_name)
     link_to( "(#{t :empty})",
       { :controller => "webmail", :action => "empty", :params=>{"folder_name"=>folder_name}},
-      :confirm => _('Do you really want to empty trash?')) 
+      :confirm => t(:want_to_empty_trash_message)) 
   end
 end
