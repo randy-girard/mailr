@@ -46,7 +46,9 @@ es-ES:
   bcc:            BCC
   send:           Enviar
   choose_address: Elegir direcci&oacute;n desde contactos
+  choose:         Elegir
   compose_txt:    Componer nuevo correo
+  groups:         Grupos
   attachment:     Adjunto
   add:            Agregar
   first_name:     Nombre

@@ -11,7 +11,7 @@
       <ul id="secondary">
         <li><%= link_compose_new %></li>
         <li><a href='#' onclick="getFormField('composeMail').submit();"><%= t :send %></a></li>
-        <li><a href="#" onclick="chooseContacts();"><%= t :choose_address %></a></li>
+        <li><a href="#" onclick="chooseContacts('<%=url_for(:controller => :contacts, :action => :index) %>');"><%= t :choose_address %></a></li>
       </ul>
     </li>
     <li><%=link_mail_prefs%></li>

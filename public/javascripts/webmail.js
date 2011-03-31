@@ -1,5 +1,5 @@
-function chooseContacts() {
-  rs('', '/contacts/contact/list?mode=choose',550,480,0);
+function chooseContacts(url) {
+  rs('', url + '?mode=choose',550,480,0);
 }
 
 function setBulk() {

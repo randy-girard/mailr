@@ -32,7 +32,7 @@
 
 #folders { margin: 0 0 0 0; padding: 0; border: 1px solid #888; background: #fff; text-align: left; }
 #folders ul { margin: 0; padding: 10px; }
-#folders ul li { margin: 0; padding-left: 20px; list-style-type:none;  font-size: 1em; background: url("/images/icon-folder-open.gif") top left no-repeat; }
+#folders ul li { margin: 0; padding-left: 20px; list-style-type:none;  font-size: 1em; background: url("icon-folder-open.gif") top left no-repeat; }
 #folders h4 { margin: 0; padding: 5px; text-align: left; } 
 
 #messages { margin: 0 0 0 0; padding: 0;  width: 100%; }

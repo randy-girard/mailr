@@ -272,7 +272,7 @@ class WebmailController < ApplicationController
     @filter.expressions << Expression.new
     @expressions = @filter.expressions
     @destfolders = get_to_folders
-    render_action("filter")
+    render "filter"
   end
   # end of filters
   
@@ -314,8 +314,8 @@ class WebmailController < ApplicationController
   protected
   
   def additional_scripts()
-    '<link rel="stylesheet" href="/stylesheets/webmail/webmail.css" type="text/css" media="screen" />'<<
-    '<script type="text/javascript" src="/javascripts/webmail.js"></script>'
+    @additional_css = ["webmail/webmail"]
+    @additional_js = ["webmail"]
   end
   
   private

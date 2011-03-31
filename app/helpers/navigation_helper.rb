@@ -25,11 +25,11 @@ module NavigationHelper
 
   def link_import_preview() "/contacts/import_preview" end
   def link_main_index() root_url end
-  def link_contact_import() "/contacts/import" end
-  def link_contact_choose() "/contacts/contact/choose" end
+  def link_contact_import() url_for(:controller => :contacts, :action => :import) end
+  def link_contact_choose() url_for(:controller => :contacts, :action => :choose) end
 
   def link_contact_list
-    link_to(_('List'), :controller => "/contacts/contact", :action => "list") 
+    link_to(t(:list), :controller => :contacts, :action => :index) 
   end
 
   def link_contact_add_one
@@ -37,11 +37,11 @@ module NavigationHelper
   end
 
   def link_contact_add_multiple
-    link_to(t(:add_multiple), :controller => "/contacts/contact", :action => "add_multiple") 
+    link_to(t(:add_multiple), :controller => :contacts, :action => "add_multiple") 
   end
   
   def link_contact_group_list 
-    link_to(_('Groups'), :controller => "/contacts/contact_group", :action => "list") 
+    link_to(t(:groups), :controller => :contact_group, :action => :index) 
   end
 
   def link_folders
