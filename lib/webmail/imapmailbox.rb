@@ -422,8 +422,18 @@ class IMAPFolder
     
     # fetch and store not cached messages
     unless uids_to_be_fetched.empty? 
-      imapres = @mailbox.imap.uid_fetch(uids_to_be_fetched, @@fetch_attr)
-      imapres.each { |cache| 
+      logger.debug("About to fetch #{uids_to_be_fetched.join(",")}")
+      uids_to_be_fetched.each_slice(20) do |slice|
+        fetch_uids(slice)
+      end
+    end	
+    @mcached = true
+    logger.debug("Synchonization done for folder #{@name} in #{Time.now - startSync} ms.")
+  end
+  
+  def fetch_uids(uids)
+      imapres = @mailbox.imap.uid_fetch(uids, @@fetch_attr)
+      uids.each { |cache| 
         envelope = cache.attr['ENVELOPE'];
         message = ImapMessage.create( :folder_name => @name, 
                                       :username => @username,
@@ -437,9 +447,6 @@ class IMAPFolder
                                       :unread => !(cache.attr['FLAGS'].member? :Seen),
                                       :size => cache.attr['RFC822.SIZE'])
       }
-    end	
-    @mcached = true
-    logger.debug("Synchonization done for folder #{@name} in #{Time.now - startSync} ms.")
   end
   
   def messages(offset = 0, limit = 10, sort = 'date desc')
