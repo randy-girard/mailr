@@ -37,7 +37,9 @@ module WebmailHelper
   
   def folder_link(folder)
     return folder.name if folder.attribs.include?(:Noselect)
-    title = folder.unseen > 0 ? "#{short_fn(folder)} (#{folder.unseen})" :  "#{short_fn(folder)}"
+    folder_name = short_fn(folder)
+    folder_name = t(folder_name.downcase.to_sym, :default => folder_name)
+    title = folder.unseen > 0 ? "#{folder_name} (#{folder.unseen})" :  "#{folder_name}"
     link = link_to title, :controller => 'webmail', :action => 'messages', :folder_name => folder.name
     link = content_tag('b', link) if folder.name == @folder_name
     link += '&nbsp;' + empty_trash_link(folder.name) if folder.trash?

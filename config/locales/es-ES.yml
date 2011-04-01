@@ -21,6 +21,11 @@ es-ES:
   delete:         borrar
   copy:           copiar
   move:           mover
+  junk:           Basura
+  sent:           Enviados
+  inbox:          Bandeja de Entrada
+  trash:          Basura
+  drafts:         Borradores
   mark_read:      marcar como leido
   mark_unread:    marcar comono leido
   destination_txt:  Destino para operaciones de copiado y movido

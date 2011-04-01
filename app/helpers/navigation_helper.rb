@@ -52,7 +52,7 @@ module NavigationHelper
 
   def short_fn(folder)
     if folder.name.include? folder.delim
-      "&nbsp; &nbsp;" + folder.name.split(folder.delim).last
+       folder.name.split(folder.delim).last
     else
       folder.name
     end
