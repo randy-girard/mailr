@@ -433,7 +433,7 @@ class IMAPFolder
   
   def fetch_uids(uids)
       imapres = @mailbox.imap.uid_fetch(uids, @@fetch_attr)
-      uids.each { |cache| 
+      imapres.each { |cache| 
         envelope = cache.attr['ENVELOPE'];
         message = ImapMessage.create( :folder_name => @name, 
                                       :username => @username,
