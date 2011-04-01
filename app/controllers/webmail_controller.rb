@@ -139,8 +139,10 @@ class WebmailController < ApplicationController
         render :action => :mailsent
       elsif operation == t(:add)
         @mail = create_mail
-        attachment = CDF::Attachment.new(@mail)
-        attachment.file = params['attachment']
+        if params['attachment'] 
+          attachment = CDF::Attachment.new(@mail)
+          attachment.file = params['attachment']
+        end
       else
         # default - new email create
         @mail = create_mail
