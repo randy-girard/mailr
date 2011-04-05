@@ -375,11 +375,22 @@ class IMAPFolder
     @mailbox.imap.expunge
   end
 
-  def synchronize_cache
+  def synchronize_cache(offset=0, limit = 10)
+    to = limit+offset
     startSync = Time.now
     activate
     startUidFetch = Time.now
-    server_messages = @mailbox.imap.uid_fetch(1..-1, ['UID', 'FLAGS'])
+
+    #Count all messages
+    count = @mailbox.imap.fetch(1..-1, "UID")
+    to = count.size if count.size < to
+
+    
+    range = (offset..to)
+    logger.info range.inspect
+
+    server_messages = @mailbox.imap.fetch(range, "(UID FLAGS)")
+    #server_messages = @mailbox.imap.uid_fetch(sequence_uids, ["UID", "FLAGS"])
     
     startDbFetch = Time.now
     cached_messages = ImapMessage.find(:all, :conditions => ["username = ? and folder_name = ?", @username, @name])
@@ -427,7 +438,7 @@ class IMAPFolder
         fetch_uids(slice)
       end
     end	
-    @mcached = true
+    #FIX: @mcached = true
     logger.debug("Synchonization done for folder #{@name} in #{Time.now - startSync} ms.")
   end
   
@@ -449,14 +460,14 @@ class IMAPFolder
       }
   end
   
-  def messages(offset = 0, limit = 10, sort = 'date desc')
+  def messages(offset = 1, limit = 10, sort = 'date desc')
     # Synchronize first retrieval time
-    synchronize_cache unless @mcached
+    synchronize_cache(offset, limit) #unless @mcached
     
     if limit == -1
       @messages = ImapMessage.find(:all, :conditions => ["username = ? and folder_name = ?", @username, @name], :order => sort)
     else
-      @messages = ImapMessage.find(:all, :conditions => ["username = ? and folder_name = ?", @username, @name], :order => sort, :limit => limit, :offset => offset )
+      @messages = ImapMessage.find(:all, :conditions => ["username = ? and folder_name = ?", @username, @name], :order => sort )
     end	
   end
   

@@ -38,25 +38,20 @@ class ApplicationController < ActionController::Base
     end
     
     def localize
-      logger.info "LOCALIZEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"
       # We will use instance vars for the locale so we can make use of them in
       # the templates.
       @charset  = 'utf-8'
-      logger.info "Paso 1"
       headers['Content-Type'] = "text/html; charset=#{@charset}"
       # Here is a very simplified approach to extract the prefered language
       # from the request. If all fails, just use 'en_EN' as the default.
       temp = if request.env['HTTP_ACCEPT_LANGUAGE'].nil?
-      logger.info "Paso 2"
                []
              else
-      logger.info "Paso 3"
                request.env['HTTP_ACCEPT_LANGUAGE'].split(',').first.split('-') rescue []
              end
       language = temp.slice(0)
       dialect  = temp.slice(1)
       @language = language.nil? ? 'en' : language.downcase # default is en
-      logger.info @language
       # If there is no dialect use the language code ('en' becomes 'en_EN').
       @dialect  = dialect.nil? ? @language.upcase : dialect
       # The complete locale string consists of

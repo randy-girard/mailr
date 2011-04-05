@@ -140,7 +140,11 @@ module Mail2Screen
   end
   
   def friendly_address_or_name(addr)
-    addr.kind_of?(Net::IMAP::Address) ? ((addr.name.nil? or addr.name.to_s == "") ? "#{addr.mailbox}@#{addr.host}" : (mime_encoded?(addr.name.to_s) ? mime_decode(addr.name.to_s): addr.name.to_s)) : ((addr.name.nil? or addr.name.to_s == "") ? "#{addr.spec}" : (mime_encoded?(addr.name.to_s) ? mime_decode(addr.name.to_s): addr.name.to_s))
+    if addr.kind_of?(Net::IMAP::Address) 
+      ((addr.name.nil? or addr.name.to_s == "") ? "#{addr.mailbox}@#{addr.host}" : (mime_encoded?(addr.name.to_s) ? mime_decode(addr.name.to_s): addr.name.to_s)) 
+    else
+      ((addr.nil? or addr.to_s == "") ? "#{addr.to_s}" : (mime_encoded?(addr.to_s) ? mime_decode(addr.to_s): addr.to_s))
+    end
   end
   
   def add_to_contact(addr, msg_id)
