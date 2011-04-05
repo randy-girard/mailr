@@ -460,9 +460,9 @@ class IMAPFolder
       }
   end
   
-  def messages(offset = 1, limit = 10, sort = 'date desc')
+  def messages(offset = 0, limit = 10, sort = 'date desc')
     # Synchronize first retrieval time
-    synchronize_cache(offset, limit) #unless @mcached
+    synchronize_cache(offset+1, limit) #unless @mcached
     
     if limit == -1
       @messages = ImapMessage.find(:all, :conditions => ["username = ? and folder_name = ?", @username, @name], :order => sort)
