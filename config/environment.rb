@@ -4,7 +4,7 @@
 # (Use only when you can't set environment variables through your web/app server)
 # ENV['RAILS_ENV'] = 'production'
 
-RAILS_GEM_VERSION = '2.3.11' unless defined? RAILS_GEM_VERSION
+#RAILS_GEM_VERSION = '2.3.11' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -34,7 +34,7 @@ Rails::Initializer.run do |config|
   # Make Active Record use UTC-base instead of local time
   config.active_record.default_timezone = :utc
 
-  config.i18n.default_locale = "es-ES"
+  #config.i18n.default_locale = "en"
 
   # Use Active Record's schema dumper instead of SQL when creating the test database
   # (enables use of different database adapters for development and test environments)
@@ -64,6 +64,9 @@ begin
 rescue LoadError
   STDERR.puts 'WARNING: config/site.rb not found, using default settings from ' + default_config_path
 end
+
+#if CONFIG[:locale] is nil then I18n.default_locale will be used
+I18n.default_locale = CDF::CONFIG[:locale]
 
 require 'tmail_patch'
 $KCODE = 'u'

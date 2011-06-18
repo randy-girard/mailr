@@ -2,7 +2,7 @@
 Installation Guide
 Requirements
 
-    * Ruby 1.8.7 
+    * Ruby 1.8.7
     * Rails 2.3.2
 
 Installation
@@ -14,18 +14,21 @@ Installation
 
    LOCALCONFIG = {
      :imap_server => 'your.imap.server'
-   }            
+   }
    end
 
   3. Configure SMTP settings
     # initializers/smtp_settings.rb
-      ActionMailer::Base.smtp_settings = { 
-      :address => "mail.example.com.py", 
-      :port => 26, 
-      :authentication => :plain, 
-      :enable_starttls_auto => true, 
-      :user_name => "emilio@example.com.py", 
-      :password => "yourpass" 
+      ActionMailer::Base.smtp_settings = {
+      :address => "mail.example.com.py",
+      :port => 26,
+      :authentication => :plain,
+      :enable_starttls_auto => true,
+      :user_name => "emilio@example.com.py",
+      :password => "yourpass"
     }
 
-  4 Use it
+  4. Prepare config/database.yml file (see config/database.yml.example)
+  5. Migrate database (rake db:migrate)
+
+  6. Use it

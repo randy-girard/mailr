@@ -3,7 +3,7 @@ module Mail2Screen
   def mail2html(mail, msg_id)
     footer = ""
     parsed_body = create_body(mail, msg_id, footer)
-    
+
     ret = "<table class='messageheader' border='0' cellpadding='0' cellspacing='0' >\n"
     ret << "<tbody>\n"
     ret << "  <tr><td class='label' nowrap='nowrap'>#{t :from}:</td><td>#{address(mail.from_addrs, @msg_id)}</td></tr>\n"
@@ -14,7 +14,7 @@ module Mail2Screen
     if @mail.bcc_addrs
       ret << "  <tr><td class='label' nowrap='nowrap'>#{t :bcc}:</td><td>#{address(mail.bcc_addrs, @msg_id)}</td></tr>\n"
     end
-    ret << "  <tr><td class='label' nowrap='nowrap'>#{t :subject}:</td><td>#{h(mime_encoded?(mail.subject) ? mime_decode(mail.subject) : mail.subject)}</dd>\n"  
+    ret << "  <tr><td class='label' nowrap='nowrap'>#{t :subject}:</td><td>#{h(mime_encoded?(mail.subject) ? mime_decode(mail.subject) : mail.subject)}</dd>\n"
     ret << "  <tr><td class='label' nowrap='nowrap'>#{t :date}:</td><td>#{h message_date(mail.date)}</td></tr>\n"
     if footer != ''
     	ret << "  <tr><td class='label' nowrap='nowrap'>#{image_tag('attachment.png')}</td><td>#{footer}</td></tr>\n"
@@ -26,7 +26,7 @@ module Mail2Screen
     ret << parsed_body
     ret << "</div>\n"
   end
-    
+
   def create_body(mail, msg_id, footer)
     charset = (mail.charset.nil? ? 'iso-8859-1' : mail.charset)
     if mail.multipart?
@@ -38,7 +38,7 @@ module Mail2Screen
             ret << create_body(part, msg_id, footer)
           end
         }
-        return ret  
+        return ret
       else
         mail.parts.each { |part|
           if part.multipart?
@@ -55,13 +55,13 @@ module Mail2Screen
             elsif part.content_type.include?("image/")
               ctype = part.header['content-type']
               ret << add_image(ctype, msg_id)
-            elsif part.content_type.include?("message/rfc822")  
+            elsif part.content_type.include?("message/rfc822")
               ret << "<br/>#{_('Follows attached message')}:<hr/>" << mail2html(TMail::Mail.parse(part.body), msg_id)
             end
           end
         }
         return ret
-      end  
+      end
     else
       ret = ""
       if mail.content_type == "text/plain" or mail.content_type.nil?
@@ -72,24 +72,24 @@ module Mail2Screen
       return ret
     end
   end
-  
+
   def add_text(part, encoding, charset)
-    CGI.escapeHTML(decode_part_text("#{part}", encoding, charset)).gsub(/\r\n/,"<br/>").gsub(/\r/, "<br/>").gsub(/\n/,"<br/>") 
+    CGI.escapeHTML(decode_part_text("#{part}", encoding, charset)).gsub(/\r\n/,"<br/>").gsub(/\r/, "<br/>").gsub(/\n/,"<br/>")
   end
 
-  def add_html(part, encoding, charset) 
+  def add_html(part, encoding, charset)
     strip_html(decode_part_text("#{part}", encoding, charset))
   end
-  
+
   def decode_part_text(part_str, encoding, charset)
     # Parse mail
     header, text = "", ""
-   
+
     # Get header and body
     #Content-type: text/plain; charset="ISO-8859-1"
-    #Content-transfer-encoding: quoted-printable 
+    #Content-transfer-encoding: quoted-printable
     isBody = false
-    part_str.each_line { |line| 
+    part_str.each_line { |line|
       if isBody
         text << line
       else
@@ -105,7 +105,7 @@ module Mail2Screen
       ret = from_qp(text)
     elsif not(encoding.nil?) and encoding.downcase == "base64"
       ret = "#{text.unpack("m")}"
-    else  
+    else
       ret = text
     end
     # manage charset
@@ -118,9 +118,9 @@ module Mail2Screen
         RAILS_DEFAULT_LOGGER.debug("Exception occured #{ex}\n#{ex.backtrace.join('\n')}")
         return ret
       end
-    end 
+    end
   end
-  
+
   def add_attachment(content_type, msg_id)
     filename = (content_type.nil? or content_type['name'].nil? ? "" : content_type['name'])
     if filename == ""
@@ -129,28 +129,28 @@ module Mail2Screen
       "<span class='attachment'>&nbsp;<a href='/webmail/download?msg_id=#{msg_id}&ctype=" << CGI.escape(filename) << "'>#{filename}</a></span>"
     end
   end
-  
+
   def add_image(content_type, msg_id)
     filename = (content_type.nil? or content_type['name'].nil? ? "" : content_type['name'])
     "<hr/><span class='attachment'><br/><img src='/webmail/download?msg_id=#{msg_id}&ctype=" << CGI.escape(filename) << "' alt='#{filename}'/></span>"
   end
-  
+
   def friendly_address(addr)
     addr.kind_of?(Net::IMAP::Address) ? ((addr.name.nil? or addr.name.strip == "") ? "#{addr.mailbox}@#{addr.host}" : "#{(mime_encoded?(addr.name.strip) ? mime_decode(addr.name.to_s): addr.name.to_s)}<#{addr.mailbox}@#{addr.host}>") : ((addr.name.nil? or addr.name.strip == "") ? "#{addr.spec}" : "#{(mime_encoded?(addr.name.strip) ? mime_decode(addr.name.to_s): addr.name.to_s)}<#{addr.spec}>")
   end
-  
+
   def friendly_address_or_name(addr)
-    if addr.kind_of?(Net::IMAP::Address) 
-      ((addr.name.nil? or addr.name.to_s == "") ? "#{addr.mailbox}@#{addr.host}" : (mime_encoded?(addr.name.to_s) ? mime_decode(addr.name.to_s): addr.name.to_s)) 
+    if addr.kind_of?(Net::IMAP::Address)
+      ((addr.name.nil? or addr.name.to_s == "") ? "#{addr.mailbox}@#{addr.host}" : (mime_encoded?(addr.name.to_s) ? mime_decode(addr.name.to_s): addr.name.to_s))
     else
       ((addr.nil? or addr.to_s == "") ? "#{addr.to_s}" : (mime_encoded?(addr.to_s) ? mime_decode(addr.to_s): addr.to_s))
     end
   end
-  
+
   def add_to_contact(addr, msg_id)
-    "&nbsp;<a href='/contact/add_from_mail?cstr=#{CGI.escape(friendly_address(addr))}&retmsg=#{msg_id}'>Agregar a contactos</a>"
+    "&nbsp;<a href='/contact/add_from_mail?cstr=#{CGI.escape(friendly_address(addr))}&retmsg=#{msg_id}'>"+t(:add_to_contacts)
   end
-  
+
   def short_address(addresses)
     ret = ""
     addresses.each { |addr| #split(/,\s*/)
@@ -159,7 +159,7 @@ module Mail2Screen
     } unless addresses.nil?
     ret
   end
-  
+
   def address(addresses, msg_id)
     ret = ""
     addresses.each { |addr| #split(/,\s*/)
