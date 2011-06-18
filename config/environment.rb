@@ -4,7 +4,7 @@
 # (Use only when you can't set environment variables through your web/app server)
 # ENV['RAILS_ENV'] = 'production'
 
-RAILS_GEM_VERSION = '2.3.3' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.11' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -14,9 +14,9 @@ Rails::Initializer.run do |config|
   # config.frameworks -= [ :action_web_service, :action_mailer ]
 
   # Add additional load paths for your own custom dirs
-  config.load_paths += %W( #{RAILS_ROOT}/vendor/ezcrypto-0.1.1/lib )
-  config.load_paths += %W( #{RAILS_ROOT}/lib/webmail )
-  # Force all environments to use the same logger level 
+  config.autoload_paths += %W( #{RAILS_ROOT}/vendor/ezcrypto-0.1.1/lib )
+  config.autoload_paths += %W( #{RAILS_ROOT}/lib/webmail )
+  # Force all environments to use the same logger level
   # (by default production uses :info, the others :debug)
   # config.log_level = :debug
 
@@ -35,7 +35,7 @@ Rails::Initializer.run do |config|
   config.active_record.default_timezone = :utc
 
   config.i18n.default_locale = "es-ES"
-  
+
   # Use Active Record's schema dumper instead of SQL when creating the test database
   # (enables use of different database adapters for development and test environments)
   # config.active_record.schema_format = :ruby
@@ -44,7 +44,7 @@ Rails::Initializer.run do |config|
   config.action_controller.session = { :session_key => "_mailr_session", :secret => "123456789012345678901234567890" }
 end
 
-# Add new inflection rules using the following format 
+# Add new inflection rules using the following format
 # (all these examples are active by default):
 # Inflector.inflections do |inflect|
 #   inflect.plural /^(ox)$/i, '\1en'
