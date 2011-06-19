@@ -45,7 +45,7 @@ pl-PL:
   add_filter:     Dodaj filtr
   cc:             Cc
   bcc:            Bcc
-  send:           Wyslij
+  send:           Wyślij
   choose_address: Wybierz adres z kontaktów
   compose_txt:    Utwórz nową wiadomość
   attachment:     Załącznik
