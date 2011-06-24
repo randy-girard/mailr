@@ -21,6 +21,7 @@ LOCALCONFIG = {
 end`
 
 3. Configure SMTP settings
+
 `# initializers/smtp_settings.rb
   ActionMailer::Base.smtp_settings = {
   :address => "mail.example.com.py",
