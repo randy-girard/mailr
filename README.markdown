@@ -13,7 +13,7 @@ In _Rails 3_ all dependencies should be defined in file _Gemfile_. All needed ge
 
 * Checkout the source code.
 
-* If you need to override some of the default constants used in the application take a look at _config/default_site.rb_. Then create config/site.rb that contains only the keys which you want to override. Example content of _config/site.rb_ is:
+* If you need to override some of the default constants used in the application take a look at _config/default_site.rb_. Then create _config/site.rb_ that contains only the keys which you want to override. Example content of _config/site.rb_ is:
 
 ```ruby
 module CDF
