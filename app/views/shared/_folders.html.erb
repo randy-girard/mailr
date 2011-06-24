@@ -3,8 +3,8 @@
   <hr/>
   <ul>
     <% @folders.each do |folder| -%>
-    <li><%= folder_link(folder) %></li> 
-    <% end -%> 
+    <li><%= raw folder_link(folder) %></li>
+    <% end -%>
   </ul>
 </div>
 <div style="text-align: center; padding: 10px;">

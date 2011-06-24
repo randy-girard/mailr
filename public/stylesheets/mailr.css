@@ -2,6 +2,12 @@
 .open { display: block; }
 .closed { display: none; }
 
+#logo {
+	background-image: url("/images/logo.png");
+	background-repeat: no-repeat;
+	height: 125px;
+}
+
 #SystemError {
         position: relative;
         color: #990000;
@@ -40,7 +46,7 @@ table.form_layout td.form_actions { text-align: right; }
 /*  Rounded Box Corners
 ---------------------------------------------------------------------- */
 .box {margin: 0 0 0.75em 0; clear: both; position: relative;}
-b.cn { position: absolute; height: 10px; width: 10px; margin: 0; padding: 0; background: url(../images/white.png) no-repeat; line-height: 1px; font-size: 1px; } 
+b.cn { position: absolute; height: 10px; width: 10px; margin: 0; padding: 0; background: url(../images/white.png) no-repeat; line-height: 1px; font-size: 1px; }
 b.tl {top: -1px; left: -1px; background-position: top left;}
 b.tr {top: -1px; right: -1px; background-position: top right;}
 b.bl {bottom: -1px; left: -1px; background-position: bottom left;}

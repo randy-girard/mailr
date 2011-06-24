@@ -1,34 +1,43 @@
 # The filters added to this controller will be run for all controllers in the application.
 # Likewise will all the methods added be available for all controllers.
 class ApplicationController < ActionController::Base
+
+  protect_from_forgery
+
   before_filter :user_login_filter
   before_filter :add_scripts
   #before_filter :localize
-  
 
-  filter_parameter_logging :password
+
+  #filter_parameter_logging :password #upgrade to Rails3
+
   protected
     def secure_user?() true end
     def secure_cust?() false end
     def additional_scripts() "" end
     def onload_function() "" end
-  
+
   private
     def add_scripts
       @additional_scripts = additional_scripts()
       @onload_function = onload_function()
     end
-    
+
     def user_login_filter
       if (secure_user? or secure_cust? )and logged_user.nil?
-        session["return_to"] = request.request_uri
+
+        #upgrade Rails 3
+        #session["return_to"] = request.request_uri
+        logger.debug "*** return_to => #{request.fullpath}"
+        session["return_to"] = request.fullpath
+
         redirect_to :controller=>"/login", :action => "index"
         return false
       end
     end
-  
-    alias login_required user_login_filter   
-      
+
+    alias login_required user_login_filter
+
     def logged_user # returns customer id
       session['user']
     end
@@ -36,7 +45,7 @@ class ApplicationController < ActionController::Base
     def logged_customer
       session['user']
     end
-    
+
     def localize
       # We will use instance vars for the locale so we can make use of them in
       # the templates.
@@ -65,7 +74,7 @@ class ApplicationController < ActionController::Base
     end
 
   public
-    
+
   def include_tinymce(mode="textareas",elements="")
     tinymce=''
     tinymce << '
@@ -76,11 +85,11 @@ class ApplicationController < ActionController::Base
     tinymce << mode << '",'
     if mode == "exact"
       tinymce << 'elements : "' << elements << '",
-      ' 
+      '
     end
     tinymce << '
         theme : "advanced",
-        cleanup : true,  
+        cleanup : true,
         width: "100%",
         remove_linebreaks : false,
         entity_encoding : "named",
@@ -142,25 +151,25 @@ class ApplicationController < ActionController::Base
       </script>'
     tinymce
   end
-  
+
   helper_method :include_tinymce
 
   def include_simple_tinymce(mode="textareas",elements="")
     tinymce = ''
     tinymce << '<script language="javascript" type="text/javascript" src="/tiny_mce/tiny_mce.js"></script>
-       <script language="javascript" type="text/javascript"> 
+       <script language="javascript" type="text/javascript">
       tinyMCE.init({
         mode : "'
     tinymce << mode << '",'
     if mode == "exact"
       tinymce << 'elements : "' << elements << '",
-      ' 
+      '
     end
     tinymce << '
         theme : "default",
         width : "100%",
         auto_reset_designmode : true
-      });      
+      });
       </script>'
     tinymce
   end
@@ -168,7 +177,7 @@ class ApplicationController < ActionController::Base
   def _(text)
     t text
   end
-  
+
   helper_method :include_simple_tinymce, :_
 
 

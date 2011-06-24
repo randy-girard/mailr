@@ -22,9 +22,9 @@
 # CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
-# 
+#
 # Modifications (c) 2005  by littlegreen
-# 
+#
 require 'net/imap'
 
 Net::IMAP.debug = true if CDF::CONFIG[:debug_imap]
@@ -34,8 +34,8 @@ class Net::IMAP
     def process(data)
       return "\0#{@user}\0#{@password}"
     end
-    
-    private 
+
+    private
     def initialize(user, password)
       @user = user
       @password = password
@@ -61,17 +61,20 @@ class IMAPMailbox
   attr_reader :connected
   attr_accessor :selected_mailbox
   cattr_accessor :logger
-  
-  def initialize
+
+  def initialize(logger)
     @selected_mailbox = ''
     @folders          = {}
     @connected = false
+    @logger = logger
   end
-  
+
   def connect(username, password)
+	#logger.debug "*** connect: @connected"
     unless @connected
       use_ssl = CDF::CONFIG[:imap_use_ssl] ? true : false
       port    = CDF::CONFIG[:imap_port] || (use_ssl ? 993 : 143)
+     # logger.debug "*** IMAP params: use_ssl => #{use_ssl}, port => #{port}"
       begin
         @imap   = Net::IMAP.new(CDF::CONFIG[:imap_server], port, use_ssl)
       rescue Net::IMAP::ByeResponseError => bye
@@ -80,26 +83,26 @@ class IMAPMailbox
           System.sleep(CDF::CONFIG[:imap_bye_timeout_retry_seconds])
           @imap   = Net::IMAP.new(CDF::CONFIG[:imap_server], port, use_ssl)
         rescue Error => ex
-          logger.error "Error on authentication!"
-      	  logger.error bye.backtrace.join("\n")
+      #    logger.error "Error on authentication!"
+      #	  logger.error bye.backtrace.join("\n")
           raise AuthenticationError.new
-        end  
+        end
       rescue Net::IMAP::NoResponseError => noresp
-        logger.error "Error on authentication!"
-      	logger.error noresp.backtrace.join("\n")
+      #  logger.error "Error on authentication!"
+      #	logger.error noresp.backtrace.join("\n")
         raise AuthenticationError.new
       rescue Net::IMAP::BadResponseError => bad
-        logger.error "Error on authentication!"
-      	logger.error bad.backtrace.join("\n")
+      #  logger.error "Error on authentication!"
+      #	logger.error bad.backtrace.join("\n")
         raise AuthenticationError.new
       rescue Net::IMAP::ResponseError => resp
-        logger.error "Error on authentication!"
-      	logger.error resp.backtrace.join("\n")
+      #  logger.error "Error on authentication!"
+      #	logger.error resp.backtrace.join("\n")
         raise AuthenticationError.new
-      end  
+      end
       @username = username
       begin
-      	logger.error "IMAP authentication - #{CDF::CONFIG[:imap_auth]}."
+      #	logger.error "IMAP authentication - #{CDF::CONFIG[:imap_auth]}."
         if CDF::CONFIG[:imap_auth] == 'NOAUTH'
           @imap.login(username, password)
         else
@@ -107,17 +110,17 @@ class IMAPMailbox
         end
         @connected = true
       rescue Exception => ex
-        logger.error "Error on authentication!"
-      	logger.error ex.backtrace.join("\n")
+      #  logger.error "Error on authentication!"
+      #	logger.error ex.backtrace.join("\n")
         raise AuthenticationError.new
       end
     end
   end
-  
+
   def imap
     @imap
   end
-  
+
   # Function chnage password works only if root has run imap_backend
   # and users courier-authlib utility authtest - from courier-imap version 4.0.1
   def change_password(username, password, new_password)
@@ -127,34 +130,34 @@ class IMAPMailbox
     if ret.include?("Password change succeeded.")
       return true
     else
-      logger.error "[!] Error on change password! - #{ret}" 
+      logger.error "[!] Error on change password! - #{ret}"
       return false
-    end  
+    end
   end
-  
+
   def disconnect
     if @connected
       @imap.logout
       #@imap.disconnect
       @imap = nil
       @connected = false
-    end	
+    end
   end
-  
+
   def [](mailboxname)
     @last_folder = IMAPFolderList.new(self, @username)[mailboxname]
   end
-  
+
   def folders
     # reference just to stop GC
     @folder_list ||= IMAPFolderList.new(self, @username)
     @folder_list
   end
-  
+
   def reload
     @folder_list.reload if @folder_list
   end
-  
+
   def create_folder(name)
 #     begin
     @imap.create(Net::IMAP.encode_utf7(name))
@@ -162,16 +165,16 @@ class IMAPMailbox
 #     rescue Exception=>e
 #     end
   end
-  
+
   def delete_folder(name)
     begin
       @imap.delete(folders[name].utf7_name)
       reload
     rescue Exception=>e
-      logger.error("Exception on delete #{name} folder #{e}") 
+      logger.error("Exception on delete #{name} folder #{e}")
     end
   end
-  
+
   def message_sent(message)
     # ensure we have sent folder
     begin
@@ -179,14 +182,14 @@ class IMAPMailbox
     rescue Exception=>e
     end
     begin
-      @imap.append(CDF::CONFIG[:mail_sent], message)  
+      @imap.append(CDF::CONFIG[:mail_sent], message)
       folders[CDF::CONFIG[:mail_sent]].cached = false if folders[CDF::CONFIG[:mail_sent]]
     rescue Exception=>e
-      logger.error("Error on append  - #{e}") 
+      logger.error("Error on append  - #{e}")
     end
-      
+
   end
-  
+
   def message_bulk(message)
     # ensure we have sent folder
     begin
@@ -194,24 +197,24 @@ class IMAPMailbox
     rescue Exception=>e
     end
     begin
-      @imap.append(CDF::CONFIG[:mail_bulk_sent], message)  
+      @imap.append(CDF::CONFIG[:mail_bulk_sent], message)
       folders[CDF::CONFIG[:mail_sent]].cached = false if folders[CDF::CONFIG[:mail_bulk_sent]]
     rescue Exception=>e
-      logger.error("Error on bulk -  #{e}") 
-    end  
+      logger.error("Error on bulk -  #{e}")
+    end
   end
 end
 
 class IMAPFolderList
   include Enumerable
   cattr_accessor :logger
-	
+
   def initialize(mailbox, username)
     @mailbox = mailbox
     @folders = Hash.new
     @username = username
   end
-  
+
   def each
     refresh if @folders.empty?
     #@folders.each_value { |folder| yield folder }
@@ -219,11 +222,11 @@ class IMAPFolderList
 
     @folders.sort.each { |pair| yield pair.last }
   end
-  
+
   def reload
     refresh
   end
-  
+
   def [](name)
     refresh if @folders.empty?
     @folders[name]
@@ -233,7 +236,7 @@ class IMAPFolderList
   def refresh
     @folders = {}
     result = @mailbox.imap.list('', '*')
-    if result 
+    if result
       result.each do |info|
         folder = IMAPFolder.new(@mailbox, info.name, @username, info.attr, info.delim)
         @folders[folder.name] = folder
@@ -257,14 +260,14 @@ class IMAPFolder
   attr_reader :username
   attr_reader :delim
   attr_reader :attribs
-  
+
   attr_writer :cached
   attr_writer :mcached
-  
+
   cattr_accessor :logger
-	
+
   @@fetch_attr = ['ENVELOPE','BODYSTRUCTURE', 'FLAGS', 'UID', 'RFC822.SIZE']
-	
+
   def initialize(mailbox, utf7_name, username, attribs, delim)
     @mailbox = mailbox
     @utf7_name = utf7_name
@@ -276,7 +279,7 @@ class IMAPFolder
     @cached = false
     @mcached = false
   end
-  
+
   def activate
     if(@mailbox.selected_mailbox != @name)
       @mailbox.selected_mailbox = @name
@@ -284,7 +287,7 @@ class IMAPFolder
       load_total_unseen if !@cached
     end
   end
-  
+
   # Just delete message without interaction with Trash folder
   def delete(message)
     activate
@@ -295,17 +298,17 @@ class IMAPFolder
     ImapMessage.delete_all(["username = ? and folder_name = ? and uid = ?", @username, @name, uid])
     @cached = false
   end
-  
+
   # Deleted messages - move to trash folder
   def delete_multiple(uids)
     # ensure we have trash folder
     begin
       @mailbox.imap.create(CDF::CONFIG[:mail_trash])
-    rescue  
+    rescue
     end
     move_multiple(uids, CDF::CONFIG[:mail_trash])
   end
-  
+
   def copy(message, dst_folder)
     uid = (message.kind_of?(Integer) ? message : message.uid)
     activate
@@ -313,14 +316,14 @@ class IMAPFolder
     @mailbox.folders[dst_folder].cached = false if @mailbox.folders[dst_folder]
     @mailbox.folders[dst_folder].mcached = false if @mailbox.folders[dst_folder]
   end
-  
+
   def copy_multiple(message_uids, dst_folder)
     activate
     @mailbox.imap.uid_copy(message_uids, dst_folder)
     @mailbox.folders[dst_folder].cached = false if @mailbox.folders[dst_folder]
     @mailbox.folders[dst_folder].mcached = false if @mailbox.folders[dst_folder]
   end
-	
+
   def move(message, dst_folder)
     uid = (message.kind_of?(Integer) ? message : message.uid)
     activate
@@ -333,7 +336,7 @@ class IMAPFolder
     @cached = false
     @mcached = false
   end
-  
+
   def move_multiple(message_uids, dst_folder)
     activate
     @mailbox.imap.uid_copy(message_uids, @mailbox.folders[dst_folder].utf7_name)
@@ -345,7 +348,7 @@ class IMAPFolder
     @cached = false
     @mcached = false
   end
-	
+
   def mark_read(message_uid)
   	activate
     cached = ImapMessage.find(:first, :conditions => ["username = ? and folder_name = ? and uid = ?", @username, @name, message_uid])
@@ -357,7 +360,7 @@ class IMAPFolder
       @unseen_messages = @unseen_messages - 1
     end
   end
-  
+
   def mark_unread(message_uid)
   	activate
     cached = ImapMessage.find(:first, :conditions => ["username = ? and folder_name = ? and uid = ?", @username, @name, message_uid])
@@ -369,7 +372,7 @@ class IMAPFolder
       @unseen_messages = @unseen_messages + 1
     end
   end
-  
+
   def expunge
     activate
     @mailbox.imap.expunge
@@ -385,33 +388,33 @@ class IMAPFolder
     count = @mailbox.imap.fetch(1..-1, "UID")
     to = count.size if count.size < to
 
-    
+
     range = (offset..to)
-    logger.info range.inspect
+    #logger.info range.inspect
 
     server_messages = @mailbox.imap.fetch(range, "(UID FLAGS)")
     #server_messages = @mailbox.imap.uid_fetch(sequence_uids, ["UID", "FLAGS"])
-    
+
     startDbFetch = Time.now
     cached_messages = ImapMessage.find(:all, :conditions => ["username = ? and folder_name = ?", @username, @name])
-    
+
     cached_unread_uids = Array.new
     cached_read_uids = Array.new
     uids_to_be_deleted = Array.new
-    
-    cached_messages.each { |msg| 
+
+    cached_messages.each { |msg|
       cached_unread_uids << msg.uid if msg.unread
       cached_read_uids << msg.uid unless msg.unread
       uids_to_be_deleted << msg.uid
     }
-    
+
     uids_to_be_fetched = Array.new
     server_msg_uids = Array.new
-    
+
     uids_unread = Array.new
     uids_read = Array.new
-    
-    server_messages.each { |server_msg| 
+
+    server_messages.each { |server_msg|
       uid, flags = server_msg.attr['UID'], server_msg.attr['FLAGS']
       server_msg_uids << uid
       unless uids_to_be_deleted.include?(uid)
@@ -421,32 +424,32 @@ class IMAPFolder
           uids_read << uid
         elsif !flags.member?(:Seen) && cached_read_uids.include?(uid)
           uids_unread << uid
-        end	
+        end
       end
       uids_to_be_deleted.delete(uid)
     } unless server_messages.nil?
-    
+
     ImapMessage.delete_all(["username = ? and folder_name = ? and uid in ( ? )", @username, @name, uids_to_be_deleted]) unless uids_to_be_deleted.empty?
     ImapMessage.update_all('unread = 0', ["username = ? and folder_name = ? and uid in ( ? )", @username, @name, uids_read]) unless uids_read.empty?
     ImapMessage.update_all('unread = 1', ["username = ? and folder_name = ? and uid in ( ? )", @username, @name, uids_unread])  unless uids_unread.empty?
-    
-    
+
+
     # fetch and store not cached messages
-    unless uids_to_be_fetched.empty? 
-      logger.debug("About to fetch #{uids_to_be_fetched.join(",")}")
+    unless uids_to_be_fetched.empty?
+   #   logger.debug("About to fetch #{uids_to_be_fetched.join(",")}")
       uids_to_be_fetched.each_slice(20) do |slice|
         fetch_uids(slice)
       end
-    end	
+    end
     #FIX: @mcached = true
-    logger.debug("Synchonization done for folder #{@name} in #{Time.now - startSync} ms.")
+  #  logger.debug("Synchonization done for folder #{@name} in #{Time.now - startSync} ms.")
   end
-  
+
   def fetch_uids(uids)
       imapres = @mailbox.imap.uid_fetch(uids, @@fetch_attr)
-      imapres.each { |cache| 
+      imapres.each { |cache|
         envelope = cache.attr['ENVELOPE'];
-        message = ImapMessage.create( :folder_name => @name, 
+        message = ImapMessage.create( :folder_name => @name,
                                       :username => @username,
                                       :msg_id => envelope.message_id,
                                       :uid => cache.attr['UID'],
@@ -459,18 +462,18 @@ class IMAPFolder
                                       :size => cache.attr['RFC822.SIZE'])
       }
   end
-  
+
   def messages(offset = 0, limit = 10, sort = 'date desc')
     # Synchronize first retrieval time
     synchronize_cache(offset+1, limit) #unless @mcached
-    
+
     if limit == -1
       @messages = ImapMessage.find(:all, :conditions => ["username = ? and folder_name = ?", @username, @name], :order => sort)
     else
       @messages = ImapMessage.find(:all, :conditions => ["username = ? and folder_name = ?", @username, @name], :order => sort )
-    end	
+    end
   end
-  
+
   def messages_search(query = ["ALL"], sort = 'date desc')
     activate
     uids = @mailbox.imap.uid_search(query)
@@ -481,38 +484,38 @@ class IMAPFolder
     else
       return Array.new
     end
-    
+
   end
-  
+
   def message(uid)
     activate
     message = ImapMessage.find(:first, :conditions => ["username = ? and folder_name = ? and uid = ?", @username, @name, uid])
     message.set_folder(self)
     message
   end
-  
+
   def unseen
     activate
     load_total_unseen if !@cached
-    @unseen_messages 
+    @unseen_messages
   end
-  
+
   def total
     activate
     load_total_unseen if !@cached
     @total_messages
   end
-  
+
   def load_total_unseen
     stat = @mailbox.imap.status(@utf7_name, ["MESSAGES", "UNSEEN"])
     @total_messages, @unseen_messages = stat["MESSAGES"], stat['UNSEEN']
     @cached = true
   end
-  
+
   def update_status
     @status ||= @mailbox.imap.status(@utf7_name, ["MESSAGES"])
   end
-  
+
   def subscribe
     @mailbox.imap.subscribe(@utf7_name)
   end

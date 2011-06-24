@@ -1,7 +1,7 @@
 en:
   mailr:          Mailr
   email:          Email
-  password:       Password 
+  password:       Password
   log_in:         Log In
   wrong_email_or_password:  Wrong email or password specified.
   mailbox:        Mailbox
@@ -46,7 +46,7 @@ en:
   cc:             CC
   bcc:            BCC
   send:           Send
-  choose_address: Choose addresses from contacts 
+  choose_address: Choose addresses from contacts
   compose_txt:    Compose new mail
   attachment:     Attachment
   add:            Add
@@ -59,8 +59,9 @@ en:
   save:           Save
   cancel:         Cancel
   add_one_contact:  Add one contact
-  add_multiple:   Add multiple 
+  add_multiple:   Add multiple
   name:           name
   add_folder:     Add folder
   total_messages: Total messages
   unseen:         Unseen
+  please_login: Log in

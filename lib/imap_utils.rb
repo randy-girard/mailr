@@ -1,5 +1,5 @@
 module ImapUtils
-  private 
+  private
 
   def load_imap_session
     return if ['error_connection'].include?(action_name)
@@ -8,7 +8,7 @@ module ImapUtils
 
   def get_imap_session
     begin
-      @mailbox = IMAPMailbox.new
+      @mailbox = IMAPMailbox.new(self.logger)
       uname = (get_mail_prefs.check_external_mail == 1 ? user.email : user.local_email)
       upass = get_upass
       @mailbox.connect(uname, upass)
@@ -17,7 +17,7 @@ module ImapUtils
 #       logger.error("Exception on loggin webmail session - #{ex} - #{ex.backtrace.join("\t\n")}")
 #       render :action => "error_connection"
       render :text => ex.inspect, :content_type => 'text/plain'
-    end   
+    end
   end
 
   def close_imap_session
@@ -31,7 +31,7 @@ module ImapUtils
       if not(@mailprefs = MailPref.find_by_customer_id(logged_customer))
         @mailprefs = MailPref.create("customer_id"=>logged_customer)
       end
-    end  
+    end
     @mailprefs
   end
 
@@ -41,8 +41,8 @@ module ImapUtils
     else
       # retrun it plain
       session["wmp"]
-    end  
-  end  
+    end
+  end
 
   def load_folders
     if have_to_load_folders?()
@@ -53,7 +53,7 @@ module ImapUtils
       end
       session["folder_name"] = @folder_name
       @folders = @mailbox.folders if @folders.nil?
-    end  
+    end
   end
 
   def user

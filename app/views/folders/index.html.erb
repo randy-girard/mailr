@@ -15,18 +15,18 @@
 <div id="tab_main">
 <div id="tab_content">
 
-<% content_for('sidebar') { %>  
+<% content_for('sidebar') { %>
 <div id="folders">
   <h4><%= t :add_folder %></h4>
   <hr/>
-  <% form_tag folders_path, :id => 'new_folder' do %>
+  <%= form_tag folders_path, :id => 'new_folder' do %>
     <ul>
       <li><label for='folder'><%= t :name %>:</label></li>
       <li><%= text_field_tag 'folder', '', :size => 18 %></li>
       <li><%= submit_tag t(:add_folder) %></li>
     </ul>
   <% end %>
-</div>    
+</div>
 <% } %>
 
 <div id="messages">
@@ -45,4 +45,4 @@
   </div>
 </div>
 </div>
-</div>  
+</div>

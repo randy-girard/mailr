@@ -1,14 +1,16 @@
 require 'ezcrypto'
+require 'imapmailbox'
+
 class LoginController < ApplicationController
-  
+
   def index
     if not(logged_user.nil?)
-      redirect_to :controller =>"webmail", :action=>"index" 
+      redirect_to :controller =>"webmail", :action=>"index"
     else
       @login_user = Customer.new
-    end 
+    end
   end
-  
+
   def authenticate
     if user = auth(params['login_user']["email"], params['login_user']["password"])
       session["user"] = user.id
@@ -17,26 +19,27 @@ class LoginController < ApplicationController
       else
         # dont use crypt
         session["wmp"] = params['login_user']["password"]
-      end  
+      end
       if session["return_to"]
         redirect_to(session["return_to"])
         session["return_to"] = nil
       else
-        redirect_to :action=>"index" 
+        redirect_to :action=>"index"
       end
     else
+		logger.debug "*** Not logged"
       @login_user = Customer.new
       flash["error"] = t :wrong_email_or_password
-      redirect_to :action => "index" 
+      redirect_to :action => "index"
     end
   end
-  
+
   def logout
     reset_session
     flash["status"] = t(:user_logged_out)
-    redirect_to :action => "index" 
+    redirect_to :action => "index"
   end
-  
+
   protected
 
   def need_subdomain?() true end
@@ -45,12 +48,15 @@ class LoginController < ApplicationController
   private
 
   def auth(email, password)
-    mailbox = IMAPMailbox.new
+    mailbox = IMAPMailbox.new(Rails.logger)
+    logger.info "*** mailbox #{mailbox.inspect}"
     begin
-      mailbox.connect(email, password)
-    rescue
-      return nil
+		mailbox.connect(email, password)
+    rescue Exception => exc
+		logger.debug "*** auth/Mailbox Object => #{exc.message}"
+		return nil
     end
+
     mailbox.disconnect
     mailbox = nil
     if user = Customer.find_by_email(email)
@@ -60,6 +66,6 @@ class LoginController < ApplicationController
       user = Customer.create("email"=>email)
       MailPref.create('customer_id' => user.id)
       return user
-    end 
-  end    
+    end
+  end
 end
