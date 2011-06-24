@@ -7,13 +7,13 @@ _Mailr_ is a IMAP mail client based on _Ruby on Rails_ platform.
 
 ### Requirements
 
-In _Rails 3_ all dependencies should be defined in file _<Rails.root>.Gemfile_. All needed gems can be installed using bundler.
+In _Rails 3_ all dependencies should be defined in file _Gemfile_. All needed gems can be installed using bundler.
 
 ### Installation procedure
 
 * Checkout the source code.
 
-* If you need to override some of the default constants used in the application take a look at config/default_site.rb. Then create config/site.rb that contains only the keys which you want to override. Example content of config/site.rb is:
+* If you need to override some of the default constants used in the application take a look at _config/default_site.rb_. Then create config/site.rb that contains only the keys which you want to override. Example content of _config/site.rb_ is:
 
 ```ruby
 module CDF
@@ -38,7 +38,7 @@ end
 }
 ```
 
-* Prepare config/database.yml file (see config/database.yml.example).
+* Prepare config/database.yml file (see _config/database.yml.example_).
    Check if proper gems (sqlite3/mysql/postgresql) are defined in _Gemfile_ and installed.
 
 * Migrate database (rake db:migrate)
