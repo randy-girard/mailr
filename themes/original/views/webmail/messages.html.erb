@@ -27,7 +27,7 @@
     <input type="hidden" name="page" value="<%=@page%>"/>
 
     <a href='#' onclick='toggle_msg_operations(true);'>
-      <%=t :operations%><img id='img_msgops' alt='open' src='../images/list_<%=@ops_img_src%>.gif'/>
+      <%=t :operations%><img id='img_msgops' alt='open' src="<%= current_theme_image_path(@ops_img_src+'.gif') %>"/>
     </a>
 
     <div id="msgops" class='<%=@ops_class%>'>

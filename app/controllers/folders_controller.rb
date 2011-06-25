@@ -6,6 +6,8 @@ class FoldersController < ApplicationController
   before_filter :load_imap_session
   after_filter  :close_imap_session
 
+  theme :theme_resolver
+
   layout 'public'
 
   def index

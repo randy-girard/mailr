@@ -9,7 +9,7 @@ gem 'sqlite3-ruby',:require => 'sqlite3'
 gem 'arel'
 gem 'mysql2'
 gem 'will_paginate'
-gem 'web-app-theme'
+gem 'themes_for_rails'
 gem 'tmail'
 
 # Use unicorn as the web server

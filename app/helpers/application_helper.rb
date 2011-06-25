@@ -1,8 +1,8 @@
 # The methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   include NavigationHelper
-  
-  protected 
+
+  protected
 
   def format_datetime(datetime)
     datetime.strftime "%d.%m.%Y %H:%M"
@@ -70,7 +70,7 @@ module ApplicationHelper
     end
   end
 
-  # Helper method that has the same signature as real input field helpers, but simply displays 
+  # Helper method that has the same signature as real input field helpers, but simply displays
   # the value of a given field enclosed within <p> </p> tags.
   # Usage:
   #   <%= form_input :read_only_field, 'new_user', 'name', _('user_name')) %>
@@ -88,22 +88,22 @@ module ApplicationHelper
   def attributes(hash)
     hash.keys.inject("") { |attrs, key| attrs + %{#{key}="#{hash[key]}" } }
   end
-    
+
   def initListClass
     @itClass = 1
   end
-  
+
   def popListClass
     ret = getListClass
     @itClass = @itClass + 1
     return ret
   end
-  
+
   def getListClass
     return "even" if @itClass%2 == 0
     return "odd" if @itClass%2 == 1
   end
-  
+
   def get_meta_info
     '<meta name="rating" content="General">'
     '<meta name="robots" content="Index, ALL">'
@@ -111,13 +111,13 @@ module ApplicationHelper
     '<meta name="keywords" content="">'
     '<meta name content="">'
   end
-    
+
   def user
     @user = Customer.find(@session["user"]) if @user.nil?
     @user
   end
 
-  def link_main 
+  def link_main
     link_to( t(:contacts), contacts_path)
   end
 
@@ -125,9 +125,9 @@ module ApplicationHelper
     if @alternator.nil?
       @alternator = 1
     end
-    
+
     @alternator = -@alternator
-    
+
     if @alternator == -1
       return "even"
     else

@@ -12,6 +12,11 @@ class ApplicationController < ActionController::Base
   #filter_parameter_logging :password #upgrade to Rails3
 
   protected
+
+  def theme_resolver
+	CDF::CONFIG[:theme] || CDF::CONFIG[:default_theme]
+  end
+
     def secure_user?() true end
     def secure_cust?() false end
     def additional_scripts() "" end

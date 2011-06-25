@@ -10,5 +10,5 @@
   </td>
   <td class="date"><%= message_date(message_row.date) %></td>
   <td class="size"><%= message_size(message_row.size) %></td>
-  <td class="attachind"><%= message_row.content_type == 'multipart' ? image_tag('attachment.png') : '&nbsp;' %></td>
+  <td class="attachind"><%= message_row.content_type == 'multipart' ? image_tag(current_theme_image_path('attachment.png')) : '&nbsp;' %></td>
 </tr>

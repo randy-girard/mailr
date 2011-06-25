@@ -3,7 +3,7 @@
 # some of them - create file config/site.rb
 # containing new constants in LOCALCONFIG module variable - they
 # will overwrite default values. Example site.rb:
-# 
+#
 # module CDF
 #   LOCALCONFIG = {
 #     :mysql_version => '4.1',
@@ -42,10 +42,11 @@ module CDF
   :encryption_salt => 'EnCr1p10n$@lt',
   :encryption_password => '$0MeEncr1pt10nP@a$sw0rd',
   :debug_imap => false,
-  :crypt_session_pass => true, # Set it to false (in site.rb) if you get any error messages like 
+  :crypt_session_pass => true, # Set it to false (in site.rb) if you get any error messages like
                                # "Unsupported cipher algorithm (aes-128-cbc)." - meaning that OpenSSL modules for crypt algo is not loaded. Setting it to false will store password in session in plain format!
-  :send_from_domain => nil, # Set this variable to your domain name in site.rb if you make login to imap only with username (without '@domain')                             
-  :imap_bye_timeout_retry_seconds => 2
+  :send_from_domain => nil, # Set this variable to your domain name in site.rb if you make login to imap only with username (without '@domain')
+  :imap_bye_timeout_retry_seconds => 2,
+  :default_theme => 'original'
   }
 end
 

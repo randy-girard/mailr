@@ -28,11 +28,11 @@ a {
 	text-decoration: none;
 	background-color: transparent;
 	}
-	
+
  a:hover {
   color: #444;
 }
-	
+
  a:active {
 	color: #000;
 	background-color: transparent;
@@ -45,7 +45,7 @@ a {
   margin: 1em auto;
   text-align: left;
   background-color: #fff;
-  color: #858585;	
+  color: #858585;
 }
 
 
@@ -68,7 +68,7 @@ a {
   height: 240px;
   margin: 15px 30px;
   padding: 0;
-  border: 0; 
+  border: 0;
 }
 
 #advert img {
@@ -158,7 +158,7 @@ table.list th {
   font-size: 12px;
   font-weight: bold;
   color: #e70;
-  text-align: left;  
+  text-align: left;
   padding-left: 1em;
 }
 
@@ -181,9 +181,9 @@ div.gal img {border: 1px solid; border-color: #444 #AAA #AAA #444;}
 div.lc img {height: 96px; width: 128px; margin: 40px 0 0 0;}
 div.pt img {height: 128px; width: 96px; margin: 8px 16px 0 0; margin-left:10px;}
 div.gal ul {margin: 0.25em 0 0 0; padding: 0; font: bold small Arial, Verdana, sans-serif;}
-div.gal ul li {padding: 0; list-style-type:none; }  
-div.gal ul li.galcaption {display: block; text-align: left; padding: 0 15px; margin: 0;}  
-div.gal ul li.galedit {display: block; text-align: left; padding: 0 15px; margin: 0;}  
+div.gal ul li {padding: 0; list-style-type:none; }
+div.gal ul li.galcaption {display: block; text-align: left; padding: 0 15px; margin: 0;}
+div.gal ul li.galedit {display: block; text-align: left; padding: 0 15px; margin: 0;}
 div.gal ul li.galdel {display: block; text-align: left; padding: 0 15px; margin: 0;}
 
 #iconmenu {
@@ -213,7 +213,7 @@ div.gal ul li.galdel {display: block; text-align: left; padding: 0 15px; margin:
   color: gray;
   display: block;
   width: 110px;
-  margin: 0;  
+  margin: 0;
   padding: 64px 0 0 0;
   background-position: center top;
   background-repeat: no-repeat;
@@ -222,40 +222,40 @@ div.gal ul li.galdel {display: block; text-align: left; padding: 0 15px; margin:
   text-decoration: none;
 }
 
-#iconmenu li a:hover {  
+#iconmenu li a:hover {
   color: black;
   text-decoration: none;
   background-position: center top;
-  border: 1px dashed #DCDCDC; 
+  border: 1px dashed #DCDCDC;
 }
 
-#mmhomepage, #mmhomepage a { background-image: url(/images/homepage.gif); }
-#mmlogo, #mmlogo a { background-image: url(/images/logo.gif); }
-#mmwebmail, #mmwebmail a { background-image: url(/images/webmail.gif); }
-#mmcontacts, #mmcontacts a { background-image: url(/images/contacts.gif); }
-#mmcontactgroups, #mmcontactgroups a { background-image: url(/images/contact_groups.gif); }
-#mmcontactscales, #mmcontactscales a { background-image: url(/images/contact_scales.gif); }
-#mmarticletypes, #mmarticletypes a { background-image: url(/images/article_types.gif); }
-#mmarticles, #mmarticles a { background-image: url(/images/articles.gif); }
-#mmgallery, #mmgallery a { background-image: url(/images/image.gif); }
-#mmcategories, #mmcategories a { background-image: url(/images/categories.gif); }
-#mmregion, #mmregion a { background-image: url(/images/region.gif); }
-#mmlogout, #mmlogout a { background-image: url(/images/logout.gif); }
-#mmwizard, #mmwizard a { background-image: url(/images/wizard_mirr.gif); }
-#mmpages, #mmpages a { background-image: url(/images/pages.gif); }
-#mmmenueditor, #mmmenueditor a { background-image: url(/images/menueditor.gif); }
-#mmforumcats, #mmforumcats a { background-image: url(/images/forum.gif); }
-#mmforums, #mmforums a { background-image: url(/images/forum.gif); }
-#mmchnagepassword, #mmchnagepassword a { background-image: url(/images/password.gif); }
-#mmblog, #mmblog a { background-image: url(/images/blog.gif); }
-#mmcar, #mmcar a { background-image: url(/images/car.gif); }
-#mmpathstatpath, #mmpathstatpath a { background-image: url(/images/stats.gif); }
-#mmnewsletters, #mmnewsletters a { background-image: url(/images/newsletters.gif); }
-#mmadvert, #mmadvert a { background-image: url(/images/advert.gif); }
-#mmforms, #mmforms a { background-image: url(/images/formbuilder.gif); }
-#mmattachments, #mmattachments a  { background-image: url(/images/attachment.gif); }
-#mmphoto, #mmphoto a { background-image: url(/images/photo.gif); }
-#mmtypo, #mmtypo a { background-image: url(/images/typo.gif); }
+#mmhomepage, #mmhomepage a { background-image: url("/themes/original/images/homepage.gif"); }
+#mmlogo, #mmlogo a { background-image: url("/themes/original/images/logo.gif"); }
+#mmwebmail, #mmwebmail a { background-image: url("/themes/original/images/webmail.gif"); }
+#mmcontacts, #mmcontacts a { background-image: url("/themes/original/images/contacts.gif"); }
+#mmcontactgroups, #mmcontactgroups a { background-image: url("/themes/original/images/contact_groups.gif"); }
+#mmcontactscales, #mmcontactscales a { background-image: url("/themes/original/images/contact_scales.gif"); }
+#mmarticletypes, #mmarticletypes a { background-image: url("/themes/original/images/article_types.gif"); }
+#mmarticles, #mmarticles a { background-image: url("/themes/original/images/articles.gif"); }
+#mmgallery, #mmgallery a { background-image: url("/themes/original/images/image.gif"); }
+#mmcategories, #mmcategories a { background-image: url("/themes/original/images/categories.gif"); }
+#mmregion, #mmregion a { background-image: url("/themes/original/images/region.gif"); }
+#mmlogout, #mmlogout a { background-image: url("/themes/original/images/logout.gif"); }
+#mmwizard, #mmwizard a { background-image: url("/themes/original/images/wizard_mirr.gif"); }
+#mmpages, #mmpages a { background-image: url("/themes/original/images/pages.gif"); }
+#mmmenueditor, #mmmenueditor a { background-image: url("/themes/original/images/menueditor.gif"); }
+#mmforumcats, #mmforumcats a { background-image: url("/themes/original/images/forum.gif"); }
+#mmforums, #mmforums a { background-image: url("/themes/original/images/forum.gif"); }
+#mmchnagepassword, #mmchnagepassword a { background-image: url("/themes/original/images/password.gif"); }
+#mmblog, #mmblog a { background-image: url("/themes/original/images/blog.gif"); }
+#mmcar, #mmcar a { background-image: url("/themes/original/images/car.gif"); }
+#mmpathstatpath, #mmpathstatpath a { background-image: url("/themes/original/images/stats.gif"); }
+#mmnewsletters, #mmnewsletters a { background-image: url("/themes/original/images/newsletters.gif"); }
+#mmadvert, #mmadvert a { background-image: url("/themes/original/images/advert.gif"); }
+#mmforms, #mmforms a { background-image: url("/themes/original/images/formbuilder.gif"); }
+#mmattachments, #mmattachments a  { background-image: url("/themes/original/images/attachment.gif"); }
+#mmphoto, #mmphoto a { background-image: url("/themes/original/images/photo.gif"); }
+#mmtypo, #mmtypo a { background-image: url("/themes/original/images/typo.gif"); }
 
 /* Wizard */
 
@@ -390,20 +390,20 @@ td.htmlarea {
   border: 1px solid;
 }
 
-#suggest { 
-  padding: 10px; 
-  margin: 10px; 
+#suggest {
+  padding: 10px;
+  margin: 10px;
   border: 1px dotted;
   width: 362px;
-  voice-family: "\"}\"";   
-  voice-family: inherit; 
+  voice-family: "\"}\"";
+  voice-family: inherit;
   width: 383px;
 }
 
-#suggest p { 
-  padding: 0; 
-  margin-left: 0; 
-  margin-top:0; 
+#suggest p {
+  padding: 0;
+  margin-left: 0;
+  margin-top:0;
   font-size: 10px;
 }
 
@@ -466,22 +466,22 @@ li.error { color: red; }
 
 .cpointer { cursor: pointer; cursor: hand; }
 
-.partactive { 
-  padding-top: 10px; 
-  width: 150px; 
-  height: 25px; 
+.partactive {
+  padding-top: 10px;
+  width: 150px;
+  height: 25px;
   text-align: center;
-  background-color: rgb(220,220,220); 
-  border: #555 solid 0.5px; 
+  background-color: rgb(220,220,220);
+  border: #555 solid 0.5px;
 }
 
-.partsel { 
-  padding-top: 10px; 
-  width: 150px; 
+.partsel {
+  padding-top: 10px;
+  width: 150px;
   height: 25px;
-  text-align: center; 
-  background-color: rgb(190,190,190); 
-  border: #555 solid 0.5px; 
+  text-align: center;
+  background-color: rgb(190,190,190);
+  border: #555 solid 0.5px;
 }
 
 div#parts a img { border: 0; align: right }
@@ -496,7 +496,7 @@ div#parts a img { border: 0; align: right }
 }
 
 .part-editor h2 { padding: 0; margin: 0; color: #00F; margin-bottom: 20px }
-.part-editor label { font-size: 10px; color: #00F } 
+.part-editor label { font-size: 10px; color: #00F }
 
 div#parts {
   width: 150px;
@@ -513,11 +513,11 @@ div#compose-choose {
 }
 
 div#compose-radios {
-  padding-top: 10px; 
-  width: 150px; 
+  padding-top: 10px;
+  width: 150px;
   height: 25px;
-  float: left; 
-  background-color: rgb(220,220,220); 
+  float: left;
+  background-color: rgb(220,220,220);
 }
 
 div#compose-radios a img { border: 0px; }
@@ -538,11 +538,11 @@ div#tab_content table tr td.cpointer a img { border: 0; }
 div#choose-urls { font-size: 0.75em; text-align: left; padding: 5px; }
 div#choose-urls h4 { margin: 0; padding: 0; }
 div#choose-urls ul { margin: 0; padding: 0; }
-div#choose-urls li { list-style-type:none; background: #EDF4F5; border: 1px solid #AAA; margin: 1px; } 
+div#choose-urls li { list-style-type:none; background: #EDF4F5; border: 1px solid #AAA; margin: 1px; }
 
 div#left-menu-items ul { margin: 0; padding: 0; }
-div#left-menu-items li { list-style-type:none; background: #EDF4F5; border: 1px solid #AAA; margin: 1px;} 
-div#left-menu-items a img { border: 0;} 
+div#left-menu-items li { list-style-type:none; background: #EDF4F5; border: 1px solid #AAA; margin: 1px;}
+div#left-menu-items a img { border: 0;}
 
 div#left-menu-items ul li ul li { list-style-type:none; background: #F4F5ED; border: 1px solid #AAA; margin: 1px; }
 div#left-menu-items ul li ul { margin: 2px; padding: 2px; }

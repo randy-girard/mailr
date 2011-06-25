@@ -3,6 +3,8 @@ require 'imapmailbox'
 
 class LoginController < ApplicationController
 
+  theme :theme_resolver
+
   def index
     if not(logged_user.nil?)
       redirect_to :controller =>"webmail", :action=>"index"

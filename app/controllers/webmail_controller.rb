@@ -10,6 +10,8 @@ require 'imap_utils'
 class WebmailController < ApplicationController
   include ImapUtils
 
+  theme :theme_resolver
+
   logger.info "*** WebmailController #{logger.inspect}"
 
   # Administrative functions

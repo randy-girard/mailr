@@ -1,4 +1,6 @@
-Rails3::Application.routes.draw do
+Mailr::Application.routes.draw do
+  themes_for_rails
+
     resources :folders
     resources :contacts do
         collection do
