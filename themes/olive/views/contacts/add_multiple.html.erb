@@ -1,0 +1,26 @@
+<h1><%=t :add_multiple_contacts %></h1>
+<% if flash["errors"] and not flash["errors"].empty?%>
+  <%= t(:errors)%>
+  <ul>
+  <% flash["errors"].each do |message| %>
+    <li><%= message %>
+  <% end %>
+  </ul>
+<% end %>
+<form action="<%=link_import_preview%>" enctype="multipart/form-data" method="post">
+  	<%= radio_button("contact", "file_type", "1")%> <%= t(:csv_file)%>
+  	<%= radio_button("contact", "file_type", "2")%> <%= t(:tab_file)%>
+  	<table>
+  		<tr>
+  			<th><label for="contact[data]"><%=t(:select_file)%></label></th>
+    		<td><input type="file" name="contact[data]"/></td>
+  		</tr>
+  		<tr>
+  			<td colspan=2>
+  				<input type="submit" value="<%= t(:import)%>"/>
+  				<input type="button" value="<%= t(:back_to_contacts)%>" onclick="window.location='<%=contacts_url%>'">
+          <input type="button" value="<%= t(:back_to_folders)%>" onclick="window.location='<%=url_for(:controller => :webmail)%>'">
+  			</td>
+  		</tr>
+  	</table>
+</form>

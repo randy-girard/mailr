@@ -1,0 +1,9 @@
+<div class="block">
+	<h3><%=t :folders %> <%= link_to t(:add_edit_folder), folders_path %></h3>
+	<ul class="navigation">
+		<% @folders.each do |folder| -%>
+		<li><%= raw folder_link(folder) %></li>
+		<% end -%>
+	</ul>
+</div>
+

@@ -3,7 +3,7 @@ pl:
   email:          E-mail
   password:       Hasło
   log_in:         Zaloguj
-  wrong_email_or_password:  Podano nieprawidłowy login lub hasło.
+  wrong_email_or_password:  Podano nieprawidłowy login lub hasło
   mailbox:        Poczta
   folders:        Foldery
   folder:         Folder
@@ -64,9 +64,9 @@ pl:
   add_folder:     Dodaj folder
   total_messages: Total messages
   unseen:         Unseen
-  add_edit_folder: Zarządzanie folderami
+  add_edit_folder: Zarządzaj
   user_logged_out: Użytkownik został wylogowany
   please_login: Logowanie
   add_to_contacts: Dodaj do kontaktów
   want_to_empty_trash_message: Czy chcesz opróznic kosz?
-
+  site_link: https://github.com/lmanolov/mailr
