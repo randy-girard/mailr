@@ -1,0 +1,21 @@
+<div id="msgops" class='<%=@ops_class%>'>
+    <p>
+    <%= submit_tag(t(:copy), :name=> 'op')%>
+    <%= submit_tag(t(:move), :name=>'op')%>
+    <%= t :marked_messages %>
+    <%= t :to_folder %>
+    <span id="destp">
+    <select name="cpdest" size="1">
+        <% for folder in @folders %>
+        <option value="<%=folder.name%>"><%=folder.name%></option>
+        <% end %>
+    </select>
+    </span>
+    </p>
+    <p>
+        <%= t :marked_messages %>
+        <%= submit_tag(t(:delete), :name=>'op')%>
+        <%= submit_tag(t(:mark_read), :name=>'op')%>
+        <%= submit_tag(t(:mark_unread), :name=>'op')%>
+    </p>
+</div>
