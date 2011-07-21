@@ -69,7 +69,7 @@ p {
 
 #main .block .content {
   background: #FFF;
-  padding-top: 1px;
+  padding: 10px;
 }
 
 #main .block .content h2 {
@@ -344,3 +344,20 @@ ul.list li .item .avatar {
 	height: 65;
 	background-color: #EFF3E4;
 }
+
+div.block div.actions-bar {
+    margin: 5px;
+}
+
+tr.notseen td.subject {
+     font-weight: bold;
+}
+
+input,select {
+    background-color: #EFF3E4;
+    border: 1px solid #5E634E;
+    color: #black;
+    margin: 5px 0 0;
+}
+
+

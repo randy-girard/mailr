@@ -5,12 +5,12 @@ gem 'rails', '3.0.7'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3-ruby',:require => 'sqlite3'
+#gem 'sqlite3-ruby',:require => 'sqlite3'
 gem 'arel'
-gem 'mysql2'
+gem 'mysql2' , '0.2.7'
 gem 'will_paginate'
 gem 'themes_for_rails'
-gem 'tmail'
+#gem 'tmail'
 
 # Use unicorn as the web server
 # gem 'unicorn'

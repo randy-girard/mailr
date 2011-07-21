@@ -1,7 +1,5 @@
-log
+.bundle
+db/*.sqlite3
+log/*.log
+tmp/
 config/database.yml
-.*.sw?
-config/site.rb
-tmp
-mail_temp
-.svn

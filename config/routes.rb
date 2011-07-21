@@ -1,26 +1,11 @@
 Mailr::Application.routes.draw do
-  themes_for_rails
 
-    resources :folders
-    resources :contacts do
-        collection do
-            get :add_multiple
-        end
-        member do
-            get :add_from_mail
-        end
-    end
+	themes_for_rails
 
-    resources :contact_groups
-    match '/' => 'webmail#index'
-    match 'webmail' => 'webmail#index'
-    match 'webmail/:action' => 'webmail#index'
-    match '/contact/:action' => 'contacts#index'
-    match 'admin/main' => 'login#logout'
-    match ':controller/service.wsdl' => '#wsdl'
-    match '/:controller(/:action(/:id))'
+	get "core/login"
+	get "core/logout"
+	post "core/authenticate"
 
-end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -78,3 +63,4 @@ end
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
+end

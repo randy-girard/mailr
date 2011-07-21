@@ -14,7 +14,7 @@ pl:
   filters:        Filtry
   contacts:       Kontakty
   search:         Szukaj
-  search_txt:     Szukaj w polu wiadomości
+  search_txt:     ciąg znaków
   refresh:        Odśwież
   operations:     Akcje
   operations_txt: Akcje na zaznaczonych wiadomościach
@@ -70,3 +70,8 @@ pl:
   add_to_contacts: Dodaj do kontaktów
   want_to_empty_trash_message: Czy chcesz opróznic kosz?
   site_link: https://github.com/lmanolov/mailr
+  marked_messages: zaznaczone wiadomości
+  to_folder: do folderu
+  message_field: Pole wiadomości
+  no_messages_found: Nie znaleziono żadnych wiadomości
+

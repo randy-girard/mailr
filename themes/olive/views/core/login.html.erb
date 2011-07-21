@@ -1,0 +1,41 @@
+<div id="box">
+<div class="block" id="block-login">
+<div id="logo"><a href="<%= t(:site_link) %>"><img src="<%= current_theme_image_path('logo_small.png')%>" alt="Mailr"/></a>
+</div>
+<h2><%= t(:please_login) %></h2>
+	<div class="content login">
+		<div class="flash">
+		<% if flash[:error] %>
+			<div class="message error"><p><%= flash[:error] %></p></div>
+		<% elsif flash[:notice] %>
+			<div class="message notice"><p><%= flash[:notice] %></p></div>
+		<% end %>
+		</div>
+	<form action="<%=url_for(:controller => 'core', :action => 'authenticate')%>" method="post" class="form login">
+		<div class="group wat-cf">
+			<div class="left">
+                <label class="label right"><%= t(:email) %></label>
+			</div>
+			<div class="right">
+				<%= text_field "login_user", "email" %>
+			</div>
+		</div>
+		<div class="group wat-cf">
+			<div class="left">
+				<label class="label right"><%= t(:password) %></label>
+			</div>
+			<div class="right">
+                <%= password_field "login_user", "password" %></td>
+			</div>
+		</div>
+		<div class="group navform wat-cf">
+			<div class="right">
+				<button class="button" type="submit">
+					<img src="<%= current_theme_image_path('key.png')%>" alt="login" /> <%= t :log_in %>
+                </button>
+			</div>
+		</div>
+	</form>
+	</div>
+</div>
+</div>

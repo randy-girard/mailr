@@ -65,3 +65,6 @@ en:
   total_messages: Total messages
   unseen:         Unseen
   please_login: Log in
+  site_link: https://github.com/lmanolov/mailr
+  user_logged_out: User was logged out
+
