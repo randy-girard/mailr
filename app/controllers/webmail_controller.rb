@@ -43,6 +43,8 @@ class WebmailController < ApplicationController
     session["return_to"] = nil
     @search_field = params['search_field']
     @search_value = params['search_value']
+    @folder_name = params['folder_name']
+
 
     # handle sorting - tsort session field contains last reverse or no for field
     # and lsort - last sort field
@@ -98,6 +100,8 @@ class WebmailController < ApplicationController
     else
       @pages = Paginator.new self, folder.total, get_mail_prefs.wm_rows, @page
       @messages = folder.messages(@pages.current.first_item - 1, get_mail_prefs.wm_rows, sort_query + (reverse_sort ? ' desc' : ' asc'))
+      #folder.synchronize_cache(@pages.current.first_item - 1, get_mail_prefs.wm_rows)
+      @messages = ImapMessage.getAll(@current_user.email,@folder_name,sort_query + (reverse_sort ? ' desc' : ' asc'))
     end
 
   end

@@ -7,11 +7,17 @@ class ApplicationController < ActionController::Base
   before_filter :user_login_filter
   before_filter :add_scripts
   #before_filter :localize
+  before_filter :current_user
 
 
   #filter_parameter_logging :password #upgrade to Rails3
 
   protected
+
+  def current_user
+    #@current_user ||=  Customer.find(logged_user)
+    #logger.debug "Current User: #{@current_user.inspect}"
+  end
 
   def theme_resolver
 	CDF::CONFIG[:theme] || CDF::CONFIG[:default_theme]

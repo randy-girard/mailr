@@ -149,11 +149,11 @@ module WebmailHelper
 
   def message_size(size)
   	if size / (1024*1024) > 0
-  		return "#{(size / (1024*1024)).round}&nbsp;MB"
+  		return "#{(size / (1024*1024)).round} MB"
   	elsif size / 1024 > 0
-  		return "#{(size / (1024)).round}&nbsp;KB"
+  		return "#{(size / (1024)).round} kB"
   	else
-  		return "#{size}&nbsp;B"
+  		return "#{size} B"
   	end
   end
 

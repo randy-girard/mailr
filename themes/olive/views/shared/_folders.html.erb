@@ -1,9 +1,13 @@
 <div class="block">
-	<h3><%=t :folders %> <%= link_to t(:add_edit_folder), folders_path %></h3>
+	<h3><%=t :folders %> <%= link_to t(:add_edit_folder), folders_path %> <%= link_refresh %></h3>
+	<div class="content">
 	<ul class="navigation">
 		<% @folders.each do |folder| -%>
 		<li><%= raw folder_link(folder) %></li>
 		<% end -%>
 	</ul>
+	<input name="logout" type="submit" value ="<%= t :logout %>" onclick="window.location='<%= url_for(:controller => :login, :action => :logout) %>'" />
+	</div>
 </div>
+
 
