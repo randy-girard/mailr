@@ -2,9 +2,9 @@ Mailr::Application.routes.draw do
 
 	themes_for_rails
 
-	get "core/login"
-	get "core/logout"
-	post "core/authenticate"
+	get "user/login"
+	get "user/logout"
+	post "user/authenticate"
 
 
   # The priority is based upon order of creation:

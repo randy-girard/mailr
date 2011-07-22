@@ -1,4 +1,4 @@
-class CoreController < ApplicationController
+class UserController < ApplicationController
 
   theme :theme_resolver
   layout "simple"
