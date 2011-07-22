@@ -13,6 +13,14 @@ class UserController < ApplicationController
   end
 
   def authenticate
+	redirect_to :action => 'unknown'
+	#redirect_to :controller => "messages", :action => "index"
+  end
+
+  def setup
+  end
+
+  def unknown
   end
 
 end

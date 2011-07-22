@@ -67,4 +67,7 @@ en:
   please_login: Log in
   site_link: https://github.com/lmanolov/mailr
   user_logged_out: User was logged out
-
+  unknown_user_title: Unknown user
+  unknown_user_flash: Your email identifier was not found in database
+  unknown_user_login: Go to login page and try to login once more.
+  unknown_user_setup: Go to setup page and do the setup of Your mail account.

@@ -1,0 +1,12 @@
+<div id="box">
+<div class="block" id="block-login">
+<div id="logo"><a href="<%= t(:site_link) %>"><img src="<%= current_theme_image_path('logo_small.png')%>" alt="Mailr"/></a>
+</div>
+<h2><%= t(:unknown_user_title) %></h2>
+	<div class="content">
+	<div class="flash"><div class="message warning"><p><%= t(:unknown_user_flash) %></p></div></div>
+	<p><%= t(:unknown_user_login) %> -> <%= link_to "Login",:controller => "user",:action =>"login" %></p>
+	<p><%= t(:unknown_user_setup) %> -> <%= link_to "Setup",:controller => "user",:action => "setup" %></p>
+	</div>
+</div>
+</div>
