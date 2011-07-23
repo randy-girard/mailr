@@ -1,0 +1,20 @@
+<% content_for :title do %>
+  <%= t(:setup_title) %>
+<% end %>
+
+<div id="box">
+<div class="block">
+<div id="logo"><a href="/"><img src="<%= current_theme_image_path('logo_small.png')%>" alt="Mailr"/></a>
+</div>
+<h2><%= t(:setup_title) %></h2>
+	<div class="content">
+	<form action="<%=url_for(:controller => 'user', :action => 'create')%>" method="post" class="form">
+	<%= raw form_field(@user,"email",nil,"joe.doe@domain.domain") %>
+	<%= raw form_field(@user,"first_name",nil,"Joe") %>
+	<%= raw form_field(@user,"last_name",nil,"Doe") %>
+	<%= raw form_field(@server,"name","server_name","domain.domain") %>
+	<%= raw form_button("send") %>
+	</form>
+	</div>
+</div>
+</div>

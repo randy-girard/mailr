@@ -4,6 +4,7 @@ Mailr::Application.routes.draw do
 	get "messages/index"
 	get "user/logout"
 	post "user/authenticate"
+	post "user/create"
 	get "user/login"
 	get "user/setup"
 	get "user/unknown"

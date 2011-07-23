@@ -71,3 +71,8 @@ en:
   unknown_user_flash: Your email identifier was not found in database
   unknown_user_login: Go to login page and try to login once more.
   unknown_user_setup: Go to setup page and do the setup of Your mail account.
+  setup_title: Setup
+  example: example
+  server_name: Server name
+  setup_done: Setup done. Please log in
+  login_failure: Login failure. Bad email or password

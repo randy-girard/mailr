@@ -1,6 +1,10 @@
+<% content_for :title do %>
+  <%= t(:unknown_user_title) %>
+<% end %>
+
 <div id="box">
 <div class="block" id="block-login">
-<div id="logo"><a href="<%= t(:site_link) %>"><img src="<%= current_theme_image_path('logo_small.png')%>" alt="Mailr"/></a>
+<div id="logo"><a href="/"><img src="<%= current_theme_image_path('logo_small.png')%>" alt="Mailr"/></a>
 </div>
 <h2><%= t(:unknown_user_title) %></h2>
 	<div class="content">

@@ -1,6 +1,10 @@
+<% content_for :title do %>
+  <%= t(:please_login) %>
+<% end %>
+
 <div id="box">
-<div class="block" id="block-login">
-<div id="logo"><a href="<%= t(:site_link) %>"><img src="<%= current_theme_image_path('logo_small.png')%>" alt="Mailr"/></a>
+<div class="block">
+<div id="logo"><a href="/"><img src="<%= current_theme_image_path('logo_small.png')%>" alt="Mailr"/></a>
 </div>
 <h2><%= t(:please_login) %></h2>
 	<div class="content login">
@@ -17,7 +21,7 @@
                 <label class="label right"><%= t(:email) %></label>
 			</div>
 			<div class="right">
-				<%= text_field "login_user", "email" %>
+				<%= text_field "user", "email" %>
 			</div>
 		</div>
 		<div class="group wat-cf">
@@ -25,7 +29,7 @@
 				<label class="label right"><%= t(:password) %></label>
 			</div>
 			<div class="right">
-                <%= password_field "login_user", "password" %></td>
+                <%= password_field "user", "password" %></td>
 			</div>
 		</div>
 		<div class="group navform wat-cf">
