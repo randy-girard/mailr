@@ -10,7 +10,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110723153214) do
+ActiveRecord::Schema.define(:version => 20110724134917) do
+
+  create_table "prefs", :force => true do |t|
+    t.string   "theme"
+    t.string   "locale"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "msgs_per_page"
+    t.string   "msg_send_type"
+  end
 
   create_table "servers", :force => true do |t|
     t.string   "name"

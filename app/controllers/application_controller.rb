@@ -8,22 +8,22 @@ class ApplicationController < ActionController::Base
 	protected
 
 	def load_defaults
-		@defaults = YAML::load(File.open(Rails.root.join('config','defaults.yml')))
+		$defaults ||= YAML::load(File.open(Rails.root.join('config','defaults.yml')))
 	end
 
 	def theme_resolver
 		if @current_user.nil?
-			@defaults['theme']
+			$defaults['theme']
 		else
-			@current_user.theme
+			@current_user.prefs.theme
 		end
 	end
 
 	def set_locale
 		if @current_user.nil?
-			I18n.locale = @defaults['locale'] || I18n.default_locale
+			I18n.locale = $defaults['locale'] || I18n.default_locale
 		else
-			I18n.locale = @current_user.locale || I18n.default_locale
+			I18n.locale = @current_user.prefs.locale || I18n.default_locale
 		end
 	end
 

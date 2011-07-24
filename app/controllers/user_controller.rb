@@ -17,9 +17,15 @@ class UserController < ApplicationController
 		if user.nil?
 			redirect_to :action => 'unknown'
 		else
-			auten = false
+			auten = true
 			if auten == true
-
+				 session[:user_id] = user.id
+				 if session["return_to"]
+					redirect_to(session["return_to"])
+					session["return_to"] = nil
+				else
+					redirect_to :controller=> "messages",:action=>"index"
+				end
 			else
 				flash[:error] = t(:login_failure)
 				redirect_to :action => 'login'
@@ -49,6 +55,7 @@ class UserController < ApplicationController
 			@user.save
 			@server.user_id = @user.id
 			@server.save
+			Prefs.create_default(@user.id)
 			flash[:notice] = t(:setup_done)
 			redirect_to :action => 'login'
 		else

@@ -1,2 +1,4 @@
 theme: olive
 locale: en
+msgs_per_page: 20
+msg_send_type: html

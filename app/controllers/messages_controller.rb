@@ -4,6 +4,7 @@ class MessagesController < ApplicationController
 	theme :theme_resolver
 
 	def index
+
 	end
 
 end
