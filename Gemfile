@@ -10,6 +10,7 @@ gem 'arel'
 gem 'mysql2' , '0.2.7'
 gem 'will_paginate'
 gem 'themes_for_rails'
+gem "ezcrypto", "~> 0.7.2"
 #gem 'tmail'
 
 # Use unicorn as the web server

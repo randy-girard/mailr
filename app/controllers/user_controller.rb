@@ -13,19 +13,23 @@ class UserController < ApplicationController
 	end
 
 	def authenticate
-		user = User.find_by_email(params["user"]["email"])
+		user = User.find_by_email(params[:user][:email])
 		if user.nil?
 			redirect_to :action => 'unknown'
 		else
 			auten = true
 			if auten == true
-				 session[:user_id] = user.id
-				 if session["return_to"]
+				session[:user_id] = user.id
+				user.set_cached_password(session,params[:user][:password])
+
+				if session["return_to"]
 					redirect_to(session["return_to"])
 					session["return_to"] = nil
 				else
-					redirect_to :controller=> "messages",:action=>"index"
+					redirect_to :controller=> "messages", :action=>"index"
 				end
+
+
 			else
 				flash[:error] = t(:login_failure)
 				redirect_to :action => 'login'

@@ -2,3 +2,7 @@ theme: olive
 locale: en
 msgs_per_page: 20
 msg_send_type: html
+imap_debug: true
+session_encryption: true
+session_password: asDD3s2@sAdc983#
+

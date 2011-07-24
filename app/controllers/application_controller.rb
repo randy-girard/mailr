@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
 		if @current_user.nil?
 			$defaults['theme']
 		else
-			@current_user.prefs.theme
+			@current_user.prefs.theme || $defaults['theme']
 		end
 	end
 

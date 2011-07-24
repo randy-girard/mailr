@@ -1,5 +1,8 @@
 Mailr::Application.routes.draw do
 
+    get "internal/error"
+    post "internal/error"
+
 	root :to => "messages#index"
 	get "messages/index"
 	get "user/logout"
