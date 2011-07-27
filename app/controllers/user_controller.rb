@@ -15,7 +15,7 @@ class UserController < ApplicationController
 	def authenticate
 		user = User.find_by_email(params[:user][:email])
 		if user.nil?
-			redirect_to :action => 'unknown'
+			redirect_to :action => 'unknown' ,:email=> params[:user][:email]
 		else
 			auten = true
 			if auten == true
@@ -26,7 +26,7 @@ class UserController < ApplicationController
 					redirect_to(session["return_to"])
 					session["return_to"] = nil
 				else
-					redirect_to :controller=> "messages", :action=>"index"
+					redirect_to :controller=> 'messages', :action=> 'refresh'
 				end
 
 
@@ -49,12 +49,15 @@ class UserController < ApplicationController
 	end
 
 	def create
+
 		@user = User.new
-		@server = Server.new
 		@user.email = params["user_email"]
 		@user.first_name = params["user_first_name"]
 		@user.last_name = params["user_last_name"]
+
+        @server = Server.new
 		@server.name = params["server_name"]
+
 		if @user.valid? and @server.valid?
 			@user.save
 			@server.user_id = @user.id

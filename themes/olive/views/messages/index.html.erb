@@ -1,0 +1,26 @@
+
+<%= link_to t(:refresh), :controller => 'messages', :action => 'refresh' %>
+
+<h1>Current: <%= pretty_folder_name(@current_folder) %></h1>
+
+<%= @current_folder.inspect %>
+<%= Time.now - @current_folder.msgs_updated_at %>
+
+<h1>Folders</h1>
+<% if @folders.size.zero? %>
+No folders.
+<% else %>
+<ul class="folders">
+<% @folders.each do |f|%>
+<% if @selected_folder.upcase == f.name.upcase %>
+<li class="selected"><%= folder_link(f) %></li>
+<% else %>
+<li><%= folder_link(f) %></li>
+<% end %>
+<% end %>
+</ul>
+<% end %>
+
+<%= link_to t(:logout), :controller => 'user', :action => 'logout' %>
+
+

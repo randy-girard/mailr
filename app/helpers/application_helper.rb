@@ -1,6 +1,6 @@
 module ApplicationHelper
 
-def form_field(object,field,flabel,example)
+def form_field(object,field,flabel,example,val)
 
 	html = ""
 	html << "<div class=\"group\">"
@@ -24,7 +24,7 @@ def form_field(object,field,flabel,example)
 	html << "<input name=\""
 	html << object.class.name.downcase+"_"+field
 	html << "\" type=\"text\" class=\"text_field\" value=\""
-	value = object.instance_eval(field) || ""
+	value = object.instance_eval(field) || val || ""
 	html << value
 	html << "\"/>"
 	html << "<span class=\"description\">"

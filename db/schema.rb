@@ -10,7 +10,36 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110724134917) do
+ActiveRecord::Schema.define(:version => 20110727134352) do
+
+  create_table "folders", :force => true do |t|
+    t.string   "name"
+    t.string   "delim"
+    t.boolean  "haschildren"
+    t.integer  "messages"
+    t.integer  "unseen"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "parent"
+    t.datetime "msgs_updated_at"
+  end
+
+  create_table "messages", :force => true do |t|
+    t.integer  "folder_id"
+    t.integer  "user_id"
+    t.string   "msg_id"
+    t.string   "from"
+    t.string   "to"
+    t.string   "subject"
+    t.string   "content_type"
+    t.integer  "uid"
+    t.integer  "size"
+    t.boolean  "unread"
+    t.datetime "date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "prefs", :force => true do |t|
     t.string   "theme"
@@ -28,6 +57,7 @@ ActiveRecord::Schema.define(:version => 20110724134917) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "use_ssl"
   end
 
   create_table "users", :force => true do |t|

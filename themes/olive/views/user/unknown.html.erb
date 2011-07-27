@@ -10,7 +10,7 @@
 	<div class="content">
 	<div class="flash"><div class="message warning"><p><%= t(:unknown_user_flash) %></p></div></div>
 	<p><%= t(:unknown_user_login) %> -> <%= link_to "Login",:controller => "user",:action =>"login" %></p>
-	<p><%= t(:unknown_user_setup) %> -> <%= link_to "Setup",:controller => "user",:action => "setup" %></p>
+	<p><%= t(:unknown_user_setup) %> -> <%= link_to "Setup",:controller => "user",:action => "setup",:email => params['email'] %></p>
 	</div>
 </div>
 </div>

@@ -1,15 +1,19 @@
 Mailr::Application.routes.draw do
 
     get "internal/error"
-    post "internal/error"
+    get "internal/imaperror"
 
 	root :to => "messages#index"
 	get "messages/index"
+	get "messages/refresh"
+	match 'messages/folder/:id' => 'messages#folder'
+
 	get "user/logout"
 	post "user/authenticate"
 	post "user/create"
 	get "user/login"
 	get "user/setup"
+	match 'user/setup/:id' => 'user#setup'
 	get "user/unknown"
 
 	themes_for_rails

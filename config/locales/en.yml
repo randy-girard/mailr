@@ -78,3 +78,4 @@ en:
   login_failure: Login failure. Bad email or password
   general_error: General error
   unspecified_error: Unspecified error occured
+  imap_error: Imap Error

@@ -39,4 +39,8 @@ class ApplicationController < ActionController::Base
 		end
 	end
 
+	def selected_folder
+        session[:selected_folder] ? @selected_folder = session[:selected_folder] : @selected_folder = $defaults['imap_inbox_folder']
+	end
+
 end
