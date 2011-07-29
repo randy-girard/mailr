@@ -37,8 +37,6 @@ class Folder < ActiveRecord::Base
             parent = ""
         end
 
-        logger.info "******************* #{name}, #{parent} "
-
         user.folders.create(:name=>name,:parent=>parent,:haschildren=>has_children,:delim=>data.delim,:messages => data.messages,:unseen => data.unseen)
         end
     end
