@@ -4,6 +4,18 @@ class Folder < ActiveRecord::Base
     validates_presence_of :name, :on => :create
     before_save :check_fill_params, :on => :create
 
+    def full_name
+        if parent.empty?
+            name
+        else
+            parent + delim + name
+        end
+    end
+
+    def depth
+        parent.split('.').size
+    end
+
     private
 
     def check_fill_params
@@ -25,6 +37,8 @@ class Folder < ActiveRecord::Base
             parent = ""
         end
 
+        logger.info "******************* #{name}, #{parent} "
+
         user.folders.create(:name=>name,:parent=>parent,:haschildren=>has_children,:delim=>data.delim,:messages => data.messages,:unseen => data.unseen)
         end
     end
@@ -37,5 +51,7 @@ class Folder < ActiveRecord::Base
             where(['name = ?',folder[0]]).first
         end
     end
+
+
 
 end

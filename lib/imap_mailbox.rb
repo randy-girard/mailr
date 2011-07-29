@@ -72,6 +72,21 @@ class IMAPMailbox
         @folders
     end
 
+    def create_folder(name)
+        begin
+            @imap.create(Net::IMAP.encode_utf7(name))
+        rescue Exception => e
+            raise e
+        end
+    end
+
+    def delete_folder(name)
+        begin
+            @imap.delete(Net::IMAP.decode_utf7(name))
+        rescue Exception => e
+            raise e
+        end
+    end
 end
 
 end

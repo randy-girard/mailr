@@ -16,6 +16,7 @@ class MessagesController < ApplicationController
 	def index
 		@folders = @current_user.folders.order("name asc")
 		@current_folder = @current_user.folders.current(@selected_folder)
+		flash[:notice] = 'Not implemented yet'
 	end
 
 	def refresh
@@ -28,6 +29,12 @@ class MessagesController < ApplicationController
 	def folder
         session[:selected_folder] = params[:id]
         redirect_to :action => 'index'
+	end
+
+	def compose
+        @folders = @current_user.folders.order("name asc")
+		@current_folder = @current_user.folders.current(@selected_folder)
+		flash[:notice] = 'Not impelented yet'
 	end
 
 end

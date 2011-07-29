@@ -1,0 +1,36 @@
+<% content_for :sidebar do %>
+<%= render :partial => 'folders/list' %>
+<% end %>
+
+<% content_for :title do %>
+- <%= t(:folders) %>
+<% end %>
+
+<div class="block" id="block-tables">
+<div class="secondary-navigation">
+    <%= raw main_navigation(:folders) %>
+</div>
+<div class="content">
+<div class="inner">
+    <div class="columns wat-cf">
+        <div class="column left">
+            <%= form_tag({:controller=>'folders',:action=>'create'},:class=>'form') %>
+                <%= raw select_for_folders("","parent_folder",@folders,t(:parent_folder),true) %>
+                <%= raw simple_input_field("folder",t(:folder_to_create),"") %>
+                <%= raw form_button(t(:create),'tick.png') %>
+            </form>
+            <%= form_tag({:controller=>'folders',:action=>'delete'},:class=>'form') %>
+                <%= raw select_for_folders("","folder",@folders,t(:folder_to_delete),true) %>
+                <%= raw form_button(t(:delete),'cross.png') %>
+            </form>
+        </div>
+        <div class="column right">
+            <%= form_tag({:controller=>'folders',:action=>'sub_un_scribe'},:class=>'form') %>
+            <%= raw multi_select("", 'folders_to_subscribe[]', @folders, @folders,t(:folders_subscribed),:id,"",{:text => [:parent,:delim,:name]}) %>
+            <%= raw form_button(t(:subscribe_unsubscribe),'tick.png') %>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+

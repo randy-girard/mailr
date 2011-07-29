@@ -3,7 +3,10 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-    <title><%= t(:mailr) %></title>
+    <title>
+    <%= t(:mailr) %>
+    <%= yield :title %>
+    </title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
 	<%=stylesheet_link_tag current_theme_stylesheet_path('base') %>
@@ -12,14 +15,24 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     <%=javascript_include_tag :defaults %>
 
 </head>
-	<body id="bodyID" onload="<%=@onload_function%>">
+	<body>
 		<div id="container">
 			<div id="wrapper" class="wat-cf">
 				<div id="sidebar">
-					<div id="logo"><%= yield :logo %></div>
+					<div id="logo"><img src="<%= current_theme_image_path('logo_small.png')%>" alt="Mailr"/></div>
 					<div id="sidebar"><%= yield :sidebar %></div>
 				</div>
-				<div id="main"><%= yield %></div>
+				<div id="main">
+				<div class="flash">
+                <% flash.each do |key, msg| %>
+                    <% unless msg.blank? %>
+                    <%= content_tag(:div,(content_tag :p, msg), :class => "message #{key.to_s}" )%>
+                    <%= flash[key.to_sym]='' %>
+                    <% end %>
+                <% end %>
+                </div>
+				<%= yield %>
+				</div>
 				<br class="clear"/>
 			</div>
 		</div>

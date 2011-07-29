@@ -11,17 +11,28 @@ In _Rails 3_ all dependencies should be defined in file _Gemfile_. All needed ge
 
 * Checkout the source code.
 
-* Install all dependiences. Use _bundler_ for that.
+* Install all dependiences. Check if proper gems (sqlite3/mysql/postgresql) are defined in _Gemfile_ and installed. Use _bundler_ for that:
+
+```shell
+bundle install
+```
+
+* Check _config/defaults.yml_ for proper values.
 
 * Prepare config/database.yml file (see _config/database.yml.example_).
-  Check if proper gems (sqlite3/mysql/postgresql) are defined in _Gemfile_ and installed.
 
 * Migrate database (rake db:migrate)
 
 * Start rails server if applicable
 
-* Point Your browser to application URL:
+* Point your browser to application URL:
   For local access: http://localhost:3000
   For remote access: http://some_url/mailr
+
+* Using browser do basic setup. If You make a mistake delete all data from DB using rake task:
+
+```shell
+rake db:clear_data
+```
 
 * Use it.

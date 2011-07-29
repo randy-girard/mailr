@@ -1,0 +1,12 @@
+<div class="block">
+	<h3><%=t (:folders) %> <%= link_to t(:refresh), {:controller => 'messages', :action => 'refresh'}, :class=>'minor' %></h3>
+	<div class="content">
+	<ul class="navigation">
+		<% @folders.each do |folder| -%>
+		<li><%= raw folder_link(folder) %></li>
+		<% end -%>
+	</ul>
+	<br/>
+	<%= raw form_button_value(t(:logout),'tick.png',url_for(:controller => :user, :action => :logout)) %>
+	</div>
+</div>

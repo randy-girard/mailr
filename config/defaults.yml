@@ -1,15 +1,22 @@
 theme: olive
 locale: en
+
 msgs_per_page: 20
 msgs_refresh_time: 300
 msg_send_type: html
+
 imap_debug: true
 imap_use_ssl: 'false'
 imap_port: 143
 imap_ssl_port: 993
 imap_bye_timeout_retry_seconds: 2
-imap_inbox_folder: inbox
+
 session_encryption: true
 session_password: asDD3s2@sAdc983#
 
+mailbox_max_parent_folder_depth: 3
+mailbox_inbox: inbox
+mailbox_trash: inbox.trash
+mailbox_sent: inbox.sent
+mailbox_drafts: inbox.drafts
 

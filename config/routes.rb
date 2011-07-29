@@ -1,12 +1,27 @@
 Mailr::Application.routes.draw do
 
+  get "prefs/index"
+
+  get "contacts/index"
+
+  get "folders/index"
+
+  post "folders/create"
+  post "folders/delete"
+  post "folders/sub_un_scribe"
+
+  get "folders/manage"
+
     get "internal/error"
     get "internal/imaperror"
+    get "internal/loginfailure"
 
 	root :to => "messages#index"
 	get "messages/index"
 	get "messages/refresh"
 	match 'messages/folder/:id' => 'messages#folder'
+	post "messages/ops"
+	get "messages/compose"
 
 	get "user/logout"
 	post "user/authenticate"

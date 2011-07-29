@@ -8,7 +8,7 @@ def open_imap_session
 		@mailbox = ImapMailboxModule::IMAPMailbox.new(logger)
 		@mailbox.connect(@current_user.servers.primary,@current_user.email, @current_user.get_cached_password(session))
 	rescue Exception => ex
-		redirect_to :controller => 'internal', :action => 'imaperror' , :error => ex.inspect
+		redirect_to :controller => 'internal', :action => 'loginfailure'
 	end
 end
 

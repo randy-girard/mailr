@@ -3,12 +3,12 @@
 <% end %>
 
 <% content_for :title do %>
-- <%= t(:messages) %>
+- <%= t(:compose) %>
 <% end %>
 
 <div class="block" id="block-tables">
     <div class="secondary-navigation">
-        <%= raw main_navigation(:messages) %>
+        <%= raw main_navigation(:compose) %>
     </div>
     <div class="content">
         <%= form_tag({:controller=>'messages', :action=>'ops'})%>
@@ -17,7 +17,3 @@
     </div>
 </div>
 
-<h1>Current: <%= pretty_folder_name(@current_folder) %></h1>
-
-<%= @current_folder.inspect %>
-<%= Time.now - @current_folder.msgs_updated_at %>

@@ -17,23 +17,16 @@ class UserController < ApplicationController
 		if user.nil?
 			redirect_to :action => 'unknown' ,:email=> params[:user][:email]
 		else
-			auten = true
-			if auten == true
-				session[:user_id] = user.id
-				user.set_cached_password(session,params[:user][:password])
+            session[:user_id] = user.id
+			user.set_cached_password(session,params[:user][:password])
 
-				if session["return_to"]
-					redirect_to(session["return_to"])
-					session["return_to"] = nil
-				else
-					redirect_to :controller=> 'messages', :action=> 'refresh'
-				end
-
-
+			if session["return_to"]
+                redirect_to(session["return_to"])
+				session["return_to"] = nil
 			else
-				flash[:error] = t(:login_failure)
-				redirect_to :action => 'login'
+				redirect_to :controller=> 'messages', :action=> 'refresh'
 			end
+
 		end
 	end
 

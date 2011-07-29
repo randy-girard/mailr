@@ -79,3 +79,16 @@ en:
   general_error: General error
   unspecified_error: Unspecified error occured
   imap_error: Imap Error
+  folder_to_create: Folder to create
+  create: Create
+  subscribe_unsubscribe: (Un)Subscribe
+  folders_subscribed_selected: Folders subscribed
+  messages: Messages
+  folder_to_create_empty: Folder to create is empty
+  folder_was_created: Folder was created
+  can_not_create_folder: Can not create folder
+  folder_max_depth: Maximum folder depth reached
+  folder_to_delete_empty: Folder to delete empty
+  folder_was_deleted: Folder was deleted
+  can_not_delete_folder: Can not delete folder
+  system_folder: System folder
