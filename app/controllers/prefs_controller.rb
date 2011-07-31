@@ -2,11 +2,11 @@ class PrefsController < ApplicationController
 
     before_filter :check_current_user,:selected_folder
 
+	before_filter :get_current_folders, :only => [:index,:compose]
+
     theme :theme_resolver
 
     def index
-        @folders = @current_user.folders.order("name asc")
-        @current_folder = @current_user.folders.current(@selected_folder)
         flash[:notice] = 'Not implemented yet'
     end
 

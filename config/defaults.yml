@@ -15,8 +15,8 @@ session_encryption: true
 session_password: asDD3s2@sAdc983#
 
 mailbox_max_parent_folder_depth: 3
-mailbox_inbox: inbox
-mailbox_trash: inbox.trash
-mailbox_sent: inbox.sent
-mailbox_drafts: inbox.drafts
+mailbox_inbox: INBOX
+mailbox_trash: Trash
+mailbox_sent: Sent
+mailbox_drafts: Drafts
 

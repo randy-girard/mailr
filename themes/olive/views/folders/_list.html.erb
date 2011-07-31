@@ -1,11 +1,19 @@
 <div class="block">
 	<h3><%=t (:folders) %> <%= link_to t(:refresh), {:controller => 'messages', :action => 'refresh'}, :class=>'minor' %></h3>
 	<div class="content">
+	<% if @folders_shown.size.zero? %>
+	<p><%= t(:no_folders_shown) %></p>
+	<% else %>
 	<ul class="navigation">
-		<% @folders.each do |folder| -%>
+		<% @folders_shown.each do |folder| -%>
+		<% if folder == @current_folder %>
+		<li><b><%= raw folder_link(folder) %></b></li>
+		<% else %>
 		<li><%= raw folder_link(folder) %></li>
+		<% end %>
 		<% end -%>
 	</ul>
+	<% end %>
 	<br/>
 	<%= raw form_button_value(t(:logout),'tick.png',url_for(:controller => :user, :action => :logout)) %>
 	</div>

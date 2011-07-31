@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110727134352) do
+ActiveRecord::Schema.define(:version => 20110731185416) do
 
   create_table "folders", :force => true do |t|
     t.string   "name"
@@ -23,6 +23,8 @@ ActiveRecord::Schema.define(:version => 20110727134352) do
     t.datetime "updated_at"
     t.string   "parent"
     t.datetime "msgs_updated_at"
+    t.boolean  "shown"
+    t.string   "alter_name"
   end
 
   create_table "messages", :force => true do |t|

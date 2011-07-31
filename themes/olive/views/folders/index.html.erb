@@ -25,9 +25,12 @@
             </form>
         </div>
         <div class="column right">
-            <%= form_tag({:controller=>'folders',:action=>'sub_un_scribe'},:class=>'form') %>
-            <%= raw multi_select("", 'folders_to_subscribe[]', @folders, @folders,t(:folders_subscribed),:id,"",{:text => [:parent,:delim,:name]}) %>
-            <%= raw form_button(t(:subscribe_unsubscribe),'tick.png') %>
+			<%= form_tag({:controller=>'folders',:action=>'refresh'},:class=>'form') %>
+				<%= raw form_button(t(:refresh_folders),'tick.png') %>
+			</form>
+            <%= form_tag({:controller=>'folders',:action=>'show_hide'},:class=>'form') %>
+            <%= raw multi_select("", 'folders_to_show[]', @folders, @folders_shown,t(:folders_shown),:id,"",{:text => [:parent,:delim,:name]}) %>
+            <%= raw form_button(t(:show_hide),'tick.png') %>
             </form>
         </div>
     </div>

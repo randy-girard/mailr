@@ -10,8 +10,7 @@ module FolderHelper
     end
 
     def pretty_folder_name(folder)
-        #folder = folder.gsub(/#/,".")
-        folder.name.capitalize
+        folder.nil? ? t(:no_folder_selected) : folder.name.capitalize
     end
 
     def select_for_folders(name,id,object,label,blank)

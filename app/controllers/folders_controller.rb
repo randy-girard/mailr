@@ -5,10 +5,10 @@ class FoldersController < ApplicationController
 
 	before_filter :check_current_user ,:selected_folder
 
-	before_filter :open_imap_session
-	after_filter :close_imap_session
+	before_filter :open_imap_session, :except => [:index,:refresh_status,:show_hide]
+	after_filter :close_imap_session, :except => [:index,:refresh_status,:show_hide]
 
-	before_filter :get_folders, :except => :manage
+	before_filter :get_folders
 
 	theme :theme_resolver
 
@@ -36,7 +36,7 @@ class FoldersController < ApplicationController
                 render 'index'
                 return
             end
-            redirect_to :action => 'manage', :flash => t(:folder_was_created), :type => :notice
+            redirect_to :action => 'refresh', :flash => t(:folder_was_created), :type => :notice
         end
     end
     # FIXME if you delete folder you should change current folder because if you go to messages/index you got nil
@@ -61,29 +61,45 @@ class FoldersController < ApplicationController
                 render 'index'
                 return
             end
-            redirect_to :action => 'manage', :flash => t(:folder_was_deleted), :type => :notice
+            redirect_to :action => 'refresh', :flash => t(:folder_was_deleted), :type => :notice
         end
     end
 
-    def sub_un_scribe
-        redirect_to :action => 'manage'
-    end
-
-    def manage
-        @current_user.folders.destroy_all
-        folders=@mailbox.folders
-        Folder.createBulk(@current_user,folders)
-        if params[:flash]
-            flash[params[:type]] = params[:flash]
-        end
+    def show_hide
+		@folders.each do |f|
+		logger.info f.inspect,"\n"
+			if params["folders_to_show"].include?(f.id.to_s)
+				f.shown = true
+				f.save
+			else
+				f.shown = false
+				f.save
+			end
+		end
         redirect_to :action => 'index'
     end
+
+	def refresh
+		Folder.refresh(@mailbox,@current_user)
+		if params[:flash]
+            flash[params[:type]] = params[:flash]
+        end
+		redirect_to :action => 'index'
+	end
 
     protected
 
     def get_folders
         @folders = @current_user.folders.order("name asc")
-		@current_folder = @current_user.folders.current(@selected_folder)
+        @folders_shown = []
+        @folders.each do |f|
+			if f.shown == true
+				@folders_shown << f
+			end
+			if f.selected?(@selected_folder)
+				@current_folder = f
+			end
+        end
     end
 
 end

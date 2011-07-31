@@ -89,7 +89,7 @@ end
 #end
 
 def nav_to_folders
-    link_to( t(:folders), :controller=>:folders, :action=>:manage )
+    link_to( t(:folders), :controller=>:folders, :action=>:index )
 end
 
 def nav_to_messages

@@ -16,6 +16,12 @@ class Folder < ActiveRecord::Base
         parent.split('.').size
     end
 
+    def selected?(session_folder)
+		fields = session_folder.split("#")
+		fields[1].nil? ? fields.insert(0,"") : fields
+		(fields[1].downcase == name.downcase) && (fields[0].downcase == parent.downcase)
+    end
+
     private
 
     def check_fill_params
@@ -43,13 +49,19 @@ class Folder < ActiveRecord::Base
 
     def self.current(data)
         folder = data.split("#")
-        if folder.size > 1
-            where(['name = ? and parent = ?',folder[1],folder[0]]).first
-        else
-            where(['name = ?',folder[0]]).first
-        end
+        nam = folder.delete_at(folder.size - 1)
+        folder.size.zero? == true ? par = "" : par = folder.join(".")
+		where(['name = ? and parent = ?',nam,par]).first
     end
 
+    def self.shown
+		where(['shown = ?',true])
+	end
 
+	def self.refresh(mailbox,user)
+        user.folders.destroy_all
+        folders=mailbox.folders
+        Folder.createBulk(user,folders)
+	end
 
 end

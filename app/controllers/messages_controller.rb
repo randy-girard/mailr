@@ -8,22 +8,15 @@ class MessagesController < ApplicationController
 
 	before_filter :check_current_user ,:selected_folder
 
+	before_filter :get_current_folders, :only => [:index,:compose]
+
 	before_filter :open_imap_session, :only => :refresh
 	after_filter :close_imap_session, :only => :refresh
 
 	theme :theme_resolver
 
 	def index
-		@folders = @current_user.folders.order("name asc")
-		@current_folder = @current_user.folders.current(@selected_folder)
 		flash[:notice] = 'Not implemented yet'
-	end
-
-	def refresh
-        @current_user.folders.destroy_all
-        folders=@mailbox.folders
-        Folder.createBulk(@current_user,folders)
-        redirect_to :action => 'index'
 	end
 
 	def folder
@@ -32,9 +25,11 @@ class MessagesController < ApplicationController
 	end
 
 	def compose
-        @folders = @current_user.folders.order("name asc")
-		@current_folder = @current_user.folders.current(@selected_folder)
 		flash[:notice] = 'Not impelented yet'
+	end
+
+	def refresh
+		redirect_to :action => 'index'
 	end
 
 end

@@ -43,4 +43,9 @@ class ApplicationController < ActionController::Base
         session[:selected_folder] ? @selected_folder = session[:selected_folder] : @selected_folder = $defaults['mailbox_inbox']
 	end
 
+	def get_current_folders
+		@folders_shown = @current_user.folders.shown.order("name asc")
+		@current_folder = @current_user.folders.current(@selected_folder)
+	end
+
 end
