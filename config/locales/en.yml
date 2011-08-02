@@ -94,3 +94,9 @@ en:
   system_folder: System folder
   refresh_folders: Refresh folders
   show_hide: Show/Hide
+  page_not_found: Page not found
+  bytes: Bytes
+  kbytes: Kb
+  mbytes: MB
+  previous_page: Previous page
+  next_page: Next page

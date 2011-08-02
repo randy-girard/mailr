@@ -1,0 +1,7 @@
+<p>
+    <%= t :message_field %>
+    <select name="search_field">
+        <%= options_for_select(CDF::CONFIG[:mail_search_fields], @search_field)%>
+    </select> <label for="search_value"> <%= t :search_txt %>
+    </label> <input type="text" name="search_value" value="<%=@search_value%>" size='16' id='search_value'/> <%= submit_tag(t(:search), :name=>'op')%> <%= submit_tag(t(:show_all), :name=>'op')%>
+</p>

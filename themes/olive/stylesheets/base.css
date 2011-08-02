@@ -218,7 +218,8 @@ body {
 }
 
 .table td {
-  padding: 5px;
+  padding: 2px 10px;
+  color: #5E634E;
 }
 
 .table td.last {

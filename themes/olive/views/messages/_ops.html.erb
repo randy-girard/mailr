@@ -1,0 +1,15 @@
+<div id="ops">
+    <p>
+    <%= submit_tag(t(:copy), :name=> 'op')%>
+    <%= submit_tag(t(:move), :name=>'op')%>
+    <%= t :marked_messages %>
+    <%= t :to_folder %>
+     <%= raw select_for_folders("","parent_folder",@folders_shown,t(:parent_folder),true) %>
+    </p>
+    <p>
+        <%= t :marked_messages %>
+        <%= submit_tag(t(:delete), :name=>'op')%>
+        <%= submit_tag(t(:mark_read), :name=>'op')%>
+        <%= submit_tag(t(:mark_unread), :name=>'op')%>
+    </p>
+</div>

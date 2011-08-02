@@ -81,9 +81,10 @@ class FoldersController < ApplicationController
 
 	def refresh
 		Folder.refresh(@mailbox,@current_user)
-		if params[:flash]
-            flash[params[:type]] = params[:flash]
-        end
+		flash.keep
+		#if params[:flash]
+        #    flash[params[:type]] = params[:flash]
+        #end
 		redirect_to :action => 'index'
 	end
 

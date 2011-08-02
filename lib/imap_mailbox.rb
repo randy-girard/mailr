@@ -30,7 +30,7 @@ class IMAPMailbox
 				@imap = Net::IMAP.new(server_name, server_port, server_use_ssl)
 			rescue Net::IMAP::ByeResponseError => bye
 				begin
-					System.sleep($defaults['imap_bye_timeout_retry_seconds'])
+					System.sleep($defaults["imap_bye_timeout_retry_seconds"])
 					@imap = Net::IMAP.new(server_name, server_port, server_use_ssl)
 				rescue Exception => ex
 					raise IMAPError, ex.inspect
@@ -87,6 +87,40 @@ class IMAPMailbox
             raise e
         end
     end
+
+    def fetch(folder_name,range,attribs)
+        begin
+            set_folder(folder_name)
+            @imap.fetch(range,attribs)
+        rescue Exception => e
+            raise e
+        end
+    end
+
+    def uid_fetch(folder_name,range,attribs)
+        begin
+            set_folder(folder_name)
+            @imap.uid_fetch(range,attribs)
+        rescue Exception => e
+            raise e
+        end
+    end
+
+    def set_folder(folder_name)
+        if folder_name.downcase != @selected_folder.downcase
+            @imap.select(folder_name)
+            @selected_folder = folder_name
+        end
+    end
+
+    def status(folder_name)
+        @imap.status(folder_name, ["MESSAGES", "RECENT", "UNSEEN"])
+    end
+
+    def fetch_body(folder_name,uid)
+        uid_fetch(folder_name,uid,"BODY[]").first.attr["BODY[]"]
+    end
+
 end
 
 end

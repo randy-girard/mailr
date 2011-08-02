@@ -365,3 +365,6 @@ input,select {
 	color: grey;
 	}
 
+tr.unread td {
+    font-weight:bold;
+}

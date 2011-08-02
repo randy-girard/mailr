@@ -2,8 +2,15 @@ require 'yaml'
 
 class ApplicationController < ActionController::Base
 
+    #unless config.consider_all_requests_local
+    #    #rescue_from ActionController::RoutingError, :with => :route_not_found
+    #    rescue_from ActiveRecord::RecordNotFound, :with => :route_not_found
+    #end
+
 	protect_from_forgery
 	before_filter :load_defaults,:set_locale,:current_user
+
+    ################################# protected section ###########################################
 
 	protected
 
@@ -47,5 +54,13 @@ class ApplicationController < ActionController::Base
 		@folders_shown = @current_user.folders.shown.order("name asc")
 		@current_folder = @current_user.folders.current(@selected_folder)
 	end
+
+    ##################################### private section ##########################################
+
+    #private
+
+    #def route_not_found
+    #    render :text => 'What the fuck are you looking for ?', :status => :not_found
+    #end
 
 end

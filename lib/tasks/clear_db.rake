@@ -1,5 +1,5 @@
 namespace :db do
-	desc "Clears all date in db"
+	desc "Clears all data in db"
     task :clear_data => :environment do
 		users = User.all
       puts "Number of users in db: #{users.size}"

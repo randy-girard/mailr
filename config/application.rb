@@ -40,3 +40,12 @@ module Mailr
     config.filter_parameters += [:password]
   end
 end
+
+class ActiveSupport::BufferedLogger
+    def custom(desc,t)
+        info "\n**** #{desc} *****"
+        info t
+        info "**********************\n\n"
+    end
+end
+

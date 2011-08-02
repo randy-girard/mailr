@@ -4,9 +4,7 @@ class InternalController < ApplicationController
 	layout "simple"
 
 	def error
-		@title = params[:title] || t(:general_error)
-		@error = params[:error] || t(:unspecified_error)
-		logger.error "!!! InternalControllerError: " + @error
+
 	end
 
 	def imaperror
@@ -15,6 +13,13 @@ class InternalController < ApplicationController
 		logger.error "!!! InternalControllerImapError: " + @error
         render 'error'
 	end
+
+	def page_not_found
+        @title = t(:page_not_found)
+		@error = t(:page_not_found)
+		logger.error "!!! InternalControllerError: " + @error
+		render 'error'
+    end
 
 	def loginfailure
         reset_session

@@ -8,6 +8,8 @@ class PrefsController < ApplicationController
 
     def index
         flash[:notice] = 'Not implemented yet'
+
+        @prefs = @current_user.prefs
     end
 
 end

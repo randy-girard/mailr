@@ -21,7 +21,8 @@ Mailr::Application.routes.draw do
 	match 'messages/folder/:id' => 'messages#folder'
 	post "messages/ops"
 	get "messages/compose"
-	get"messages/refresh"
+	get "messages/refresh"
+	match "messages/show/:id" => 'messages#show'
 
 	get "user/logout"
 	post "user/authenticate"
@@ -32,6 +33,8 @@ Mailr::Application.routes.draw do
 	get "user/unknown"
 
 	themes_for_rails
+
+	match '*a', :to => 'internal#page_not_found'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

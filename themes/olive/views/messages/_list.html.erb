@@ -1,0 +1,38 @@
+<div class="inner">
+
+<% WillPaginate::ViewHelpers.pagination_options[:previous_label] = t(:previous_page) %>
+<% WillPaginate::ViewHelpers.pagination_options[:next_label] = t(:next_page) %>
+
+<div class="actions-bar wat-cf">
+    <%= will_paginate @messages %>
+</div>
+
+<form>
+    <table class="table">
+    <tbody>
+    <tr>
+        <th class="first"><input class="checkbox toggle" type="checkbox"></th>
+        <th><%= raw('&nbsp;') %></th>
+        <th><%= t(:from) %></th>
+        <th><%= t(:subject) %></th>
+        <th><%= t(:date) %></th>
+        <th><%= t(:size) %></th>
+        <th class="last"></th>
+    </tr>
+    <% trclass = :even %>
+    <% @messages.each do |m| %>
+    <% m.unread == true ? unread = "unread" : unread = "" %>
+    <tr class="<%= trclass.to_s %> <%= unread %>">
+       <%= render :partial => 'messages/row', :object => m %>
+    </tr>
+    <% trclass == :even ? trclass = :odd : trclass = :even %>
+    <% end %>
+    </tbody>
+    </table>
+</form>
+
+<div class="actions-bar wat-cf">
+    <%= will_paginate @messages %>
+</div>
+
+</div>

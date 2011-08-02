@@ -13,21 +13,24 @@
     <div class="content">
         <%= form_tag({:controller=>'messages', :action=>'ops'})%>
 
+            <%  #render :partial => 'search' %>
+            <%= render :partial => 'ops' %>
+
+            <%= raw form_button(t(:ops),'tick.png') %>
+
+            <% if @current_folder.nil? %>
+                <h2><%= t(:no_folder_selected) %></h2>
+            <% else %>
+                <h2><%= t(:current) %>: <%= pretty_folder_name(@current_folder) %></h2>
+            <% end %>
+
+            <% if @messages.size.zero? %>
+                <%= t(:no_messages) %>
+            <% else %>
+                <%= render :partial => 'list' %>
+            <% end %>
+
         </form>
-
-
-<% if @current_folder.nil? %>
-<%= t(:no_folder_selected) %>
-<% else %>
-
-<h1>Current: <%= pretty_folder_name(@current_folder) %></h1>
-
-<%= @current_folder.inspect %>
-<%= Time.now - @current_folder.msgs_updated_at %>
-
-<% end %>
-
-
     </div>
 </div>
 
