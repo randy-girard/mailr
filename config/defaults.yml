@@ -1,12 +1,23 @@
 theme: olive
-locale: en
+locale: pl
+
+themes: [olive]
+locales: [en, pl]
+msgs_per_page_table: [15, 20, 25, 30, 35, 40, 45, 50]
+msg_send_type: [html, text]
+
+contacts_table_fields: [nick, first_name, last_name, email, info]
+contacts_per_page: 25
 
 msgs_per_page: 20
 msgs_refresh_time: 300
 msgs_send_type: html
-msgs_update_time: 300
+msgs_update_time: 600
+msgs_inbox_view_fields: [from_addr, subject, date, size]
+msgs_sent_view_fields: [to_addr, subject, date, size]
 
 msg_subject_length: 45
+msg_search_fields: [subject, from, to]
 
 imap_debug: true
 imap_use_ssl: 'false'
@@ -20,7 +31,7 @@ session_password: asDD3s2@sAdc983#
 
 mailbox_max_parent_folder_depth: 3
 mailbox_inbox: INBOX
-mailbox_trash: Trash
-mailbox_sent: Sent
-mailbox_drafts: Drafts
+mailbox_trash: INBOX.Trash
+mailbox_sent: INBOX.sent
+mailbox_drafts: INBOX.drafts
 

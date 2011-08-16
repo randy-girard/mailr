@@ -15,3 +15,5 @@ class Prefs < ActiveRecord::Base
 					 )
 	end
 end
+
+# TODO move refresh to prefs and make refresh page with messages

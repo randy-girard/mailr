@@ -3,7 +3,7 @@
 <% end %>
 
 <% content_for :title do %>
-- <%= t(:contacts) %>
+- <%= t(:contacts,:scope=>:contact) %>
 <% end %>
 
 <div class="block" id="block-tables">
@@ -11,8 +11,19 @@
         <%= raw main_navigation(:contacts) %>
     </div>
     <div class="content">
-        <%= form_tag({:controller=>'messages', :action=>'ops'})%>
+        <%= form_tag(contacts_ops_path,{:name=>'contacts'})%>
+
+            <% if @contacts.size.zero? %>
+                <div class="actions-bar wat-cf">
+                    <div class="header_info"><%= t(:no_entries,:scope=>:contact) %>
+                    <%= content_tag(:span, link_to(raw('('+t(:create_new,:scope=>:contact)+')'),new_contact_path),:class=>"other_info") %>
+                </div>
+            <% else %>
+                <%= render :partial => 'ops' %>
+                <%= render :partial => 'list' %>
+            <% end %>
 
         </form>
     </div>
 </div>
+

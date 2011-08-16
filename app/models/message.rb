@@ -1,13 +1,37 @@
 class Message < ActiveRecord::Base
     belongs_to :user
+    belongs_to :folder
 
-    #cattr_reader :per_page
-    #@@per_page = $defaults["msgs_per_page"]
+    def self.getPageForUser(user,folder,page,sort_field,sort_dir)
 
-    def self.getPageForUser(user,page,order = "date desc")
-        #Message.paginate :page => page , :per_page => user.prefs.msgs_per_page.to_i, :conditions=> ['user_id = ?', user.id],:order => order
+        order = 'date desc'
+        if sort_field
+            if Message.attribute_method?(sort_field) == true
+                order = sort_field
+                sort_dir == 'desc' ? order += ' desc' : sort_dir
+            end
+        end
 
-        Message.paginate :page => page , :per_page => 50, :conditions=> ['user_id = ?', user.id],:order => order
+        Message.paginate :page => page , :per_page => user.prefs.msgs_per_page.to_i, :conditions=> ['user_id = ? and folder_id = ?', user.id,folder.id],:order => order
+    end
+
+    def self.createForUser(user,folder,mess)
+        create(
+                :user_id => user.id,
+                :folder_id => folder.id,
+                :msg_id => mess.message_id,
+                :uid => mess.uid,
+                :from_addr => mess.from_to_db,
+                :to_addr => mess.to,
+                :subject => mess.subject,
+                :content_type => mess.content_type,
+                :date => mess.date,
+                :unseen => mess.unseen,
+                :size => mess.size)
+    end
+
+    def change_folder(folder)
+        update_attributes(:folder_id => folder.id)
     end
 
 end

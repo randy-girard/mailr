@@ -3,7 +3,7 @@
 <% end %>
 
 <% content_for :title do %>
-- <%= t(:messages) %>
+- <%= t(:messages,:scope=>:message) %>
 <% end %>
 
 <div class="block" id="block-tables">
@@ -11,22 +11,18 @@
         <%= raw main_navigation(:messages) %>
     </div>
     <div class="content">
-        <%= form_tag({:controller=>'messages', :action=>'ops'})%>
-
-            <%  #render :partial => 'search' %>
-            <%= render :partial => 'ops' %>
-
-            <%= raw form_button(t(:ops),'tick.png') %>
+        <%= form_tag({:controller=>'messages', :action=>'ops'},{:name=>'messages'})%>
 
             <% if @current_folder.nil? %>
-                <h2><%= t(:no_folder_selected) %></h2>
-            <% else %>
-                <h2><%= t(:current) %>: <%= pretty_folder_name(@current_folder) %></h2>
+                <h2><%= t(:no_selected,:scope=>:folder) %></h2>
             <% end %>
 
             <% if @messages.size.zero? %>
-                <%= t(:no_messages) %>
+                <div class="actions-bar wat-cf">
+                    <div class="header_info"><%= t(:no_in,:scope=>:message) %></div>
+                </div>
             <% else %>
+                <%= render :partial => 'ops' %>
                 <%= render :partial => 'list' %>
             <% end %>
 

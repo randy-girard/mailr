@@ -3,7 +3,7 @@
 <% end %>
 
 <% content_for :title do %>
-- <%= t(:folders) %>
+- <%= t(:folders,:scope=>:folder) %>
 <% end %>
 
 <div class="block" id="block-tables">
@@ -14,23 +14,23 @@
 <div class="inner">
     <div class="columns wat-cf">
         <div class="column left">
-            <%= form_tag({:controller=>'folders',:action=>'create'},:class=>'form') %>
-                <%= raw select_for_folders("","parent_folder",@folders,t(:parent_folder),true) %>
-                <%= raw simple_input_field("folder",t(:folder_to_create),"") %>
-                <%= raw form_button(t(:create),'tick.png') %>
+            <%= form_tag(folders_create_path,:class=>'form') %>
+                <%= raw select_for_folders("","parent_folder",@folders,t(:parent,:scope=>:folder),true) %>
+                <%= raw simple_input_field("folder",t(:to_create,:scope=>:folder),"") %>
+                <%= raw form_button('create','tick.png') %>
             </form>
-            <%= form_tag({:controller=>'folders',:action=>'delete'},:class=>'form') %>
-                <%= raw select_for_folders("","folder",@folders,t(:folder_to_delete),true) %>
-                <%= raw form_button(t(:delete),'cross.png') %>
+            <%= form_tag(folders_delete_path,:class=>'form') %>
+                <%= raw select_for_folders("","folder",@folders,t(:to_delete,:scope=>:folder),true) %>
+                <%= raw form_button('delete','cross.png') %>
             </form>
         </div>
         <div class="column right">
-			<%= form_tag({:controller=>'folders',:action=>'refresh'},:class=>'form') %>
-				<%= raw form_button(t(:refresh_folders),'tick.png') %>
+			<%= form_tag(folders_refresh_path,:class=>'form') %>
+				<%= raw form_button('refresh','tick.png') %>
 			</form>
-            <%= form_tag({:controller=>'folders',:action=>'show_hide'},:class=>'form') %>
-            <%= raw multi_select("", 'folders_to_show[]', @folders, @folders_shown,t(:folders_shown),:id,"",{:text => [:parent,:delim,:name]}) %>
-            <%= raw form_button(t(:show_hide),'tick.png') %>
+            <%= form_tag(folders_show_hide_path,:class=>'form') %>
+            <%= raw multi_select("", 'folders_to_show[]', @folders, @folders_shown,t(:shown,:scope=>:folder),:id,"",{:text => [:parent,:delim,:name]}) %>
+            <%= raw form_button('show_hide','tick.png') %>
             </form>
         </div>
     </div>

@@ -3,7 +3,7 @@
 <% end %>
 
 <% content_for :title do %>
-- <%= t(:preferences) %>
+- <%= t(:prefs,:scope=>:prefs) %>
 <% end %>
 
 <div class="block" id="block-tables">
@@ -11,10 +11,15 @@
         <%= raw main_navigation(:prefs) %>
     </div>
     <div class="content">
-        <%= form_tag({:controller=>'messages', :action=>'ops'})%>
-
-
-        <%= @prefs.inspect %>
-
+        <div class="inner"> <%= form_tag(prefs_update_path,:name=>'prefs') %>
+            <div class="columns wat-cf">
+                <div class="column left">
+                    <%= render :partial => 'prefs/left' %>
+                </div>
+                <div class="column right">
+                    <%= render :partial => 'prefs/right' %>
+                </div>
+            </div></form>
+        </div>
     </div>
 </div>

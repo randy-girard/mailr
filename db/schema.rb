@@ -10,19 +10,29 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110731185416) do
+ActiveRecord::Schema.define(:version => 20110816120258) do
+
+  create_table "contacts", :force => true do |t|
+    t.string   "nick"
+    t.string   "email"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "info"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "folders", :force => true do |t|
     t.string   "name"
     t.string   "delim"
     t.boolean  "haschildren"
-    t.integer  "messages"
+    t.integer  "total"
     t.integer  "unseen"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "parent"
-    t.datetime "msgs_updated_at"
     t.boolean  "shown"
     t.string   "alter_name"
   end
@@ -31,13 +41,13 @@ ActiveRecord::Schema.define(:version => 20110731185416) do
     t.integer  "folder_id"
     t.integer  "user_id"
     t.string   "msg_id"
-    t.string   "from"
-    t.string   "to"
+    t.string   "from_addr"
+    t.string   "to_addr"
     t.string   "subject"
     t.string   "content_type"
     t.integer  "uid"
     t.integer  "size"
-    t.boolean  "unread"
+    t.boolean  "unseen"
     t.datetime "date"
     t.datetime "created_at"
     t.datetime "updated_at"

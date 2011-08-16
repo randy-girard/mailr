@@ -25,6 +25,9 @@
 }
 
 a:link, a:visited, a:hover, a:active, h1, h2, h3 { color: #A3AB74; }
+
+#sidebar ul li.selected a { color: #5E634E; }
+
 a { -moz-outline: none; }
 
 body {
@@ -365,6 +368,79 @@ input,select {
 	color: grey;
 	}
 
-tr.unread td {
+tr.unseen td {
     font-weight:bold;
+}
+
+div.ops {
+     border: 1px solid #DACF77;
+     padding: 5px;
+     margin: 3px 0;
+}
+
+div.actions-bar div.header_info {
+    float: left;
+    color: #5E634E;
+    font-size: 22px;
+    margin: 0 10px;
+    font-weight: normal;
+}
+
+div.actions-bar div.header_info .other_info {
+    font-size: 12px;
+}
+
+th a.header {
+    color: white;
+}
+
+ul.navigation {
+    color: #A3AB74;
+}
+
+ul.folders {
+    font-size: 14px;
+}
+
+li.selected {
+    color: #5E634E;
+    font-weight: bold;
+}
+
+div.param_group {
+    margin: 5px 0;
+    font-size: 14px;
+    padding: 3px 0;
+}
+
+div.param_group label.label {
+    margin-right: 5px;
+}
+
+div.params {
+    margin-bottom: 15px;
+}
+
+div.params div.group {
+    margin-bottom:5px;
+}
+
+div.params div.group div.fieldWithErrors label.label {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+div.params input.text_field, div.params textarea.text_area {
+    width: 100%;
+	border:1px solid #CFCFCF;
+}
+
+div.params div.group .description {
+  font-style: italic;
+  color: #8C8C8C;
+  font-size: .9em;
+}
+
+div.params div.group .fieldWithErrors .error {
+  color: red;
 }

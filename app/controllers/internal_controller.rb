@@ -23,7 +23,7 @@ class InternalController < ApplicationController
 
 	def loginfailure
         reset_session
-        flash[:error] = t(:login_failure)
+        flash[:error] = t(:login_failure,:scope=>:user)
         @current_user = nil
         redirect_to :controller=>'user', :action => 'login'
 	end

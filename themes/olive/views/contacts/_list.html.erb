@@ -1,0 +1,31 @@
+
+<div class="inner">
+
+<div class="actions-bar wat-cf">
+    <span class="other_info"> <%= t(:total_entries,:scope=>:contact) %>: <%= @contacts.total_entries %> / <%= link_to t(:create_new,:scope=>:contact), new_contact_path %></span>
+    </div>
+    <%= will_paginate @contacts %>
+</div>
+
+<table class="table">
+    <tbody>
+    <tr>
+        <th class="first"><input id="togglechkbox" class="checkbox toggle" type="checkbox" name="allbox" onclick=toggleCheckBoxes(this.form); /></th>
+        <%= raw contacts_table_header %>
+        <th class="last"></th>
+    </tr>
+    <% trclass = :even %>
+    <% @contacts.each do |c| %>
+    <tr class="<%= trclass.to_s %>">
+       <%= render :partial => 'contacts/row', :object => c %>
+    </tr>
+    <% trclass == :even ? trclass = :odd : trclass = :even %>
+    <% end %>
+    </tbody>
+    </table>
+
+<div class="actions-bar wat-cf">
+    <%= will_paginate @contacts %>
+</div>
+
+</div>

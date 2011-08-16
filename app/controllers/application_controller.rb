@@ -8,7 +8,8 @@ class ApplicationController < ActionController::Base
     #end
 
 	protect_from_forgery
-	before_filter :load_defaults,:set_locale,:current_user
+	before_filter :load_defaults,:current_user,:set_locale
+	before_filter :plugins_configuration
 
     ################################# protected section ###########################################
 
@@ -30,7 +31,7 @@ class ApplicationController < ActionController::Base
 		if @current_user.nil?
 			I18n.locale = $defaults['locale'] || I18n.default_locale
 		else
-			I18n.locale = @current_user.prefs.locale || I18n.default_locale
+			I18n.locale = @current_user.prefs.locale.to_sym || I18n.default_locale
 		end
 	end
 
@@ -52,15 +53,21 @@ class ApplicationController < ActionController::Base
 
 	def get_current_folders
 		@folders_shown = @current_user.folders.shown.order("name asc")
-		@current_folder = @current_user.folders.current(@selected_folder)
+		@current_folder = @current_user.folders.find_by_full_name(@selected_folder)
 	end
 
     ##################################### private section ##########################################
 
-    #private
+    private
+
+    def plugins_configuration
+        WillPaginate::ViewHelpers.pagination_options[:previous_label] = t(:previous_page)
+        WillPaginate::ViewHelpers.pagination_options[:next_label] = t(:next_page)
+    end
 
     #def route_not_found
     #    render :text => 'What the fuck are you looking for ?', :status => :not_found
     #end
 
 end
+

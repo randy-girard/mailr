@@ -11,75 +11,38 @@ class MessagesController < ApplicationController
 
 	before_filter :check_current_user ,:selected_folder
 
-	before_filter :get_current_folders, :only => [:index,:compose,:show]
+	before_filter :get_current_folders
 
-	before_filter :open_imap_session, :only => :refresh
-	after_filter :close_imap_session, :only => :refresh
+	before_filter :open_imap_session, :select_imap_folder
+	after_filter :close_imap_session
 
 	theme :theme_resolver
 
-	@@fetch_attr = ['ENVELOPE','BODYSTRUCTURE', 'FLAGS', 'UID', 'RFC822.SIZE']
 
 	def index
 
-        open_imap_session
-        ####################
         @messages = []
 
-        folder_status = @mailbox.status(@current_folder.full_name)
-        @current_folder.update_attributes(:messages => folder_status['MESSAGES'], :unseen => folder_status['UNSEEN'])
+        folder_status = @mailbox.status
+        @current_folder.update_attributes(:total => folder_status['MESSAGES'], :unseen => folder_status['UNSEEN'])
 
-        if folder_status['MESSAGES'].zero?
-            return
+        folder_status['MESSAGES'].zero? ? uids_remote = [] : uids_remote = @mailbox.fetch_uids
+        uids_local = @current_user.messages.where(:folder_id => @current_folder).collect(&:uid)
+
+        (uids_local-uids_remote).each do |uid|
+            @current_folder.messages.find_by_uid(uid).destroy
         end
 
-        messages = @mailbox.fetch(@current_folder.full_name,1..-1, "UID")
-        logger.custom('mess',messages)
-        uids_to_be_fetched = []
-
-        messages.each do |m|
-            uids_to_be_fetched << m.attr['UID']
-        end
-
-        messages = []
-        @current_user.messages.destroy_all
-        uids_to_be_fetched.each_slice($defaults["imap_fetch_slice"].to_i) do |slice|
-            logger.custom('slice',slice.join(","))
-            messages = @mailbox.uid_fetch(@current_folder.full_name,slice, @@fetch_attr)
-
-
-
+        (uids_remote-uids_local).each_slice($defaults["imap_fetch_slice"].to_i) do |slice|
+            messages = @mailbox.uid_fetch(slice, ImapMessageModule::IMAPMessage.fetch_attr)
             messages.each do |m|
-
-            envelope = m.attr['ENVELOPE']
-            uid = m.attr['UID']
-            #content_type = m.attr['BODYSTRUCTURE'].multipart? ? 'multipart' : 'text'
-            content_type = m.attr['BODYSTRUCTURE'].media_type.downcase
-            size = m.attr['RFC822.SIZE']
-            unread = !(m.attr['FLAGS'].member? :Seen)
-            from = ImapMessageModule::IMAPAddress.from_address(envelope.from[0])
-            logger.custom('from',from.to_db)
-            logger.custom('enevelope_from',envelope)
-            logger.custom('body',m.attr['BODYSTRUCTURE'])
-            message = @current_user.messages.create(:folder_id => @current_folder.id,
-                                                    :msg_id => envelope.message_id,
-                                                    :uid => uid,
-                                                    :from => from.to_db,
-                                                    :to => envelope.to,
-                                                    :subject => envelope.subject,
-                                                    :content_type => content_type,
-                                                    :date => envelope.date,
-                                                    :unread => unread,
-                                                    :size => size)
-
+                mess = ImapMessageModule::IMAPMessage.fromImap(m)
+                Message.createForUser(@current_user,@current_folder,mess)
             end
-
         end
 
-        @messages = Message.getPageForUser(@current_user,params['page'])
+        @messages = Message.getPageForUser(@current_user,@current_folder,params[:page],params[:sort_field],params[:sort_dir])
 
-        ###############
-        close_imap_session
 	end
 
 	def folder
@@ -92,20 +55,102 @@ class MessagesController < ApplicationController
 	end
 
 	def refresh
+        @folders_shown.each do |f|
+            @mailbox.set_folder(f.full_name)
+            folder_status = @mailbox.status
+            f.update_attributes(:total => folder_status['MESSAGES'], :unseen => folder_status['UNSEEN'])
+        end
+        redirect_to :action => 'index'
+	end
+
+	def emptybin
+        begin
+            trash_folder = @current_user.folders.find_by_full_name($defaults["mailbox_trash"])
+            @mailbox.set_folder(trash_folder.full_name)
+            trash_folder.messages.each do |m|
+                logger.custom('id',m.inspect)
+                @mailbox.delete_message(m.uid)
+            end
+            @mailbox.expunge
+            trash_folder.messages.destroy_all
+            trash_folder.update_attributes(:unseen => 0, :total => 0)
+        rescue Exception => e
+            flash[:error] = "#{t(:imap_error)} (#{e.to_s})"
+        end
         redirect_to :action => 'index'
 	end
 
 	def ops
+        begin
+        if !params["uids"]
+            flash[:warning] = t(:no_selected,:scope=>:message)
+        elsif params["delete"]
+            params["uids"].each do |uid|
+                @mailbox.delete_message(uid)
+                @current_user.messages.find_by_uid(uid).destroy
+            end
+            @current_folder.update_stats
+        elsif params["set_unread"]
+            params["uids"].each do |uid|
+                @mailbox.set_unread(uid)
+                @current_user.messages.find_by_uid(uid).update_attributes(:unseen => 1)
+            end
+        elsif params["set_read"]
+            params["uids"].each do |uid|
+                @mailbox.set_read(uid)
+                @current_user.messages.find_by_uid(uid).update_attributes(:unseen => 0)
+            end
+        elsif params["trash"]
+            dest_folder = @current_user.folders.find_by_full_name($defaults["mailbox_trash"])
+            params["uids"].each do |uid|
+                @mailbox.move_message(uid,dest_folder.full_name)
+                message = @current_folder.messages.find_by_uid(uid)
+                message.change_folder(dest_folder)
+            end
+            @mailbox.expunge
+            dest_folder.update_stats
+            @current_folder.update_stats
+        elsif params["copy"]
+            if params["dest_folder"].empty?
+                flash[:warning] = t(:no_selected,:scope=>:folder)
+            else
+                dest_folder = find(params["dest_folder"])
+                params["uids"].each do |uid|
+                    @mailbox.copy_message(uid,dest_folder.full_name)
+                    message = @current_folder.messages.find_by_uid(uid)
+                    new_message = message.clone
+                    new_message.folder_id = dest_folder.id
+                    new_message.save
+                end
+                dest_folder.update_stats
+                @current_folder.update_stats
+            end
+        elsif params["move"]
+            if params["dest_folder"].empty?
+                flash[:warning] = t(:no_selected,:scope=>:folder)
+            else
+                dest_folder = @current_user.folders.find(params["dest_folder"])
+                params["uids"].each do |uid|
+                    @mailbox.move_message(uid,dest_folder.full_name)
+                    message = @current_folder.messages.find_by_uid(uid)
+                    message.change_folder(dest_folder)
+                end
+                @mailbox.expunge
+                dest_folder.update_stats
+                @current_folder.update_stats
+            end
+        end
+        rescue Exception => e
+            flash[:error] = "#{t(:imap_error)} (#{e.to_s})"
+        end
         redirect_to :action => 'index'
     end
 
     def show
-        @message = Message.find(params[:id])
-        flash[:notice] = 'Not impelented yet'
-        open_imap_session
-        @body = @mailbox.fetch_body(@current_folder.full_name,@message.uid)
-        logger.custom('body',@body.inspect)
-        close_imap_session
+        @message = @current_user.messages.find(params[:id])
+        @message.update_attributes(:unseen => false)
+        flash[:notice] = 'Not implemented yet'
+        @body = @mailbox.fetch_body(@message.uid)
     end
 
 end

@@ -3,6 +3,7 @@ class Folder < ActiveRecord::Base
     belongs_to :user
     validates_presence_of :name, :on => :create
     before_save :check_fill_params, :on => :create
+    has_many :messages, :dependent => :destroy
 
     def full_name
         if parent.empty?
@@ -22,12 +23,23 @@ class Folder < ActiveRecord::Base
 		(fields[1].downcase == name.downcase) && (fields[0].downcase == parent.downcase)
     end
 
+	def update_stats
+        unseen = messages.where(:unseen => true).count
+        total = messages.count
+        update_attributes(:unseen => unseen, :total => total)
+	end
+
+	def hasFullName?(folder_name)
+        full_name.downcase == folder_name.downcase
+	end
+
+    ############################################## private section #####################################
+
     private
 
     def check_fill_params
-        self.messages.nil? ? self.messages = 0 : self.messages
+        self.total.nil? ? self.total = 0 : self.total
         self.unseen.nil? ? self.unseen = 0 : self.unseen
-        self.msgs_updated_at.nil? ? self.msgs_updated_at = (DateTime.now-1) : self.msgs_updated_at
     end
 
     def self.createBulk(user,imapFolders)
@@ -43,14 +55,22 @@ class Folder < ActiveRecord::Base
             parent = ""
         end
 
-        user.folders.create(:name=>name,:parent=>parent,:haschildren=>has_children,:delim=>data.delim,:messages => data.messages,:unseen => data.unseen)
+        user.folders.create(
+            :msgs_updated_at => DateTime.now-1,
+            :name => name,
+            :parent => parent,
+            :haschildren => has_children,
+            :delim => data.delim,
+            :total => data.messages,
+            :unseen => data.unseen)
         end
     end
 
-    def self.current(data)
-        folder = data.split("#")
-        nam = folder.delete_at(folder.size - 1)
-        folder.size.zero? == true ? par = "" : par = folder.join(".")
+    def self.find_by_full_name(data)
+        folder = data.gsub(/\./,'#')
+        fields = folder.split("#")
+        nam = fields.delete_at(fields.size - 1)
+        fields.size.zero? == true ? par = "" : par = fields.join(".")
 		where(['name = ? and parent = ?',nam,par]).first
     end
 
@@ -63,5 +83,7 @@ class Folder < ActiveRecord::Base
         folders=mailbox.folders
         Folder.createBulk(user,folders)
 	end
+
+
 
 end

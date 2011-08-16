@@ -8,7 +8,7 @@ class UserController < ApplicationController
 
 	def logout
 		reset_session
-		flash[:notice] = t(:user_logged_out)
+		flash[:notice] = t(:logged_out,:scope=>:user)
 		redirect_to :action => "login"
 	end
 
@@ -44,19 +44,19 @@ class UserController < ApplicationController
 	def create
 
 		@user = User.new
-		@user.email = params["user_email"]
-		@user.first_name = params["user_first_name"]
-		@user.last_name = params["user_last_name"]
+		@user.email = params[:user][:email]
+		@user.first_name = params[:user][:first_name]
+		@user.last_name = params[:user][:last_name]
 
         @server = Server.new
-		@server.name = params["server_name"]
+		@server.name = params[:server][:name]
 
 		if @user.valid? and @server.valid?
 			@user.save
 			@server.user_id = @user.id
 			@server.save
 			Prefs.create_default(@user.id)
-			flash[:notice] = t(:setup_done)
+			flash[:notice] = t(:setup_done,:scope=>:user)
 			redirect_to :action => 'login'
 		else
 			render "setup"

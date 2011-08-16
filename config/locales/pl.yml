@@ -1,77 +1,122 @@
 pl:
-  mailr:          Mailr
-  email:          E-mail
-  password:       Hasło
-  log_in:         Zaloguj
-  wrong_email_or_password:  Podano nieprawidłowy login lub hasło
-  mailbox:        Poczta
-  folders:        Foldery
-  folder:         Folder
-  empty:          Opróżnij
-  logout:         Wyloguj
-  compose:        Nowa wiadomość
-  preferences:    Ustawienia
-  filters:        Filtry
-  contacts:       Kontakty
-  search:         Szukaj
-  search_txt:     ciąg znaków
-  refresh:        Odśwież
-  operations:     Akcje
-  operations_txt: Akcje na zaznaczonych wiadomościach
-  delete:         Usuń
-  copy:           Skopiuj
-  move:           Przenieś
-  mark_read:      Zaznacz jako przeczytane
-  mark_unread:    Zaznacz jako nieprzeczytane
-  destination_txt:  Miejsce docelowe dla akcji
-  for:            ciągu znaków
-  to:             Do
-  subject:        Temat
-  date:           Data
-  size:           Rozmiar
-  from:           Od
-  show_all:       Pokaż wszystkie
-  pages:          Strony
-  first:          Pierwsza
-  prev:           Poprzednia
-  next:           Następna
-  last:           Ostatnia
-  back_to_list:   Powrót do listy
-  back_to_message:  Powrót do wiadomości
-  reply:          Odpowiedz
-  forward:        Przekaż
-  delete:         Usuń
-  view_source:    Pokaż źródło
-  add_filter:     Dodaj filtr
-  cc:             Cc
-  bcc:            Bcc
-  send:           Wyślij
-  choose_address: Wybierz adres z kontaktów
-  compose_txt:    Utwórz nową wiadomość
-  attachment:     Załącznik
-  add:            Dodaj
-  first_name:     Imię
-  last_name:      Nazwisko
-  send_type:      Format wiadomości wychodzącej
-  messages_per_page:    Ilość wiadomości na stronie
-  check_external_mail:  Check external mail?
-  check_external_mail_txt:  Note that by selecting this option webmail system will try to log you using your original email on a local server.
-  save:           Zapisz
-  cancel:         Anuluj
-  add_one_contact:  Dodaj jeden kontakt
-  add_multiple:   Dodaj wiele
-  name:           Nazwa
-  add_folder:     Dodaj folder
-  total_messages: Total messages
-  unseen:         Unseen
-  add_edit_folder: Zarządzaj
-  user_logged_out: Użytkownik został wylogowany
-  please_login: Logowanie
-  add_to_contacts: Dodaj do kontaktów
-  want_to_empty_trash_message: Czy chcesz opróznic kosz?
+  activerecord:
+    errors:
+      messages:
+        blank: "nie może być pust(a/e/y) "
+        too_short: "za krótki(e) (min. %{count} znak(i/ów)) "
+        too_long: "za długi(e) (max. %{count} znak(i/ów)) "
+        invalid: "ma niepoprawny format "
+        not_unique: "musi być unikalny "
+        taken: "musi być unikalny"
+    models:
+      contact: Kontakt
+    attributes:
+      contact:
+        nick: Pseudonim
+        first_name: Imię
+        last_name: Nazwisko
+        email: E-mail
+        info: Informacje dodatkowe
+      prefs:
+        theme: Temat
+        locale: Ustawienia językowe
+        msgs_per_page: Ilość wiadomości wyświetlanych na stronie
+        msg_send_type: Format wysyłanej wiadomości
+      message:
+        from_addr: Od
+        to_addr: Do
+        subject: Temat
+        size: Rozmiar
+        date: Data
+      user:
+        email: E-mail
+        password: Hasło
+        first_name: Imię
+        last_name: Nazwisko
+      server:
+        name: Nazwa serwera
+
+  contact:
+    compose_to_selected: Napisz do wybranych
+    delete_selected: Usuń wybrane
+    modifying: Modyfikacja kontaktu
+    creating_new: Tworzenie nowego kontaktu
+    create_new: Utwórz nowy kontakt
+    contacts: Kontakty
+    contact: Kontakt
+    no_selected: Nie wybrano żadnego kontaktu
+    total_entries: Liczba kontaktów
+    no_entries: Brak kontaktów
+    was_created: Kontakt został utworzony
+    are_you_sure_to_delete_contact: Czy na pewno chcesz usunąć kontakt?
+
+  prefs:
+    prefs: Ustawienia
+
+  folder:
+    folders: Foldery
+    no_shown: Żadnych pokazanych folderów
+    parent: Folder nadrzędny
+    to_create: Folder do utworzenia
+    to_delete: Folder do usunięcia
+    shown: Foldery pokazane
+    emptybin: Opróżnij
+    current: Folder bieżący
+    no_selected: Nie wybrano żadnego folderu
+    to_create_empty: Nie podano nazwy folderu
+    max_depth: Osiągnięto maksymalne zagnieżdzenie fodlderów
+    can_not_create: Nie można utworzyć folderu
+    was_created: Folder został utworzony
+    to_delete_empty: Nie wybrano folderu do usunięcia
+    can_not_delete: Nie można usunąć folderu
+    was_deleted: Folder został usunięty
+    to_folder: do folderu
+
+  message:
+    messages: Wiadomości
+    no_selected: Nie wybrano żadnej wiadomości
+    total: Liczba wszystkich wiadomości
+    checked: zaznaczone wiadomości
+    set_read: Ustaw jako przeczytane
+    set_unread: Ustaw jako nieprzeczytane
+    no_in: Nie ma żadnych wiadomości w bieżącym folderze
+    no_subject: Brak tematu
+
+  compose:
+    compose: Nowa wiadomość
+
+  user:
+    login_failure: Nieudane logowanie. Podano błędny e-mail lub hasło.
+    logged_out: Użytkownik wylogowany
+    setup_done: Konfiguracja zakończona. Proszę się zalogować.
+    please_login: Logowanie
+    unknown_title: Nieznany użytkownik
+    unknown_flash: Twój identyfikator użytkownika nie został odnaleziony w bazie
+    unknown_login: Idź do strony logowania i zaloguj sie jeszcze raz
+    unknown_setup: Idź do strony konfiguracyjnej i skonfiguruj swój dostęp
+    setup: Konfiguracja
+    login: Logowanie
+
+  must_be_unique: musi być unikalny
+  some_add_info: jakieś dodatkowe informacje
+  example: przykład
+  refresh: Odśwież
+  create: Utwórz
+  delete: Usuń
+  show_hide: Pokaż/Ukryj
+  mailr: Mailr
+  save: Zapisz
+  imap_error: Błąd protokołu IMAP
+  unspecified_error: Nieoczekiwany błąd
+  page_not_found: Nie znaleziono żadanej strony
+  copy: Skopiuj
+  move: Przenieś
+  to: do
+  previous_page: Poprzednia
+  next_page: Następna
+  bytes: B
+  kbytes: kB
+  mbytes: MB
   site_link: https://github.com/lmanolov/mailr
-  marked_messages: zaznaczone wiadomości
-  to_folder: do folderu
-  message_field: Pole wiadomości
-  no_messages_found: Nie znaleziono żadnych wiadomości
+  send: Wyślij
 

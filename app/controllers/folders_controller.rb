@@ -18,35 +18,35 @@ class FoldersController < ApplicationController
 
     def create
         if params["folder"].empty?
-            flash[:warning] = t(:folder_to_create_empty)
+            flash[:warning] = t(:to_create_empty,:scope=>:folder)
             render "index"
         else
             begin
                 if params["parent_folder"].empty?
                     @mailbox.create_folder(params[:folder])
                 else
-                    parent_folder = Folder.find(params["parent_folder"])
+                    parent_folder = @current_user.folders.find(params["parent_folder"])
                     if parent_folder.depth >= $defaults["mailbox_max_parent_folder_depth"].to_i
-                        raise Exception, t(:folder_max_depth)
+                        raise Exception, t(:max_depth,:scope=>:folder)
                     end
                     @mailbox.create_folder(parent_folder.full_name + parent_folder.delim + params[:folder])
                 end
             rescue Exception => e
-                flash[:error] = t(:can_not_create_folder) + ' (' + e.to_s + ')'
+                flash[:error] = t(:can_not_create,:scope=>:folder) + ' (' + e.to_s + ')'
                 render 'index'
                 return
             end
-            redirect_to :action => 'refresh', :flash => t(:folder_was_created), :type => :notice
+            redirect_to :action => 'refresh', :flash => t(:was_created,:scope=>:folder), :type => :notice
         end
     end
     # FIXME if you delete folder you should change current folder because if you go to messages/index you got nil
     def delete
         if params["folder"].empty?
-            flash[:warning] = t(:folder_to_delete_empty)
+            flash[:warning] = t(:to_delete_empty,:scope=>:folder)
             render "index"
         else
             begin
-                folder = Folder.find(params["folder"])
+                folder = @current_user.folders.find(params["folder"])
                 system_folders = Array.new
                 system_folders << $defaults["mailbox_inbox"]
                 system_folders << $defaults["mailbox_trash"]
@@ -55,13 +55,13 @@ class FoldersController < ApplicationController
                 if system_folders.include?(folder.full_name.downcase)
                     raise Exception, t(:system_folder)
                 end
-                @mailbox.delete_folder(Folder.find(params["folder"]).full_name)
+                @mailbox.delete_folder(folder.full_name)
             rescue Exception => e
-                flash[:error] = t(:can_not_delete_folder) + ' (' + e.to_s + ')'
+                flash[:error] = t(:can_not_delete,:scope=>:folder) + ' (' + e.to_s + ')'
                 render 'index'
                 return
             end
-            redirect_to :action => 'refresh', :flash => t(:folder_was_deleted), :type => :notice
+            redirect_to :action => 'refresh', :flash => t(:was_deleted,:scope=>:folder), :type => :notice
         end
     end
 
@@ -82,9 +82,6 @@ class FoldersController < ApplicationController
 	def refresh
 		Folder.refresh(@mailbox,@current_user)
 		flash.keep
-		#if params[:flash]
-        #    flash[params[:type]] = params[:flash]
-        #end
 		redirect_to :action => 'index'
 	end
 

@@ -2,14 +2,25 @@ class PrefsController < ApplicationController
 
     before_filter :check_current_user,:selected_folder
 
-	before_filter :get_current_folders, :only => [:index,:compose]
+	before_filter :get_current_folders
+
+	before_filter :get_prefs
 
     theme :theme_resolver
 
     def index
-        flash[:notice] = 'Not implemented yet'
-
-        @prefs = @current_user.prefs
     end
 
+    def update
+        if params[:prefs]
+            @prefs.update_attributes(params[:prefs])
+        end
+        redirect_to :action => 'index'
+    end
+
+    ############################################ private section #########################################
+
+    def get_prefs
+        @prefs = @current_user.prefs
+    end
 end

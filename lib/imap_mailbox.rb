@@ -9,11 +9,11 @@ end
 class IMAPMailbox
 
 	attr_reader :connected
-	attr_accessor :selected_folder
+	attr_accessor :sfolder
 	attr_accessor :logger
 
 	def initialize(logger)
-		@selected_folder = ''
+		@sfolder = ''
 		@folders = {}
 		@connected = false
 		@logger = logger
@@ -80,6 +80,19 @@ class IMAPMailbox
         end
     end
 
+    def fetch_uids
+        begin
+            uids = []
+            imap_uids = @imap.fetch(1..-1, "UID")
+            imap_uids.each do |u|
+                uids << u.attr['UID']
+            end
+            return uids
+        rescue Exception => e
+            raise e
+        end
+    end
+
     def delete_folder(name)
         begin
             @imap.delete(Net::IMAP.decode_utf7(name))
@@ -88,18 +101,16 @@ class IMAPMailbox
         end
     end
 
-    def fetch(folder_name,range,attribs)
+    def fetch(range,attribs)
         begin
-            set_folder(folder_name)
             @imap.fetch(range,attribs)
         rescue Exception => e
             raise e
         end
     end
 
-    def uid_fetch(folder_name,range,attribs)
+    def uid_fetch(range,attribs)
         begin
-            set_folder(folder_name)
             @imap.uid_fetch(range,attribs)
         rescue Exception => e
             raise e
@@ -107,18 +118,79 @@ class IMAPMailbox
     end
 
     def set_folder(folder_name)
-        if folder_name.downcase != @selected_folder.downcase
-            @imap.select(folder_name)
-            @selected_folder = folder_name
+        begin
+            if folder_name != @sfolder
+                @imap.select(folder_name)
+                @sfolder = folder_name
+            end
+        rescue Exception => e
+            raise e
         end
     end
 
-    def status(folder_name)
-        @imap.status(folder_name, ["MESSAGES", "RECENT", "UNSEEN"])
+    def status
+        begin
+            @imap.status(@sfolder, ["MESSAGES", "RECENT", "UNSEEN"])
+        rescue Exception => e
+            raise e
+        end
     end
 
-    def fetch_body(folder_name,uid)
-        uid_fetch(folder_name,uid,"BODY[]").first.attr["BODY[]"]
+    def fetch_body(uid)
+        begin
+            uid_fetch(uid,"BODY[]").first.attr["BODY[]"]
+        rescue Exception => e
+            raise e
+        end
+    end
+
+    def delete_message(uid)
+        begin
+            @imap.uid_store(uid.to_i, "+FLAGS", :Deleted)
+        rescue Exception => e
+            raise e
+        end
+    end
+
+    def expunge
+        begin
+            @imap.expunge
+        rescue Exception => e
+            raise e
+        end
+    end
+
+    def set_read(uid)
+        begin
+            @imap.uid_store(uid.to_i, "+FLAGS", :Seen)
+        rescue Exception => e
+            raise e
+        end
+    end
+
+    def set_unread(uid)
+        begin
+            @imap.uid_store(uid.to_i, "-FLAGS", :Seen)
+        rescue Exception => e
+            raise e
+        end
+    end
+
+    def copy_message(uid,dest_folder)
+        begin
+            @imap.uid_copy(uid.to_i, dest_folder)
+        rescue Exception => e
+            raise e
+        end
+    end
+
+    def move_message(uid,dest_folder)
+        begin
+            copy_message(uid,dest_folder)
+            delete_message(uid)
+        rescue Exception => e
+            raise e
+        end
     end
 
 end

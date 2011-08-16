@@ -1,7 +1,7 @@
 module ApplicationHelper
 
 def form_field(object,field,flabel,example,val)
-
+    model_name = eval(object.class.model_name)
 	html = ""
 	html << "<div class=\"group\">"
 	if object.errors[field.to_sym]
@@ -10,7 +10,7 @@ def form_field(object,field,flabel,example,val)
 	end
 	html << "<label class=\"label\">"
 	if flabel.nil?
-		html << t(field.to_sym)
+		html << model_name.human_attribute_name(field)
 	else
 		html << t(flabel.to_sym)
 	end
@@ -21,9 +21,11 @@ def form_field(object,field,flabel,example,val)
 		html << "</span>"
 		html << "</div>"
 	end
-	html << "<input name=\""
+	html << "<input id=\""
 	html << object.class.name.downcase+"_"+field
-	html << "\" type=\"text\" class=\"text_field\" value=\""
+	html << "\""
+	html << " name=\"#{object.class.name.downcase}[#{field}]\""
+	html << " size=50 type=\"text\" class=\"text_field\" value=\""
 	value = object.instance_eval(field) || val || ""
 	html << value
 	html << "\"/>"
@@ -43,7 +45,7 @@ def form_button(text,image)
 	html << "<img src=\""
 	html << current_theme_image_path(image)
 	html << "\" alt=\""
-	html << text
+	html << t(text.to_sym)
 	html << "\" />"
 	html << t(text.to_sym)
 	html << "</button></div>"
@@ -66,7 +68,7 @@ end
 
 def simple_input_field(name,label,value)
     html = ""
-    html << "<div class=\"group\">"
+    html << "<div class=\"param_group\">"
     html << "<label class=\"label\">#{label}</label>"
     html << "<input name=\"#{name}\" class=\"text_field\" type=\"text\" value=\"#{value}\">"
     html << "</div>"
@@ -80,6 +82,15 @@ def select_field(name,object,label,blank)
     html << "</div>"
 end
 
+def select_field_table(object,field,table_choices,choice,blank)
+    model_name = eval(object.class.model_name)
+    html = ""
+    html << "<div class=\"param_group\">"
+    html << "<label class=\"label\">#{model_name.human_attribute_name(field)}</label>"
+    html << select(object.class.to_s.downcase, field, options_for_select(table_choices,choice), {:include_blank => blank})
+    html << "</div>"
+end
+
 #def form_simle_field(name,label,value)
 #    html = ""
 #    html << "<div class=\"group\">"
@@ -89,23 +100,23 @@ end
 #end
 
 def nav_to_folders
-    link_to( t(:folders), :controller=>:folders, :action=>:index )
+    link_to( t(:folders,:scope=>:folder), :controller=>:folders, :action=>:index )
 end
 
 def nav_to_messages
-    link_to( t(:messages), :controller=>:messages, :action=>:index )
+    link_to( t(:messages,:scope=>:message), :controller=>:messages, :action=>:index )
 end
 
 def nav_to_compose
-    link_to( t(:compose), :controller=>:messages, :action=>:compose )
+    link_to( t(:compose,:scope=>:compose), :controller=>:messages, :action=>:compose )
 end
 
 def nav_to_contacts
-    link_to( t(:contacts), :controller=>:contacts, :action=>:index )
+    link_to( t(:contacts,:scope=>:contact), contacts_path )
 end
 
 def nav_to_prefs
-    link_to( t(:preferences), :controller=>:prefs, :action=>:index )
+    link_to( t(:prefs,:scope=>:prefs), prefs_path )
 end
 
 def main_navigation(active)

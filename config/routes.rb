@@ -1,9 +1,13 @@
 Mailr::Application.routes.draw do
 
-  get "prefs/index"
+  match "prefs/index" => "prefs#index", :as => :prefs
+  post "prefs/update"
 
-  get "contacts/index"
+  resources :contacts
+  post "contacts/ops"
 
+
+  #resources :folders
   get "folders/index"
   post "folders/create"
   post "folders/delete"
@@ -18,11 +22,12 @@ Mailr::Application.routes.draw do
 	root :to => "messages#index"
 	get "messages/index"
 	get "messages/refresh"
-	match 'messages/folder/:id' => 'messages#folder'
+	match 'messages/folder/:id' => 'messages#folder', :as => :messages_folder
 	post "messages/ops"
 	get "messages/compose"
 	get "messages/refresh"
 	match "messages/show/:id" => 'messages#show'
+	get "messages/emptybin"
 
 	get "user/logout"
 	post "user/authenticate"

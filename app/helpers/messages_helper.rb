@@ -19,14 +19,38 @@ module MessagesHelper
     end
 
     def subject_formatter(message)
-		length = $defaults["msg_subject_length"].to_i
-		logger.custom('l',length)
-		message.subject.length >= length ? s = message.subject[0,length]+"..." : s = message.subject
+        if message.subject.size.zero?
+            s = t(:no_subject,:scope=>:message)
+        else
+            length = $defaults["msg_subject_length"].to_i
+            message.subject.length >= length ? s = message.subject[0,length]+"..." : s = message.subject
+        end
         link_to s,:controller => 'messages', :action => 'show', :id => message.id
     end
 
     def attachment_formatter(message)
         message.content_type == 'text' ? "" : "A"
+    end
+
+    def headers_links
+
+        if @current_folder.hasFullName?($defaults["mailbox_sent"])
+            fields = $defaults["msgs_sent_view_fields"]
+        else
+            fields = $defaults["msgs_inbox_view_fields"]
+        end
+
+        html = ""
+        fields.each do |f|
+            html << "<th>"
+            if params[:sort_field] == f
+                params[:sort_dir].nil? ? dir = 'desc' : dir = nil
+            end
+
+            html << link_to(Message.human_attribute_name(f), {:controller => 'messages',:action => 'index',:sort_field => f,:sort_dir => dir}, {:class=>"header"})
+            html << "</th>"
+        end
+        html
     end
 
 end

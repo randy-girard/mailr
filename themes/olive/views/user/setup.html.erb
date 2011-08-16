@@ -1,19 +1,19 @@
 <% content_for :title do %>
-  <%= t(:setup_title) %>
+  <%= t(:setup,:scope=>:user) %>
 <% end %>
 
 <div id="box">
 <div class="block">
-<div id="logo"><a href="/"><img src="<%= current_theme_image_path('logo_small.png')%>" alt="Mailr"/></a>
+<div id="logo"><a href="/"><img src="<%= current_theme_image_path('logo_small.png')%>" alt="<%= t(:mailr) %>"/></a>
 </div>
-<h2><%= t(:setup_title) %></h2>
+<h2><%= t(:setup,:scope=>:user) %></h2>
 	<div class="content">
 	<form action="<%=url_for(:controller => 'user', :action => 'create')%>" method="post" class="form">
-	<%= raw form_field(@user,"email",nil,"joe.doe@domain.domain",params['email']) %>
+	<%= raw form_field(@user,"email",nil,"joe.doe@domain.domain",params[:user].nil? ? params[:email] : params[:user][:email]) %>
 	<%= raw form_field(@user,"first_name",nil,"Joe","") %>
 	<%= raw form_field(@user,"last_name",nil,"Doe","") %>
-	<%= raw form_field(@server,"name","server_name","domain.domain","") %>
-	<%= raw form_button(t(:send),"tick.png") %>
+	<%= raw form_field(@server,"name",nil,"server.domain","") %>
+	<%= raw form_button('send',"tick.png") %>
 	</form>
 	</div>
 </div>

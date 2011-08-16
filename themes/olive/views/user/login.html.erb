@@ -1,12 +1,12 @@
 <% content_for :title do %>
-  <%= t(:please_login) %>
+  <%= t(:login,:scope=>:user) %>
 <% end %>
 
 <div id="box">
 <div class="block">
 <div id="logo"><a href="/"><img src="<%= current_theme_image_path('logo_small.png')%>" alt="Mailr"/></a>
 </div>
-<h2><%= t(:please_login) %></h2>
+<h2><%= t(:login,:scope=>:user) %></h2>
 	<div class="content login">
 		<div class="flash">
 		<% if flash[:error] %>
@@ -18,7 +18,7 @@
 	<form action="<%=url_for(:controller => 'user', :action => 'authenticate')%>" method="post" class="form login">
 		<div class="group wat-cf">
 			<div class="left">
-                <label class="label right"><%= t(:email) %></label>
+                <label class="label right"><%= User.human_attribute_name('email') %></label>
 			</div>
 			<div class="right">
 				<%= text_field "user", "email" %>
@@ -26,7 +26,7 @@
 		</div>
 		<div class="group wat-cf">
 			<div class="left">
-				<label class="label right"><%= t(:password) %></label>
+				<label class="label right"><%= User.human_attribute_name('password') %></label>
 			</div>
 			<div class="right">
                 <%= password_field "user", "password" %></td>
