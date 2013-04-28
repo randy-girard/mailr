@@ -6,7 +6,7 @@ module CDF
 end
 
 class CDF::Mail
-	include ActionMailer::Quoting
+#	include ActionMailer::Quoting
 	  
   def initialize(senderTempLocation)
     @attachments = Array.new

@@ -42,7 +42,7 @@ module WebmailHelper
     title = folder.unseen > 0 ? "#{folder_name} (#{folder.unseen})" :  "#{folder_name}"
     link = link_to title, :controller => 'webmail', :action => 'messages', :folder_name => folder.name
     link = content_tag('b', link) if folder.name == @folder_name
-    link += '&nbsp;' + empty_trash_link(folder.name) if folder.trash?
+    link += ' ' + empty_trash_link(folder.name) if folder.trash?
     link
   end
 
@@ -101,7 +101,7 @@ module WebmailHelper
   def page_navigation_webmail(pages)
     nav = "<p class='paginator'><small>"
     
-    nav << "(#{pages.length} #{t :pages}) &nbsp; "
+    nav << "(#{pages.length} #{t :pages}) "
     
     window_pages = pages.current.window.pages
     nav << "..." unless window_pages[0].first?
@@ -113,7 +113,7 @@ module WebmailHelper
       end
     end
     nav << "..." unless window_pages[-1].last?
-    nav << " &nbsp; "
+    nav << " "
     
     nav << link_to(t(:first), :controller=>"webmail", :action=>'messages', :page=>@pages.first.number) << " | " unless @pages.current.first?
     nav << link_to(t(:prev), :controller=>"webmail", :action=>'messages', :page=>@pages.current.previous.number) << " | " if @pages.current.previous
@@ -148,11 +148,11 @@ module WebmailHelper
   
   def message_size(size) 
   	if size / (1024*1024) > 0
-  		return "#{(size / (1024*1024)).round}&nbsp;MB"
+  		return "#{(size / (1024*1024)).round} MB"
   	elsif size / 1024 > 0	
-  		return "#{(size / (1024)).round}&nbsp;KB"
+  		return "#{(size / (1024)).round} KB"
   	else
-  		return "#{size}&nbsp;B"
+  		return "#{size} B"
   	end	
   end
 

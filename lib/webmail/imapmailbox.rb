@@ -80,26 +80,26 @@ class IMAPMailbox
           System.sleep(CDF::CONFIG[:imap_bye_timeout_retry_seconds])
           @imap   = Net::IMAP.new(CDF::CONFIG[:imap_server], port, use_ssl)
         rescue Error => ex
-          logger.error "Error on authentication!"
-      	  logger.error bye.backtrace.join("\n")
+          logger.debug "Error on authentication!"
+      	  logger.debug bye.backtrace.join("\n")
           raise AuthenticationError.new
         end  
       rescue Net::IMAP::NoResponseError => noresp
-        logger.error "Error on authentication!"
-      	logger.error noresp.backtrace.join("\n")
+        logger.debug "Error on authentication!"
+      	logger.debug noresp.backtrace.join("\n")
         raise AuthenticationError.new
       rescue Net::IMAP::BadResponseError => bad
-        logger.error "Error on authentication!"
-      	logger.error bad.backtrace.join("\n")
+        logger.debug "Error on authentication!"
+      	logger.debug bad.backtrace.join("\n")
         raise AuthenticationError.new
       rescue Net::IMAP::ResponseError => resp
-        logger.error "Error on authentication!"
-      	logger.error resp.backtrace.join("\n")
+        logger.debug "Error on authentication!"
+      	logger.debug resp.backtrace.join("\n")
         raise AuthenticationError.new
       end  
       @username = username
       begin
-      	logger.error "IMAP authentication - #{CDF::CONFIG[:imap_auth]}."
+      	logger.debug "IMAP authentication - #{CDF::CONFIG[:imap_auth]}."
         if CDF::CONFIG[:imap_auth] == 'NOAUTH'
           @imap.login(username, password)
         else
@@ -107,8 +107,8 @@ class IMAPMailbox
         end
         @connected = true
       rescue Exception => ex
-        logger.error "Error on authentication!"
-      	logger.error ex.backtrace.join("\n")
+        logger.debug "Error on authentication!"
+      	logger.debug ex.backtrace.join("\n")
         raise AuthenticationError.new
       end
     end
@@ -127,7 +127,7 @@ class IMAPMailbox
     if ret.include?("Password change succeeded.")
       return true
     else
-      logger.error "[!] Error on change password! - #{ret}" 
+      logger.debug "[!] Error on change password! - #{ret}" 
       return false
     end  
   end
@@ -168,7 +168,7 @@ class IMAPMailbox
       @imap.delete(folders[name].utf7_name)
       reload
     rescue Exception=>e
-      logger.error("Exception on delete #{name} folder #{e}") 
+      logger.debug("Exception on delete #{name} folder #{e}") 
     end
   end
   
@@ -182,7 +182,7 @@ class IMAPMailbox
       @imap.append(CDF::CONFIG[:mail_sent], message)  
       folders[CDF::CONFIG[:mail_sent]].cached = false if folders[CDF::CONFIG[:mail_sent]]
     rescue Exception=>e
-      logger.error("Error on append  - #{e}") 
+      logger.debug("Error on append  - #{e}") 
     end
       
   end
@@ -197,7 +197,7 @@ class IMAPMailbox
       @imap.append(CDF::CONFIG[:mail_bulk_sent], message)  
       folders[CDF::CONFIG[:mail_sent]].cached = false if folders[CDF::CONFIG[:mail_bulk_sent]]
     rescue Exception=>e
-      logger.error("Error on bulk -  #{e}") 
+      logger.debug("Error on bulk -  #{e}") 
     end  
   end
 end

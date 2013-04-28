@@ -66,3 +66,5 @@ en:
   unseen:         Unseen
   add_edit_folder: Add/Edit folder 
   want_to_empty_trash_message: Do you really want to empty trash message?
+  save_and_add_another: Save and add another
+  delete_contact_question: Do you really want to delete %{name} %{email}?

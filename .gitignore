@@ -5,3 +5,5 @@ config/site.rb
 tmp
 mail_temp
 config/site.rb
+db/*.sqlite3
+.project

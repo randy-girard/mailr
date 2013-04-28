@@ -15,6 +15,8 @@ class WebmailController < ApplicationController
   
   layout "public", :except => [:view_source, :download]
   
+  
+  
 #   model :filter, :expression, :mail_pref, :customer
   
   BOOL_ON = "on"
@@ -90,7 +92,7 @@ class WebmailController < ApplicationController
       @messages = folder.messages_search([@search_field, @search_value], sort_query + (reverse_sort ? ' desc' : ' asc'))
     else
       @pages = Paginator.new self, folder.total, get_mail_prefs.wm_rows, @page
-      @messages = @pages.last.last_item > 0 ? folder.messages_rev(@page ? @page.to_i : 1, @pages.last.last_item, get_mail_prefs.wm_rows, sort_query + (reverse_sort ? ' desc' : ' asc')) : "" 
+      @messages = @pages.last.last_item > 0 ? folder.messages_rev(@page && @page != "" ? @page.to_i : 1, @pages.last.last_item, get_mail_prefs.wm_rows, sort_query + (reverse_sort ? ' desc' : ' asc')) : "" 
     end
     
   end

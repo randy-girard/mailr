@@ -1,4 +1,5 @@
 require 'ezcrypto'
+
 class LoginController < ApplicationController
   
   def index
@@ -57,8 +58,8 @@ class LoginController < ApplicationController
       return user
     else
       # create record in database
-      user = Customer.create("email"=>email)
-      MailPref.create('customer_id' => user.id)
+      user = Customer.create(:email => email)
+      MailPref.create(:customer_id => user.id)
       return user
     end 
   end    

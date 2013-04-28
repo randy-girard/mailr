@@ -5,6 +5,7 @@ class Customer < ActiveRecord::Base
   has_many :filters, :order => "order_num"
   has_one :mail_pref
   attr_accessor :password
+  attr_accessible :email, :customer_id, :fname, :lname, :created_at, :updated_at
   
   def mail_temporary_path
     "#{CDF::CONFIG[:mail_temp_path]}/#{self.email}"

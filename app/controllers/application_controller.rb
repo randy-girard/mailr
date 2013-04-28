@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
   #before_filter :localize
   
 
-  filter_parameter_logging :password
   protected
     def secure_user?() true end
     def secure_cust?() false end
@@ -21,7 +20,7 @@ class ApplicationController < ActionController::Base
     
     def user_login_filter
       if (secure_user? or secure_cust? )and logged_user.nil?
-        session["return_to"] = request.request_uri
+        session["return_to"] = request.original_url
         redirect_to :controller=>"/login", :action => "index"
         return false
       end

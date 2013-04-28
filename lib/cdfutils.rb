@@ -2,7 +2,7 @@ MIME_ENCODED = /=\?([a-z\-0-9]*)\?[QB]\?([a-zA-Z0-9+\/=\_\-]+)\?=/i
 IMAP_EMAIL_ENVELOPE_FORMAT = /([a-zA-Z\-\.\_]*@[a-zA-Z\-\.\_]*)/
 IMAP_EMAIL_ENVELOPE_FORMAT2 = /(.*)<([a-zA-Z\-\.\_]*@[a-zA-Z\-\.\_]*)>/
 
-require 'iconv'
+# require 'iconv'
 
 def valid_email?(email)
   email.size < 100 && email =~ /.@.+\../ && email.count('@') == 1

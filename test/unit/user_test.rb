@@ -1,14 +1,7 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require 'test_helper'
 
-class UserTest < Test::Unit::TestCase
-  fixtures :users
-
-  def setup
-    @user = User.find(1)
-  end
-
-  # Replace this with your real tests.
-  def test_truth
-    assert_kind_of User,  @user
-  end
+class UserTest < ActiveSupport::TestCase
+  # test "the truth" do
+  #   assert true
+  # end
 end
