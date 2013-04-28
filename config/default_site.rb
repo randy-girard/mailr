@@ -4,7 +4,7 @@
 # containing new constants in LOCALCONFIG module variable - they
 # will overwrite default values. Example site.rb:
 # 
-# module CDF
+# module Mailr
 #   LOCALCONFIG = {
 #     :mysql_version => '4.1',
 #     :default_encoding => 'utf-8',
@@ -13,7 +13,7 @@
 #   }
 # end
 
-module CDF
+module Mailr
   CONFIG = {
   :mysql_version => '4.0',
   :default_language => 'en',

@@ -54,7 +54,7 @@
       <thead>
         <tr>
           <th width="1%"><input type="checkbox" name="allbox" onclick="checkAll(this.form)" style="margin: 0 0 0 4px" /></th>
-    <% if @folder_name == CDF::CONFIG[:mail_sent] %>
+    <% if @folder_name == Mailr::CONFIG[:mail_sent] %>
           <th width="20%"><%= link_to(t(:to), :controller=>:webmail, :action=>:messages, :op=>'SORT', :page=>@page, :scc=>'to_flat')%></th>
     <% else %>
           <th width="20%"><%= link_to(t(:from), :controller=>:webmail, :action=>:messages, :op=>'SORT', :page=>@page, :scc=>'from_flat')%></th>

@@ -1,4 +1,4 @@
-require 'cdfmail'
+require 'mailr'
 require 'net/smtp'
 require 'net/imap'
 require 'mail2screen'
@@ -142,7 +142,7 @@ class WebmailController < ApplicationController
       elsif operation == t(:add)
         @mail = create_mail
         if params['attachment'] 
-          attachment = CDF::Attachment.new(@mail)
+          attachment = Mailr::Attachment.new(@mail)
           attachment.file = params['attachment']
         end
       else
@@ -326,20 +326,20 @@ class WebmailController < ApplicationController
   
   def get_to_folders
     res = Array.new
-    @folders.each{|f| res << f unless f.name == CDF::CONFIG[:mail_sent] or f.name == CDF::CONFIG[:mail_inbox] }
+    @folders.each{|f| res << f unless f.name == Mailr::CONFIG[:mail_sent] or f.name == Mailr::CONFIG[:mail_inbox] }
     res
   end
   
   
   def create_mail
-    m = CDF::Mail.new(user.mail_temporary_path)
+    m = Mailr::Mail.new(user.mail_temporary_path)
     if params["mail"]
       ma = params["mail"]
       m.body, m.content_type, m.from, m.to, m.cc, m.bcc, m.subject =  ma["body"], ma["content_type"], ma["from"], ma["to"], ma["cc"], ma["bcc"], ma["subject"]
       if params["att_files"]
         att_files, att_tfiles, att_ctypes = params["att_files"], params["att_tfiles"], params["att_ctypes"]
         att_files.each {|i, value|
-          att = CDF::Attachment.new(m)
+          att = Mailr::Attachment.new(m)
           att.filename, att.temp_filename, att.content_type = value, att_tfiles[i], att_ctypes[i]
         }
       end
@@ -351,7 +351,7 @@ class WebmailController < ApplicationController
   end
   
   def prepare_mail
-    m = CDF::Mail.new(user.mail_temporary_path)
+    m = Mailr::Mail.new(user.mail_temporary_path)
     m.from, m.content_type = user.friendlly_local_email, get_mail_prefs.mail_type
     m
   end

@@ -13,8 +13,8 @@ class LoginController < ApplicationController
   def authenticate
     if user = auth(params['login_user']["email"], params['login_user']["password"])
       session["user"] = user.id
-      if CDF::CONFIG[:crypt_session_pass]
-        session["wmp"] = EzCrypto::Key.encrypt_with_password(CDF::CONFIG[:encryption_password], CDF::CONFIG[:encryption_salt], params['login_user']["password"])
+      if Mailr::CONFIG[:crypt_session_pass]
+        session["wmp"] = EzCrypto::Key.encrypt_with_password(Mailr::CONFIG[:encryption_password], Mailr::CONFIG[:encryption_salt], params['login_user']["password"])
       else
         # dont use crypt
         session["wmp"] = params['login_user']["password"]

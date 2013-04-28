@@ -30,7 +30,7 @@
       <table class="list">
         <tr>
           <td colspan="4" id="alphaListHeader">
-            <% CDF::CONFIG[:contact_letters].each do |letter| %>
+            <% Mailr::CONFIG[:contact_letters].each do |letter| %>
               <%= link_to letter, contacts_path(:letter => letter) %>
             <% end %>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

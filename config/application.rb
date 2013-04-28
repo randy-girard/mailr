@@ -66,7 +66,7 @@ end
 require File.expand_path('../default_site', __FILE__)
 begin
   require File.expand_path('../site', __FILE__)
-  CDF::CONFIG.update(CDF::LOCALCONFIG) if CDF::LOCALCONFIG
+  Mailr::CONFIG.update(Mailr::LOCALCONFIG) if Mailr::LOCALCONFIG
 rescue LoadError
   STDERR.puts 'WARNING: config/site.rb not found, using default settings from ' + default_config_path
 end

@@ -2,11 +2,11 @@
 		<tr>
 			<td>
 				<select name="expression[<%=expr_counter%>][field_name]">
-  			<%= options_for_select(CDF::CONFIG[:mail_filters_fields], @expressions[expr_counter].field_name)%>
+  			<%= options_for_select(Mailr::CONFIG[:mail_filters_fields], @expressions[expr_counter].field_name)%>
   			</select></td>
   		<td>
   			<select name="expression[<%=expr_counter%>][operator]">
-  			<%= options_for_select(CDF::CONFIG[:mail_filters_expressions], @expressions[expr_counter].operator)%>
+  			<%= options_for_select(Mailr::CONFIG[:mail_filters_expressions], @expressions[expr_counter].operator)%>
   			</select></td>
   		<td>
   			<%= text_field 'expression', 'expr_value', 'index'=>expr_counter %>

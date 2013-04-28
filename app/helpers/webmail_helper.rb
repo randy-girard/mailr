@@ -1,4 +1,4 @@
-require 'cdfutils'
+require 'mailrutils'
 require 'mail2screen'
 
 module WebmailHelper

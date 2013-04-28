@@ -29,14 +29,14 @@
 	      <tr class="two_rows">
             <td><label><%= t :send_type %></label></td>
             <td><select name="mailpref[mail_type]">
-                <%= options_for_select(CDF::CONFIG[:mail_send_types], @mailpref.mail_type)%>
+                <%= options_for_select(Mailr::CONFIG[:mail_send_types], @mailpref.mail_type)%>
             </select></td>
           </tr>
      
           <tr class="two_rows">
             <td><label><%= t :messages_per_page %></label></td>
             <td><select name="mailpref[wm_rows]">
-                <%= options_for_select(CDF::CONFIG[:mail_message_rows], @mailpref.wm_rows)%>
+                <%= options_for_select(Mailr::CONFIG[:mail_message_rows], @mailpref.wm_rows)%>
             </select></td>
           </tr>
     

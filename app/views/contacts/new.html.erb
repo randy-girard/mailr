@@ -33,11 +33,7 @@
 		<tr class="two_columns">
           <td class="prompt"><label><%= t(:email) %></label></td>
           <td class="value">
-          	<% if @contact.new_record? %>
-          	<%= f.text_field :email, :class => 'two_columns' %>
-          	<% else %>
-          	<%= f.read_only_field :email, :class => 'two_columns' %>
-          	<% end %>
+          	<%= f.text_field :email, :class => 'two_columns', :readonly => !@contact.new_record? %>
           </td>
         </tr>
     </table>

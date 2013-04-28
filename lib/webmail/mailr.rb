@@ -2,10 +2,10 @@ require 'tmail'
 require 'net/smtp'
 require 'mail_transform'
 
-module CDF
+module Mailr
 end
 
-class CDF::Mail
+class Mailr::Mail
 #	include ActionMailer::Quoting
 	  
   def initialize(senderTempLocation)
@@ -138,7 +138,7 @@ class CDF::Mail
   def forward(tmail, fb)
     decoded_subject = mime_encoded?(tmail.subject) ? mime_decode(tmail.subject) : tmail.subject
     self.subject = "[Fwd: #{decoded_subject}]"
- 		attachment = CDF::Attachment.new(self)
+ 		attachment = Mailr::Attachment.new(self)
    	attachment.body(tmail, fb)
   end
     
@@ -206,12 +206,12 @@ class CDF::Mail
           ret << "," if not(ret == "")
           @to_contacts << contact unless contact.nil?
           ret << contact.full_address
-          ad, = quote_any_address_if_necessary(CDF::CONFIG[:mail_charset], contact.full_address)
+          ad, = quote_any_address_if_necessary(Mailr::CONFIG[:mail_charset], contact.full_address)
           ret << ad
         }
       else
         ret << "," if not(ret == "")
-        ad, = quote_any_address_if_necessary(CDF::CONFIG[:mail_charset], addr) if not(addr.nil? or addr == "")
+        ad, = quote_any_address_if_necessary(Mailr::CONFIG[:mail_charset], addr) if not(addr.nil? or addr == "")
         ret << ad if not(addr.nil? or addr == "")
       end
     } unless str.nil? or str.strip() == ""
@@ -219,7 +219,7 @@ class CDF::Mail
   end
 end
   
-class CDF::Attachment
+class Mailr::Attachment
   
   def initialize(arg)
     @mail = arg

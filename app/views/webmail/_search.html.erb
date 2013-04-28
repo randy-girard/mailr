@@ -4,7 +4,7 @@
   <div id="msg_search" class='<%=@srch_class%>'> 
   <%= t :search_txt %>&nbsp;
   <select name="search_field">
-      <%= options_for_select(CDF::CONFIG[:mail_search_fields], @search_field)%>
+      <%= options_for_select(Mailr::CONFIG[:mail_search_fields], @search_field)%>
     </select>&nbsp;
     <label for="search_value"><%= t :for %></label>&nbsp;
     <input type="text" name="search_value" value="<%=@search_value%>" size='16' id='search_value'/>&nbsp;

@@ -15,7 +15,7 @@ module MaildropSerializator
   
   private
     def dest_folder(filter)
-      '$DEFAULT/'<<filter.destination_folder.sub(Regexp.new("(#{CDF::CONFIG[:mail_inbox]})(.*)"), '\2')<<"/"
+      '$DEFAULT/'<<filter.destination_folder.sub(Regexp.new("(#{Mailr::CONFIG[:mail_inbox]})(.*)"), '\2')<<"/"
     end
     
     def escape_expr_value(text)

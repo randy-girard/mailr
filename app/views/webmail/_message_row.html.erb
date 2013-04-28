@@ -1,6 +1,6 @@
 <tr class="<%= message_row.unread ? 'notseen': 'seen' %>">
   <td class="mark"><input type="checkbox" name="messages[<%= message_row.uid %>]"/></td>
-	<% if @folder_name == CDF::CONFIG[:mail_sent] %>
+	<% if @folder_name == Mailr::CONFIG[:mail_sent] %>
   <td class="to"><%= short_address(message_row.to_addr) %></td>
 <% else %>
   <td class="from"><%= short_address(message_row.from_addr) %></td>

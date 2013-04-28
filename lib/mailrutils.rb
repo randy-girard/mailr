@@ -103,7 +103,7 @@ end
 def encode_email(names, email)
   nameen = ""
   names.each_byte { | ch | nameen = nameen +"=" + sprintf("%X",ch) }
-  return "=?#{CDF::CONFIG[:mail_charset]}?Q?#{nameen}?= <#{email}>"
+  return "=?#{Mailr::CONFIG[:mail_charset]}?Q?#{nameen}?= <#{email}>"
 end
 
 # #############################

@@ -8,7 +8,7 @@ class Customer < ActiveRecord::Base
   attr_accessible :email, :customer_id, :fname, :lname, :created_at, :updated_at
   
   def mail_temporary_path
-    "#{CDF::CONFIG[:mail_temp_path]}/#{self.email}"
+    "#{Mailr::CONFIG[:mail_temp_path]}/#{self.email}"
   end
   
   def friendlly_local_email
@@ -16,7 +16,7 @@ class Customer < ActiveRecord::Base
   end
   
   def mail_filter_path
-    "#{CDF::CONFIG[:mail_filters_path]}/#{self.email}"
+    "#{Mailr::CONFIG[:mail_filters_path]}/#{self.email}"
   end
 
   def local_email
@@ -24,8 +24,8 @@ class Customer < ActiveRecord::Base
   end
   
   def check_for_domain(email)
-    if email && !email.nil? && !email.include?("@") && CDF::CONFIG[:send_from_domain]
-      email + "@" + CDF::CONFIG[:send_from_domain]
+    if email && !email.nil? && !email.include?("@") && Mailr::CONFIG[:send_from_domain]
+      email + "@" + Mailr::CONFIG[:send_from_domain]
     else
       email
     end

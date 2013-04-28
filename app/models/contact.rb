@@ -1,4 +1,4 @@
-require 'cdfutils'
+require 'mailrutils'
 require_association 'contact_group'
 
 class Contact < ActiveRecord::Base

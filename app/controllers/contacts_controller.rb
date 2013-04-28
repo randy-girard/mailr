@@ -4,18 +4,18 @@ class ContactsController < ApplicationController
   def index
     if params[:letter] && params[:letter].any?
       @contacts = Contact.for_customer(logged_user).letter(params[:letter]).paginate :page => params[:page],
-        :per_page => CDF::CONFIG[:contacts_per_page]
+        :per_page => Mailr::CONFIG[:contacts_per_page]
     else
-      @contacts = Contact.for_customer(logged_user).paginate :page => params[:page], :per_page => CDF::CONFIG[:contacts_per_page]
+      @contacts = Contact.for_customer(logged_user).paginate :page => params[:page], :per_page => Mailr::CONFIG[:contacts_per_page]
     end
   end
   
   def listLetter
-    letters = CDF::CONFIG[:contact_letters]
+    letters = Mailr::CONFIG[:contact_letters]
     @contact_pages = Paginator.new(self, Contact.count(
-      ["customer_id = %s and substr(UPPER(fname),1,1) = '%s'", logged_user, letters[params['id'].to_i]]), CDF::CONFIG[:contacts_per_page], params['page'])
+      ["customer_id = %s and substr(UPPER(fname),1,1) = '%s'", logged_user, letters[params['id'].to_i]]), Mailr::CONFIG[:contacts_per_page], params['page'])
     @contacts = Contact.find(:all, :conditions=>["customer_id = %s and substr(UPPER(fname),1,1) = '%s'", logged_user, letters[params['id'].to_i]], 
-                             :order=>['fname'],  :limit=>CDF::CONFIG[:contacts_per_page], :offset=>@contact_pages.current.offset)
+                             :order=>['fname'],  :limit=>Mailr::CONFIG[:contacts_per_page], :offset=>@contact_pages.current.offset)
       
     if params["mode"] == "groups"
       if params["group_id"] and not params["group_id"].nil? and not params["group_id"] == ''
@@ -175,7 +175,7 @@ class ContactsController < ApplicationController
         end
         # Check if contact is valid
         contact.valid?
-      rescue CDF::ValidationError => e
+      rescue Mailr::ValidationError => e
         if not contact.errors.empty?
           ["fname", "lname", "email"].each do |attr|
             attr_errors = contact.errors.on(attr)

@@ -1,4 +1,4 @@
-require 'cdfutils'
+require 'mailrutils'
 
 module Mail2Screen
   def mail2html(mail, msg_id)

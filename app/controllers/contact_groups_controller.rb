@@ -39,7 +39,7 @@ class ContactGroupsController < ApplicationController
       else
         render "/contact_group/edit"
       end
-    rescue CDF::ValidationError => e
+    rescue Mailr::ValidationError => e
       logger.info("RESCUE")
       @contactgroup = e.entity
       render("/contact_group/edit")

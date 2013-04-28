@@ -16,7 +16,7 @@ module NavigationHelper
   end
 
   def folder_manage_link(folder)
-    if folder.name == CDF::CONFIG[:mail_trash] or folder.name == CDF::CONFIG[:mail_inbox] or folder.name == CDF::CONFIG[:mail_sent]
+    if folder.name == Mailr::CONFIG[:mail_trash] or folder.name == Mailr::CONFIG[:mail_inbox] or folder.name == Mailr::CONFIG[:mail_sent]
       short_fn(folder)
     else
       short_fn(folder) + '&nbsp;' + link_to(t(:delete), folder_path(folder.name), :method => :delete)

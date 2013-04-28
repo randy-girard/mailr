@@ -13,7 +13,7 @@ class FoldersController < ApplicationController
   end
 
   def create
-    @mailbox.create_folder(CDF::CONFIG[:mail_inbox] + '.' + params[:folder])
+    @mailbox.create_folder(Mailr::CONFIG[:mail_inbox] + '.' + params[:folder])
     redirect_to folders_path
   end
 

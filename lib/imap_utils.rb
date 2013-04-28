@@ -36,8 +36,8 @@ module ImapUtils
   end
 
   def get_upass
-    if CDF::CONFIG[:crypt_session_pass]
-      EzCrypto::Key.decrypt_with_password(CDF::CONFIG[:encryption_password], CDF::CONFIG[:encryption_salt], session["wmp"])
+    if Mailr::CONFIG[:crypt_session_pass]
+      EzCrypto::Key.decrypt_with_password(Mailr::CONFIG[:encryption_password], Mailr::CONFIG[:encryption_salt], session["wmp"])
     else
       # retrun it plain
       session["wmp"]
@@ -49,7 +49,7 @@ module ImapUtils
       if params["folder_name"]
         @folder_name = params["folder_name"]
       else
-        @folder_name = session["folder_name"] ? session["folder_name"] : CDF::CONFIG[:mail_inbox]
+        @folder_name = session["folder_name"] ? session["folder_name"] : Mailr::CONFIG[:mail_inbox]
       end
       session["folder_name"] = @folder_name
       @folders = @mailbox.folders if @folders.nil?

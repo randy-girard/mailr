@@ -27,7 +27,7 @@
 # 
 require 'net/imap'
 
-Net::IMAP.debug = true if CDF::CONFIG[:debug_imap]
+Net::IMAP.debug = true if Mailr::CONFIG[:debug_imap]
 
 class Net::IMAP
   class PlainAuthenticator
@@ -70,15 +70,15 @@ class IMAPMailbox
   
   def connect(username, password)
     unless @connected
-      use_ssl = CDF::CONFIG[:imap_use_ssl] ? true : false
-      port    = CDF::CONFIG[:imap_port] || (use_ssl ? 993 : 143)
+      use_ssl = Mailr::CONFIG[:imap_use_ssl] ? true : false
+      port    = Mailr::CONFIG[:imap_port] || (use_ssl ? 993 : 143)
       begin
-        @imap   = Net::IMAP.new(CDF::CONFIG[:imap_server], port, use_ssl)
+        @imap   = Net::IMAP.new(Mailr::CONFIG[:imap_server], port, use_ssl)
       rescue Net::IMAP::ByeResponseError => bye
         # make a timeout and retry
         begin
-          System.sleep(CDF::CONFIG[:imap_bye_timeout_retry_seconds])
-          @imap   = Net::IMAP.new(CDF::CONFIG[:imap_server], port, use_ssl)
+          System.sleep(Mailr::CONFIG[:imap_bye_timeout_retry_seconds])
+          @imap   = Net::IMAP.new(Mailr::CONFIG[:imap_server], port, use_ssl)
         rescue Error => ex
           logger.debug "Error on authentication!"
       	  logger.debug bye.backtrace.join("\n")
@@ -99,11 +99,11 @@ class IMAPMailbox
       end  
       @username = username
       begin
-      	logger.debug "IMAP authentication - #{CDF::CONFIG[:imap_auth]}."
-        if CDF::CONFIG[:imap_auth] == 'NOAUTH'
+      	logger.debug "IMAP authentication - #{Mailr::CONFIG[:imap_auth]}."
+        if Mailr::CONFIG[:imap_auth] == 'NOAUTH'
           @imap.login(username, password)
         else
-          @imap.authenticate(CDF::CONFIG[:imap_auth], username, password)
+          @imap.authenticate(Mailr::CONFIG[:imap_auth], username, password)
         end
         @connected = true
       rescue Exception => ex
@@ -175,12 +175,12 @@ class IMAPMailbox
   def message_sent(message)
     # ensure we have sent folder
     begin
-      @imap.create(CDF::CONFIG[:mail_sent])
+      @imap.create(Mailr::CONFIG[:mail_sent])
     rescue Exception=>e
     end
     begin
-      @imap.append(CDF::CONFIG[:mail_sent], message)  
-      folders[CDF::CONFIG[:mail_sent]].cached = false if folders[CDF::CONFIG[:mail_sent]]
+      @imap.append(Mailr::CONFIG[:mail_sent], message)  
+      folders[Mailr::CONFIG[:mail_sent]].cached = false if folders[Mailr::CONFIG[:mail_sent]]
     rescue Exception=>e
       logger.debug("Error on append  - #{e}") 
     end
@@ -190,12 +190,12 @@ class IMAPMailbox
   def message_bulk(message)
     # ensure we have sent folder
     begin
-      @imap.create(CDF::CONFIG[:mail_bulk_sent])
+      @imap.create(Mailr::CONFIG[:mail_bulk_sent])
     rescue Exception=>e
     end
     begin
-      @imap.append(CDF::CONFIG[:mail_bulk_sent], message)  
-      folders[CDF::CONFIG[:mail_sent]].cached = false if folders[CDF::CONFIG[:mail_bulk_sent]]
+      @imap.append(Mailr::CONFIG[:mail_bulk_sent], message)  
+      folders[Mailr::CONFIG[:mail_sent]].cached = false if folders[Mailr::CONFIG[:mail_bulk_sent]]
     rescue Exception=>e
       logger.debug("Error on bulk -  #{e}") 
     end  
@@ -240,7 +240,7 @@ class IMAPFolderList
       end
     else
       # if there are no folders subscribe to INBOX - this is on first use
-      @mailbox.imap.subscribe(CDF::CONFIG[:mail_inbox])
+      @mailbox.imap.subscribe(Mailr::CONFIG[:mail_inbox])
       # try again to list them - we should find INBOX
       @mailbox.imap.list('', '*').each do |info|
         @folders[info.name] = IMAPFolder.new(@mailbox, info.name, @username, info.attr, info.delim)
@@ -300,11 +300,11 @@ class IMAPFolder
   def delete_multiple(uids)
     # ensure we have trash folder
     begin
-      @mailbox.imap.create(CDF::CONFIG[:mail_trash])
+      @mailbox.imap.create(Mailr::CONFIG[:mail_trash])
       @mailbox.reload
     rescue  
     end
-    move_multiple(uids, CDF::CONFIG[:mail_trash])
+    move_multiple(uids, Mailr::CONFIG[:mail_trash])
   end
   
   def copy(message, dst_folder)
@@ -529,6 +529,6 @@ class IMAPFolder
   end
 
   def trash?
-    self.name == CDF::CONFIG[:mail_trash]
+    self.name == Mailr::CONFIG[:mail_trash]
   end
 end
