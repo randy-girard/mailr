@@ -27,10 +27,14 @@
 <input type="hidden" id="mail_op" name="op" value="<%= t :send %>"/>
 <div id="msghdr">
   <table>
-    <tr><td><label for=''><%= t :to %></label></td><td><%= autocomplete_field_tag(:mail, :to, auto_complete_for_mail_to, :size=>65, 'data-delimeter'=> ",", :multiple=>true) %></td></tr>
-    <tr><td><label for=''><%= t :cc %></label></td><td><%= autocomplete_field_tag(:mail, :cc, auto_complete_for_mail_cc, :size=>65, 'data-delimeter'=> ",", :multiple=>true) %></td></tr>
-    <tr><td><label for=''><%= t :bcc %></label></td><td><%= autocomplete_field_tag(:mail, :bcc, auto_complete_for_mail_bcc, :size=>65, 'data-delimeter'=> ",", :multiple=>true) %></td></tr>
-    <tr><td><label for=''><%= t :subject %></label></td><td><%= text_field('mail', 'subject', {"size"=>65}) %></td></tr>
+    <tr><td><label for=''><%= t :to %></label></td>
+    	<td><%= autocomplete_field_tag(:mail, :to, "/webmail/autocomplete_contact_email", {:size=>65, 'data-delimiter' => ',', :multiple => true }) %></td></tr>
+    <tr><td><label for=''><%= t :cc %></label></td>
+    	<td><%= autocomplete_field_tag(:mail, :cc, "/webmail/autocomplete_contact_email", {:size=>65, 'data-delimiter' => ',', :multiple => true }) %></td></tr>
+    <tr><td><label for=''><%= t :bcc %></label></td>
+    	<td><%= autocomplete_field_tag(:mail, :bcc, "/webmail/autocomplete_contact_email", {:size=>65, 'data-delimiter' => ',', :multiple => true }) %></td></tr>
+    <tr><td><label for=''><%= t :subject %></label></td>
+    	<td><%= text_field('mail', 'subject', {"size"=>65}) %></td></tr>
   </table>
   <%= hidden_field('mail', 'from') %>
   <%= hidden_field('mail', 'content_type') %>

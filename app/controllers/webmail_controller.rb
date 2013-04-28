@@ -9,12 +9,13 @@ class WebmailController < ApplicationController
   
   # Administrative functions
   before_filter :login_required
-  before_filter :obtain_cookies_for_search_and_nav, :only=>[:messages]
-  before_filter :load_imap_session
-  after_filter :close_imap_session
+  before_filter :obtain_cookies_for_search_and_nav, :only => [:messages]
+  before_filter :load_imap_session, :except => :autocomplete_contact_email
+  after_filter :close_imap_session, :except => :autocomplete_contact_email
   
   layout "public", :except => [:view_source, :download]
   
+  autocomplete :contact, :email, :display_value => :email, :full => false
   
   
 #   model :filter, :expression, :mail_pref, :customer
@@ -286,20 +287,24 @@ class WebmailController < ApplicationController
     @msg_source = CGI.escapeHTML(@imapmail.full_body).gsub("\n", "<br/>")
   end
   
+  # TODO: To be Removed - not needed anymore
   def auto_complete_for_mail_to
     auto_complete_responder_for_contacts params[:mail][:to]
   end
   
+  # TODO: To be Removed - not needed anymore
   def auto_complete_for_mail_cc
     auto_complete_responder_for_contacts params[:mail][:cc]
   end
   
+  # TODO: To be Removed - not needed anymore
   def auto_complete_for_mail_bcc
     auto_complete_responder_for_contacts params[:mail][:bcc]
   end
   
   private
   
+  # TODO: To be Removed - not needed anymore
   def auto_complete_responder_for_contacts(value)
     # first split by "," and take last name
     searchName = value.split(',').last.strip

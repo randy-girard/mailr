@@ -44,15 +44,15 @@ class Contact < ActiveRecord::Base
   end
 
   def full_name
-    "#{fname} #{lname}"
+    "#{self.fname} #{self.lname}"
   end
   
   def show_name
-    "#{fname} #{lname}"
+    "#{self.fname} #{self.lname}"
   end
   
   def full_address
-    "#{fname} #{lname}<#{email}>"
+    "#{self.fname} #{self.lname}<#{self.email}>"
   end
   
   protected
