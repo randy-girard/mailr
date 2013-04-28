@@ -41,3 +41,4 @@ gem 'tinymce-rails'
 gem 'tmail'
 gem 'will_paginate'
 gem 'rails3-jquery-autocomplete'
+

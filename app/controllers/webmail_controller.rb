@@ -9,12 +9,13 @@ class WebmailController < ApplicationController
   
   # Administrative functions
   before_filter :login_required
-  before_filter :obtain_cookies_for_search_and_nav, :only=>[:messages]
-  before_filter :load_imap_session
-  after_filter :close_imap_session
+  before_filter :obtain_cookies_for_search_and_nav, :only => [:messages]
+  before_filter :load_imap_session, :except => :autocomplete_contact_email
+  after_filter :close_imap_session, :except => :autocomplete_contact_email
   
   layout "public", :except => [:view_source, :download]
   
+  autocomplete :contact, :email, :display_value => :email, :full => false
   
   
 #   model :filter, :expression, :mail_pref, :customer

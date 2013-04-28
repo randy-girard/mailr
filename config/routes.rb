@@ -8,7 +8,8 @@ NewMailr::Application.routes.draw do
   match '/contact/:action', :controller=>'contacts'
   match 'admin/main', :controller=> 'login', :action=>'logout'
   match 'login', :controller=> 'login', :action => 'index'
-
+  
+  get 'webmail/autocomplete_contact_email'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
