@@ -42,7 +42,6 @@ class Init < ActiveRecord::Migration
 
     create_table :contact_contact_groups do |t|
       t.integer :contact_id, :contact_group_id
-      t.timestamps
     end
 
     create_table :imap_messages do |t|

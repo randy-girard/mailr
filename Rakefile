@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-NewMailr::Application.load_tasks
+Mailr::Application.load_tasks

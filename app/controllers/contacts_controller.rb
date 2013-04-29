@@ -1,10 +1,64 @@
 class ContactsController < ApplicationController
   layout :select_layout
   
+  # ====================
+  # Group handling methods  
+  def groups
+    @contact_group = ContactGroup.new
+    @contact_group.customer_id = logged_user
+    @contactgroups = ContactGroup.find_by_user(logged_user)
+  end
+  
+  def add_group
+    @contactgroup = ContactGroup.new
+    @contactgroup.customer_id = logged_user
+    render("edit_group")
+  end
+  
+  def delete_group
+    contactgroup = ContactGroup.find(params["id"])
+    contactgroup.destroy
+    redirect_to(:action=>"groups")
+  end
+  
+  def edit_group
+    @contactgroup = ContactGroup.find(params["id"]) if @contactgroup == nil && params != nil
+  end
+  
+  def save_group
+    cg = params[:contactgroup] 
+    cg[:customer_id] = logged_user
+    if cg.nil? or cg["id"].nil? or cg["id"] == ""
+      # New contactgroup
+      @contactgroup = ContactGroup.create({:name => cg[:name], :customer_id => logged_user})
+    else
+      # Edit existing
+      @contactgroup = ContactGroup.find(cg["id"])
+      @contactgroup.attributes = cg
+    end
+    
+    if @contactgroup.save
+      redirect_to(:action=>"groups")
+    else
+      render "/contacts/edit_group"
+    end
+    
+  end
+  
+  # ====================
+  # Contact handling methods  
   def index
+    redirect_to :action => :list
+  end
+  
+  def list
     if params[:letter] && params[:letter].any?
       @contacts = Contact.for_customer(logged_user).letter(params[:letter]).paginate :page => params[:page],
         :per_page => Mailr::CONFIG[:contacts_per_page]
+    elsif params[:id] && params[:id].any? 
+      @groupmode = true
+      @title = t(:contacts_in_group, :group_name => ContactGroup.find(params[:id]).name)
+      @contacts = Contact.find_by_group_user(logged_user, params[:id]) # .paginate :page => params[:page], :per_page => Mailr::CONFIG[:contacts_per_page]
     else
       @contacts = Contact.for_customer(logged_user).paginate :page => params[:page], :per_page => Mailr::CONFIG[:contacts_per_page]
     end
@@ -58,7 +112,7 @@ class ContactsController < ApplicationController
   def add_from_mail
     cstr = params['cstr']
     retmsg = params['retmsg']
-    session["return_to"] = url_for(:controller=>'/webmail/webmail',
+    session["return_to"] = url_for(:controller=>'webmail',
                                     :action=>'folders',
                                     :msg_id=>retmsg)
     # parse string
@@ -249,7 +303,7 @@ class ContactsController < ApplicationController
         contact_group.contacts.delete(contact) 
       end
     }
-    redirect_to(:action=>"index", :id=>group_id, :params=>{"mode"=>params["mode"]})
+    redirect_to(:action=>:list, :id=>group_id, :params=>{"mode"=>params["mode"]})
   end
   
   def edit
@@ -262,7 +316,7 @@ class ContactsController < ApplicationController
     @contactgroups.each {|g|
       groupSelected = false
       @contact.groups.each {|gr|
-        if gr.contact_group_id.to_i == g.id.to_i
+        if gr.id == g.id
           groupSelected = true
           break
         end
@@ -290,28 +344,15 @@ class ContactsController < ApplicationController
     @contactgroups = ContactGroup.find_by_user(logged_user)
     # Groups displayed
     groups = params['groups']
-    tempGroups = Array.new
-    tempGroups.concat(@contact.groups)
+    @contact.groups.clear
     
-    @contactgroups.each { |cgroup| 
-      includesCGroup = false
-      tempGroups.each {|gr|
-        if gr.contact_group_id.to_i == cgroup.id.to_i
-        includesCGroup = true
-        break
-      end
-      }
-      if groups["#{cgroup.id}"] == "1" and not includesCGroup
-        @contact.groups << cgroup
-      end
+    groups.each { |key,value| 
+      @contact.groups << ContactGroup.find(key.to_i)
+    } unless groups.nil?
     
-      if groups["#{cgroup.id}"] == "0" and includesCGroup
-        @contact.groups.delete(cgroup)
-      end
-    }
     if @contact.save
-      if params["paction"] == t(:save)
-        redirect_to  :action =>:index
+      if params[:commit] == t(:save)
+        redirect_to :action =>:list
       else
         redirect_to :action => :new
       end
@@ -331,7 +372,7 @@ class ContactsController < ApplicationController
   
   def delete
     Contact.destroy(params['id'])
-    redirect_to(:action=>'index')
+    redirect_to(:action=>:list)
   end
   
   protected

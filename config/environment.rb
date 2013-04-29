@@ -2,7 +2,7 @@
 require File.expand_path('../application', __FILE__)
 
 # Initialize the rails application
-NewMailr::Application.initialize!
+Mailr::Application.initialize!
 
 require 'imapmailbox'
 Rails.logger = Logger.new(STDOUT)

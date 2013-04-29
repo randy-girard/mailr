@@ -1,4 +1,4 @@
-<h1><%= t :contacts %></h1>
+<h1><%= t :contacts unless @title %> <%= @title if @title %></h1>
 <% unless @mode == "choose" %>
 <div id="header">
   <ul id="primary">
@@ -13,6 +13,8 @@
       <% if ret = session["return_to"] %>
         <li><%=link_to(t(:back_to_message), ret) %></li>
       <% end %>
+      <li><%= link_to t(:contact_groups), {:controller => "contacts", :action => "groups"} %></li>
+      <li><%= link_to t(:add_contact_group), {:controller => "contacts", :action => "add_group"} %></li>
     </ul>
     </li>
   </ul>
@@ -38,7 +40,7 @@
           </td>
         </tr>
         <tr>
-          <td colspan="3"><%= will_paginate @contacts %></td>
+          <td colspan="3"><%= will_paginate @contacts unless @groupmode %></td>
         </tr>
         <% if @mode == "choose" %>	
           <tr>

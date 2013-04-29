@@ -1,11 +1,15 @@
-NewMailr::Application.routes.draw do
+Mailr::Application.routes.draw do
   resources :folders, :requirements => {:id => /[^\/]+/}
   resources :contacts, :member => {:add_from_mail => :get}, :collection => {:add_multiple => :get}
-  resources :contact_groups
+  
   root :controller=>'webmail', :action=>'index'
+  
   match 'webmail', :controller=>'webmail', :action=>'index'
+  
   match 'webmail/:action', :controller=>'webmail'
-  match '/contact/:action', :controller=>'contacts'
+  
+  match 'contact/:action', :controller=>'contacts'
+  
   match 'admin/main', :controller=> 'login', :action=>'logout'
   match 'login', :controller=> 'login', :action => 'index'
   
@@ -60,8 +64,6 @@ NewMailr::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   # root :to => 'welcome#index'
-  
-  root :to => 'webmail#index'
   
   # See how all your routes lay out with "rake routes"
 

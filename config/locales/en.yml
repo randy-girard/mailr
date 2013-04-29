@@ -68,3 +68,15 @@ en:
   want_to_empty_trash_message: Do you really want to empty trash message?
   save_and_add_another: Save and add another
   delete_contact_question: Do you really want to delete %{name} %{email}?
+  contact_groups: Groups
+  add_contact_group: Add group
+  back_to_messages: Back to messages
+  group_name: Name
+  delete_group: Delete group %{name}?
+  validate_group_name_error: Invalid name specified (must be between 1 and 50 characters long).
+  action_group_members: Members
+  action_edit_group: Edit
+  action_delete_group: Delete
+  contact_belongs_to_groups: Contact belong to these groups
+  contacts_in_group: Contacts in group %{group_name}
+  contact_group_edit: Edit group

@@ -1,0 +1,54 @@
+<h1><%= t :contact_groups%></h1>
+<div id="header">
+  <ul id="primary">
+    <li><%=link_folders%></li>
+    <li><%=link_send_mail%></li>
+    <li><%=link_mail_prefs%></li>
+    <li><%=link_mail_filters%></li>
+    <li><span><%= t :contacts %></span>
+    <ul id="secondary">
+    	<li><%= link_to t(:contacts), {:controller => "contacts", :action => "index"} %></li>
+		<li><%= link_to t(:add_one_contact), :controller => "contacts", :action => "new" %></li>
+		<li><%= link_to t(:add_multiple), :controller => "contacts", :action => "add_multiple" %></li>
+		  <% if ret = session["return_to"] %>
+		<li><%= link_to(t(:back_to_message), ret) %></li>
+		  <% end %>
+		<li><%= link_to t(:add_contact_group), {:controller => "contacts", :action => "add_group"} %></li>
+    </ul>
+    </li>
+  </ul>
+</div>
+
+<div id="tab_main">
+  <div id="tab_content">
+
+  <% if flash["alert"] %><ul><li><%= flash["alert"] %></li></ul><% end %>
+	<table class="list">
+		<tr>
+			<th><%= t :group_name %></th>
+			<th colspan=3>&nbsp;</th>
+		</tr>
+	<%  
+		for contactgroup in @contactgroups %>
+		<tr class="even">
+			<td><%= contactgroup.name %></td>
+			<td><%= link_to( t(:action_group_members), :controller=>'contacts', :action=>'list', :id=>contactgroup.id, :params=>{"mode"=>"groups"}) %></td>
+			<td><%= link_to( t(:action_edit_group), :controller=>'contacts', :action=>'edit_group', :id=>contactgroup.id) %></td>
+	  		<td><%= link_to( t(:action_delete_group), {:controller=>'contacts', :action=>'delete_group', :id=>contactgroup.id}, {:confirm=> t(:delete_group, :name => contactgroup.name)})%></td>
+		</tr>
+	<% end %>
+		<tr>
+			<td colspan=2 class="buttonBar">
+				
+			</td>
+		</tr>
+	</table>
+  </div>
+</div>
+
+
+
+
+
+
+

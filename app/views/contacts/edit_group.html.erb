@@ -1,0 +1,44 @@
+<h1><%= t :contact_group_edit %></h1>
+<div id="header">
+  <ul id="primary">
+    <li><%=link_folders%></li>
+    <li><%=link_send_mail%></li>
+    <li><%=link_mail_prefs%></li>
+    <li><%=link_mail_filters%></li>
+    <li><span><%= t :contacts %></span>
+      <ul id="secondary">
+        <li><%=link_to t(:back_to_contacts), contacts_url %></li>
+	  </ul>
+    </li>
+  </ul>
+</div>
+
+<div id="tab_main">
+  <div id="tab_content">  
+<%= form_for @contactgroup, :as => 'contactgroup', :url => url_for(:controller => :contacts, :action=>:save_group), :html => { :class => "two_columns" } do |f| %>
+	<%= f.error_messages %>
+    <%= f.hidden_field(:id) %>
+    <%= f.hidden_field(:customer_id) %>
+    <table>
+    	<tr class="two_columns">
+          <td class="prompt"><label><%= t(:group_name) %></label></td>
+          <td class="value"><%= f.text_field(:name, :class=> 'two_columns') %>
+          </td>
+        </tr>
+    </table>
+  
+	<table class="edit">  
+	  <tr>
+	    <td colspan="2" class="buttonBar">
+	    	<%= f.submit t(:save), :options => {:name => 'paction'} %>
+	    </td>
+	  </tr>	
+	</table>
+  <% if flash['error'] %>
+  <div id="SystemError"><%= flash['error'] %></div>
+  <% elsif flash['status'] %>
+  <div id="SystemStatus"><%= flash['status'] %></div>
+  <% end %>	
+<% end %>
+  </div>
+</div>
