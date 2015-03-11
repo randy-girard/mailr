@@ -28,11 +28,11 @@
 <div id="msghdr">
   <table>
     <tr><td><label for=''><%= t :to %></label></td>
-    	<td><%= autocomplete_field_tag(:mail, :to, "/webmail/autocomplete_contact_email", {:size=>65, 'data-delimiter' => ',', :multiple => true }) %></td></tr>
+    	<td><%= text_field('mail', 'to') %></td></tr>
     <tr><td><label for=''><%= t :cc %></label></td>
-    	<td><%= autocomplete_field_tag(:mail, :cc, "/webmail/autocomplete_contact_email", {:size=>65, 'data-delimiter' => ',', :multiple => true }) %></td></tr>
+    	<td><%= text_field('mail', 'cc') %></td></tr>
     <tr><td><label for=''><%= t :bcc %></label></td>
-    	<td><%= autocomplete_field_tag(:mail, :bcc, "/webmail/autocomplete_contact_email", {:size=>65, 'data-delimiter' => ',', :multiple => true }) %></td></tr>
+    	<td><%= text_field('mail', 'bcc') %></td></tr>
     <tr><td><label for=''><%= t :subject %></label></td>
     	<td><%= text_field('mail', 'subject', {"size"=>65}) %></td></tr>
   </table>

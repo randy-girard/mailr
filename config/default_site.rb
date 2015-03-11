@@ -41,7 +41,7 @@ module Mailr
   :imap_auth => 'PLAIN', # 'LOGIN', 'NOAUTH'
   :encryption_salt => 'EnCr1p10n$@lt',
   :encryption_password => '$0MeEncr1pt10nP@a$sw0rd',
-  :debug_imap => false,
+  :debug_imap => true,
   :crypt_session_pass => true, # Set it to false (in site.rb) if you get any error messages like 
                                # "Unsupported cipher algorithm (aes-128-cbc)." - meaning that OpenSSL modules for crypt algo is not loaded. Setting it to false will store password in session in plain format!
   :send_from_domain => nil, # Set this variable to your domain name in site.rb if you make login to imap only with username (without '@domain')                             

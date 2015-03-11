@@ -33,11 +33,11 @@
     <div id="msgops" class='<%=@ops_class%>'>
       <h4><%= t :operations_txt %></h4>
       <span id="opch">
-             <%= submit_tag(t(:delete), :name=>'op')%>
-             <%= submit_tag(t(:copy), :name=> 'op')%>
-             <%= submit_tag(t(:move), :name=>'op')%>
-             <%= submit_tag(t(:mark_read), :name=>'op')%>
-             <%= submit_tag(t(:mark_unread), :name=>'op')%>
+         <%= submit_tag(t(:delete), :name=>'op')%>
+         <%= submit_tag(t(:copy), :name=> 'op')%>
+         <%= submit_tag(t(:move), :name=>'op')%>
+         <%= submit_tag(t(:mark_read), :name=>'op')%>
+         <%= submit_tag(t(:mark_unread), :name=>'op')%>
       </span><br/>
       <span id="destp">
              <%= t :destination_txt %>&nbsp;
@@ -66,8 +66,10 @@
         </tr>
       </thead>
       <tbody>
+        <% if @messages.present? %>
         <% for message in @messages %>
           <%=  render :partial  => 'message_row', :object => message if message %>
+        <% end %>
         <% end %>
       </tbody>
     </table>

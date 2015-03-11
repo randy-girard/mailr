@@ -91,6 +91,46 @@ class Mailr::Mail
   def content_type=(arg) @content_type = arg end
     
   def temp_location() @sender_temp_location end
+   
+   
+  if !defined?(CHARS_NEEDING_QUOTING)
+    CHARS_NEEDING_QUOTING = /[\000-\011\013\014\016-\037\177-\377]/
+  end
+  
+  def quoted_printable_encode(character)
+    result = ""
+    character.each_byte { |b| result << "=%02X" % b }
+    result
+  end
+   
+  def quoted_printable(text, charset)
+    text = text.gsub( /[^a-z ]/i ) { quoted_printable_encode($&) }.
+                gsub( / /, "_" )
+    "=?#{charset}?Q?#{text}?="
+  end
+  def quote_any_if_necessary(charset, text)
+    text = text.dup.force_encoding(Encoding::ASCII_8BIT) if text.respond_to?(:force_encoding)
+
+    (text =~ CHARS_NEEDING_QUOTING) ?
+      quoted_printable(text, charset) :
+      text
+  end
+  
+  def quote_any_address_if_necessary(charset, *args)
+    args.map { |v| quote_address_if_necessary(v, charset) }
+  end
+  
+  def quote_address_if_necessary(address, charset)
+    if Array === address
+      address.map { |a| quote_address_if_necessary(a, charset) }
+    elsif address =~ /^(\S.*)\s+(<.*>)$/
+      address = $2
+      phrase = quote_if_necessary($1.gsub(/^['"](.*)['"]$/, '\1'), charset)
+      "\"#{phrase}\" #{address}"
+    else
+      address
+    end
+  end
     
   def send_mail(db_msg_id = 0)
     m = TMail::Mail.new
@@ -105,18 +145,18 @@ class Mailr::Mail
       m.set_content_type("multipart/mixed")
       p = TMail::Mail.new(TMail::StringPort.new(""))
       if @content_type.include?("text/plain") # here maybe we should encode in 7bit??!!
-        prepare_text(p, self.content_type, self.body)
+        prepare_text(p, "text", "plain", self.body)
       elsif self.content_type.include?("text/html")
-        prepare_html(p, self.content_type, self.body)
+        prepare_html(p, "text", "html", self.body)
       elsif self.content_type.include?("multipart")
         prepare_alternative(p, self.body)
       end
       m.parts << p
     else
       if @content_type.include?("text/plain") # here maybe we should encode in 7bit??!!
-        prepare_text(m, self.content_type, self.body)
+        prepare_text(m, "text", "plain", self.body)
       elsif self.content_type.include?("text/html")
-        prepare_html(m, self.content_type, self.body)
+        prepare_html(m, "text", "html", self.body)
       elsif self.content_type.include?("multipart")
         prepare_alternative(m, self.body)
       end
@@ -169,14 +209,14 @@ class Mailr::Mail
     clear_html(txt)
   end
     
-  def prepare_text(msg, ctype, bdy)
-    msg.set_content_type(ctype, nil, {"charset"=>"utf-8"})
+  def prepare_text(msg, ctype1, ctype2, bdy)
+    msg.set_content_type(ctype1, ctype2, {"charset"=>"utf-8"})
     msg.transfer_encoding = "8bit"
     msg.body = bdy
   end
     
-  def prepare_html(msg, ctype, bdy)
-    msg.set_content_type(ctype, nil, {"charset"=>"utf8"})
+  def prepare_html(msg, ctype1, ctype2, bdy)
+    msg.set_content_type(ctype1, ctype2, {"charset"=>"utf8"})
     msg.transfer_encoding = "8bit"
     msg.body = bdy
   end
@@ -184,14 +224,14 @@ class Mailr::Mail
   def prepare_alternative(msg, bdy)
     bound = ::TMail.new_boundary
       
-    msg.set_content_type("multipart/alternative", nil, {"charset"=>"utf8", "boundary"=>bound})
+    msg.set_content_type("multipart", "alternative", {"charset"=>"utf8", "boundary"=>bound})
     msg.transfer_encoding = "8bit"
       
     ptext = TMail::Mail.new(TMail::StringPort.new(""))
     phtml = TMail::Mail.new(TMail::StringPort.new(""))
       
-    prepare_text(ptext, "text/plain", html2text(bdy))
-    prepare_html(phtml, "text/html", bdy)
+    prepare_text(ptext, "text", "plain", html2text(bdy))
+    prepare_html(phtml, "text", "html", bdy)
       
     msg.parts << ptext
     msg.parts << phtml
@@ -285,17 +325,17 @@ class Mailr::Attachment
     data = self.file
     p.body = data
     if @content_type.include?("text/plain") # here maybe we should encode in 7bit??!!
-      p.set_content_type(@content_type, nil, {"charset"=>"utf-8"})
+      p.set_content_type("text", "plain", {"charset"=>"utf-8"})
       p.transfer_encoding = "8bit"
     elsif @content_type.include?("text/html")
-      p.set_content_type(@content_type, nil, {"charset"=>"utf8"})
+      p.set_content_type("text", "html", {"charset"=>"utf8"})
       p.transfer_encoding = "8bit"
     elsif @content_type.include?("rfc822")
-      p.set_content_type(@content_type, nil, {"charset"=>"utf8"})
+      p.set_content_type("text", "rfc822", {"charset"=>"utf8"})
       p.set_disposition("inline;")
       p.transfer_encoding = "8bit"
     else  
-      p.set_content_type(@content_type, nil, {"name"=>@filename})
+      p.set_content_type("multipart", "alternative", {"name"=>@filename})
       p.set_disposition("inline; filename=#{@filename}") unless @filename.nil?
       p.set_disposition("inline;") if @filename.nil?
       p.transfer_encoding='Base64'
